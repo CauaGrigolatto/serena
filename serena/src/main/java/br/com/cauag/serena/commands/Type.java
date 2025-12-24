@@ -26,6 +26,7 @@ public class Type implements CommandExecutor {
 	        
 	        bot.keyPress(keyCode);
 	        bot.keyRelease(keyCode);
+	        bot.delay(25);
 		}
 	}
 

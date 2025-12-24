@@ -20,8 +20,15 @@ public class CommandMapper {
 		map.put(Command.PRESS, new Press());
 	}
 	
+	@SuppressWarnings("deprecation")
 	public CommandExecutor get(Command command) {
-		return map.get(command);
+		try {			
+			return map.get(command).getClass().newInstance();
+		}
+		catch(IllegalAccessException | InstantiationException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	public enum Command {		
