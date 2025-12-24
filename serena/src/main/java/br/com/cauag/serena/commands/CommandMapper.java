@@ -1,5 +1,6 @@
 package br.com.cauag.serena.commands;
 
+import java.awt.event.KeyEvent;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,6 +17,7 @@ public class CommandMapper {
 		map.put(Command.WAIT_SECONDS, new WaitSeconds());
 		map.put(Command.WAIT_MILLIS, new WaitMillis());
 		map.put(Command.TYPE, new Type());
+		map.put(Command.PRESS, new Press());
 	}
 	
 	public CommandExecutor get(Command command) {
@@ -29,6 +31,24 @@ public class CommandMapper {
 		RIGHT_CLICK,
 		WAIT_SECONDS,
 		WAIT_MILLIS,
-		TYPE;
+		TYPE,
+		PRESS;
+	}
+	
+	public enum SpecialKey {
+		ENTER(KeyEvent.VK_ENTER),
+		SPACE(KeyEvent.VK_SPACE),
+		BACKSPACE(KeyEvent.VK_BACK_SPACE),
+		TAB(KeyEvent.VK_TAB);
+		
+		private int keyCode;
+		
+		private SpecialKey(int keyCode) {
+			this.keyCode = keyCode;
+		}
+		
+		public int getKeyCode() {
+			return keyCode;
+		}
 	}
 }

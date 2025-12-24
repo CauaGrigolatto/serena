@@ -26,8 +26,7 @@ public class Core implements Runnable {
 	
 	@Override
 	public void run() {
-		try {
-			BufferedReader reader = new BufferedReader(new FileReader(file));
+		try(BufferedReader reader = new BufferedReader(new FileReader(file));) {
 			String line;
 			
 			while ((line = reader.readLine()) != null) {
