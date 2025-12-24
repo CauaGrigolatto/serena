@@ -1,26 +1,24 @@
 package br.com.cauag.serena.core;
 
 import java.awt.Robot;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
+import java.util.List;
+import java.util.Stack;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 
 import br.com.cauag.serena.commands.CommandExecutor;
 import br.com.cauag.serena.commands.CommandMapper;
-import br.com.cauag.serena.functions.FunctionExecutor;
-import br.com.cauag.serena.functions.FunctionMapper;
-import br.com.cauag.serena.functions.FunctionStack;
 
 public class Core implements Runnable {
 	private final String FILE_EXTENSION = "ser";
 	
-	private final FunctionMapper functionMapper = new FunctionMapper();
 	private final CommandMapper commandMapper = new CommandMapper();
-	
-	private final FunctionStack functionStack = new FunctionStack();
+		
+	private final Stack<Integer> indexesToComeBack = new Stack<Integer>();
+	private final Stack<Integer> timesToRepeat = new Stack<Integer>();
 	
 	private Robot bot;
 	private File file;
@@ -32,53 +30,48 @@ public class Core implements Runnable {
 	
 	@Override
 	public void run() {
-		try(BufferedReader reader = new BufferedReader(new FileReader(file));) {
-			String line;
-			int index = 1;
-						
-			while ((line = reader.readLine()) != null) {
-				line = line.trim();
-				
+		try {			
+			List<String> lines = FileUtils.readLines(file, "UTF-8");
+			int n = lines.size();
+			
+			for (int index = 0; index < n; index++) {
+				String line = lines.get(index).trim();
 				if (line.isBlank() || line.startsWith("//")) continue;
-								
+				
 				String[] statement = getStatement(line);
 				
 				String commandStr = statement[0].trim();
 				String argumentStr = statement[1] != null ? statement[1].trim() : null;
 				
-				if ("END".equals(commandStr)) {
-					functionStack.executeStack();
-					continue;
+				if ("REPEAT".equals(commandStr)) {
+					indexesToComeBack.add(index);
+					timesToRepeat.add(Integer.parseInt(argumentStr)); //validate it later
 				}
-				
-				FunctionExecutor functionExecutor = functionMapper.fromString(commandStr);
-				
-				if (functionExecutor != null) {
-					functionExecutor.prepare(bot, argumentStr);
-					functionStack.add(functionExecutor);
-					continue;
-				}
-				
-				CommandExecutor commandExecutor = commandMapper.fromString(commandStr);
-
-				if (commandExecutor != null) {
-					commandExecutor.prepare(argumentStr);
+				else if ("END".equals(commandStr) && !indexesToComeBack.isEmpty()) {
+					int indexToComeBack = indexesToComeBack.peek();
 					
-					if (! functionStack.isEmpty()) {
-						functionStack.addCommand(commandExecutor);
+					int times = timesToRepeat.pop() - 1;
+					
+					if (times > 0) {
+						times--;
+						index = indexToComeBack;
+						timesToRepeat.add(times);
 					}
 					else {
+						indexesToComeBack.pop();
+					}					
+				}
+				else {					
+					CommandExecutor commandExecutor = commandMapper.fromString(commandStr);
+					
+					if (commandExecutor != null) {
+						commandExecutor.prepare(argumentStr);
 						commandExecutor.execute(bot);
 					}
 				}
-				else {
-					throw new IllegalArgumentException("Invalid command at line " + index + ": " + commandStr);
-				}
 			}
-			
-			index++;
 		}
-		catch (Exception e) {
+		catch(IOException e) {
 			e.printStackTrace();
 		}
 	}
