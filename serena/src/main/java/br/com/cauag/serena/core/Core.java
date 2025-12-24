@@ -53,7 +53,6 @@ public class Core implements Runnable {
 					int times = timesToRepeat.pop() - 1;
 					
 					if (times > 0) {
-						times--;
 						index = indexToComeBack;
 						timesToRepeat.add(times);
 					}
