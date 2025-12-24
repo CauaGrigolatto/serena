@@ -20,6 +20,16 @@ public class CommandMapper {
 		map.put(Command.PRESS, new Press());
 	}
 	
+	public CommandExecutor fromString(String command) {
+		for (Command c : Command.values()) {
+			if (c.toString().equals(command)) {
+				return get(c);
+			}
+		}
+		
+		return null;
+	}
+	
 	@SuppressWarnings("deprecation")
 	public CommandExecutor get(Command command) {
 		try {			

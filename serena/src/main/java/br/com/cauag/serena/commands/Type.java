@@ -6,15 +6,19 @@ import java.awt.event.KeyEvent;
 public class Type implements CommandExecutor {
 
 	private String phrase;
+	private int n;
 	
 	@Override
 	public void prepare(String arg) {
-		int n = arg.length();
+		this.n = arg.length();
 		this.phrase = arg.substring(1, n-1);
 	}
 
 	@Override
 	public void execute(Robot bot) {
+		
+		int i = 0;
+		
 		for (char ch : phrase.toCharArray()) {
 			if (ch == '\0') continue;
 			
@@ -26,7 +30,8 @@ public class Type implements CommandExecutor {
 	        
 	        bot.keyPress(keyCode);
 	        bot.keyRelease(keyCode);
-	        bot.delay(25);
+	        
+	        if (i < n-1) bot.delay(50);
 		}
 	}
 
