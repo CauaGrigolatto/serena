@@ -18,6 +18,7 @@ public class CommandMapper {
 		map.put(Command.WAIT_MILLIS, new WaitMillis());
 		map.put(Command.TYPE, new Type());
 		map.put(Command.PRESS, new Press());
+		map.put(Command.DISPLAY, new Display());
 	}
 	
 	public CommandExecutor fromString(String command) {
@@ -49,7 +50,8 @@ public class CommandMapper {
 		WAIT_SECONDS,
 		WAIT_MILLIS,
 		TYPE,
-		PRESS;
+		PRESS,
+		DISPLAY;
 	}
 	
 	public enum SpecialKey {

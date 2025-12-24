@@ -3,7 +3,10 @@ package br.com.cauag.serena.core;
 import java.awt.Robot;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Stack;
 
 import org.apache.commons.io.FileUtils;
@@ -19,6 +22,10 @@ public class Core implements Runnable {
 		
 	private final Stack<Integer> indexesToComeBack = new Stack<Integer>();
 	private final Stack<Integer> timesToRepeat = new Stack<Integer>();
+	
+	private final Map<String, List<CommandExecutor>> definedBlocks = new HashMap<String,  List<CommandExecutor>>();
+	private String blockName;
+	private List<CommandExecutor> commandsToExecute;
 	
 	private Robot bot;
 	private File file;
@@ -43,11 +50,29 @@ public class Core implements Runnable {
 				String commandStr = statement[0].trim();
 				String argumentStr = statement[1] != null ? statement[1].trim() : null;
 				
-				if ("REPEAT".equals(commandStr)) {
+				if ("BLOCK".equals(commandStr)) {
+					commandsToExecute = new LinkedList<CommandExecutor>();
+					blockName = argumentStr;
+					definedBlocks.put(blockName, null);
+				}
+				else if ("END_BLOCK".equals(commandStr)) {
+					definedBlocks.put(blockName, new LinkedList<>(commandsToExecute));
+					commandsToExecute = null;
+				}
+				else if ("CALL".equals(commandStr)) {
+					List<CommandExecutor> commands = definedBlocks.get(argumentStr);
+					
+					if (commands != null) {
+						for (CommandExecutor c : commands) {
+							c.execute(bot);
+						}
+					}
+				}
+				else if ("REPEAT".equals(commandStr)) {
 					indexesToComeBack.add(index);
 					timesToRepeat.add(Integer.parseInt(argumentStr));
 				}
-				else if ("END".equals(commandStr) && !indexesToComeBack.isEmpty()) {
+				else if ("END_REPEAT".equals(commandStr) && !indexesToComeBack.isEmpty()) {
 					int indexToComeBack = indexesToComeBack.peek();
 					
 					int times = timesToRepeat.pop() - 1;
@@ -60,12 +85,18 @@ public class Core implements Runnable {
 						indexesToComeBack.pop();
 					}					
 				}
-				else {					
+				else {
 					CommandExecutor commandExecutor = commandMapper.fromString(commandStr);
 					
 					if (commandExecutor != null) {
 						commandExecutor.prepare(argumentStr);
-						commandExecutor.execute(bot);
+						
+						if (commandsToExecute != null) {
+							commandsToExecute.add(commandExecutor);
+						}
+						else {							
+							commandExecutor.execute(bot);
+						}
 					}
 				}
 			}
