@@ -45,7 +45,7 @@ public class Core implements Runnable {
 				
 				if ("REPEAT".equals(commandStr)) {
 					indexesToComeBack.add(index);
-					timesToRepeat.add(Integer.parseInt(argumentStr)); //validate it later
+					timesToRepeat.add(Integer.parseInt(argumentStr));
 				}
 				else if ("END".equals(commandStr) && !indexesToComeBack.isEmpty()) {
 					int indexToComeBack = indexesToComeBack.peek();
