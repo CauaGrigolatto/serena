@@ -8,9 +8,9 @@ import java.io.IOException;
 
 import org.apache.commons.io.FilenameUtils;
 
-import br.com.cauag.serena.core.commands.CommandExecutor;
-import br.com.cauag.serena.core.commands.CommandMapper;
-import br.com.cauag.serena.core.commands.CommandMapper.Command;
+import br.com.cauag.serena.commands.CommandExecutor;
+import br.com.cauag.serena.commands.CommandMapper;
+import br.com.cauag.serena.commands.CommandMapper.Command;
 
 public class Core implements Runnable {
 	private final String FILE_EXTENSION = "ser";
