@@ -58,13 +58,19 @@ public class Core implements Runnable {
 				else if ("END_BLOCK".equals(commandStr)) {
 					definedBlocks.put(blockName, new LinkedList<>(commandsToExecute));
 					commandsToExecute = null;
+					blockName = null;
 				}
 				else if ("CALL".equals(commandStr)) {
 					List<CommandExecutor> commands = definedBlocks.get(argumentStr);
 					
-					if (commands != null) {
-						for (CommandExecutor c : commands) {
-							c.execute(bot);
+					if (isDeclaringBlock()) {
+						commandsToExecute.addAll(commands);
+					}
+					else {						
+						if (commands != null) {
+							for (CommandExecutor c : commands) {
+								c.execute(bot);
+							}
 						}
 					}
 				}
@@ -91,7 +97,7 @@ public class Core implements Runnable {
 					if (commandExecutor != null) {
 						commandExecutor.prepare(argumentStr);
 						
-						if (commandsToExecute != null) {
+						if (isDeclaringBlock()) {
 							commandsToExecute.add(commandExecutor);
 						}
 						else {							
@@ -136,5 +142,9 @@ public class Core implements Runnable {
 		}
 		
 		this.file = file;
+	}
+	
+	private boolean isDeclaringBlock() {
+		return blockName != null;
 	}
 }
