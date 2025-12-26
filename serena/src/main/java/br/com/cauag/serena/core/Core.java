@@ -4,7 +4,6 @@ import java.awt.Robot;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Stack;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -12,23 +11,25 @@ import org.apache.commons.io.FilenameUtils;
 import br.com.cauag.serena.commands.CommandExecutor;
 import br.com.cauag.serena.commands.CommandMapper;
 import br.com.cauag.serena.functions.block.BlocksControl;
+import br.com.cauag.serena.functions.repeat.RepeatsControl;
+import br.com.cauag.serena.functions.repeat.Syntax;
 
 public class Core implements Runnable {
-	private final String FILE_EXTENSION = "ser";
-	
-	private final CommandMapper commandMapper = new CommandMapper();
-		
-	private final Stack<Integer> indexesToComeBack = new Stack<Integer>();
-	private final Stack<Integer> timesToRepeat = new Stack<Integer>();
-	
-	private final BlocksControl blocksControl;
-	
 	private Robot bot;
 	private File file;
 	
+	private final String FILE_EXTENSION = "ser";
+	
+	private final CommandMapper commandMapper;
+		
+	private final BlocksControl blocksControl;
+	private final RepeatsControl repeatsControl;
+	
 	public Core(String path) throws Exception {
 		this.bot = new Robot();
+		this.commandMapper = new CommandMapper();
 		this.blocksControl = new BlocksControl(bot);
+		this.repeatsControl = new RepeatsControl();
 		setExecutable(path);
 	}
 	
@@ -47,13 +48,13 @@ public class Core implements Runnable {
 				String commandStr = statement[0].trim();
 				String argumentStr = statement[1] != null ? statement[1].trim() : null;
 				
-				if ("BLOCK".equals(commandStr)) {
+				if (Syntax.BLOCK.sameAs(commandStr)) {
 					blocksControl.startBlock(argumentStr);
 				}
-				else if ("END_BLOCK".equals(commandStr)) {
+				else if (Syntax.END_BLOCK.sameAs(commandStr)) {
 					blocksControl.closeBlock();
 				}
-				else if ("CALL".equals(commandStr)) {					
+				else if (Syntax.CALL.sameAs(commandStr)) {					
 					if (blocksControl.isDeclaringBlock()) {
 						blocksControl.appendCommands(blocksControl.getBlock(argumentStr));
 					}
@@ -61,21 +62,14 @@ public class Core implements Runnable {
 						blocksControl.execute(argumentStr);
 					}
 				}
-				else if ("REPEAT".equals(commandStr)) {
-					indexesToComeBack.add(index);
-					timesToRepeat.add(Integer.parseInt(argumentStr));
+				else if (Syntax.REPEAT.sameAs(commandStr)) {
+					repeatsControl.startRepeat(index, Integer.parseInt(argumentStr));
 				}
-				else if ("END_REPEAT".equals(commandStr) && !indexesToComeBack.isEmpty()) {
-					int indexToComeBack = indexesToComeBack.peek();
+				else if (Syntax.END_REPEAT.sameAs(commandStr)) {
+					Integer goBackTo = repeatsControl.getIndexAndDecreaseLoop();
 					
-					int times = timesToRepeat.pop() - 1;
-					
-					if (times > 0) {
-						index = indexToComeBack;
-						timesToRepeat.add(times);
-					}
-					else {
-						indexesToComeBack.pop();
+					if (goBackTo != null) {
+						index = goBackTo;
 					}
 				}
 				else {
@@ -100,14 +94,13 @@ public class Core implements Runnable {
 	}
 
 	private String[] getStatement(String line) {
-		int n = line.length();
-		int i = 0;
-
-		while (i < n && line.charAt(i) != ' ') i++;
-		
 		String[] statement = new String[2];
-		statement[0] = line.substring(0, i);
-		statement[1] = i < n ? line.substring(i+1, n) : null;
+		String[] splittedLine = line.split(" ", 2);
+		
+		for (int i = 0; i < splittedLine.length; i++) {
+			statement[i] = splittedLine[i];
+		}
+		
 		return statement;
 	}
 
