@@ -2,6 +2,7 @@ package br.com.cauag.serena.commands;
 
 import java.awt.Robot;
 import java.awt.event.InputEvent;
+import java.util.Map;
 
 public class LeftClick implements CommandExecutor {
 
@@ -18,4 +19,8 @@ public class LeftClick implements CommandExecutor {
 		bot.mouseRelease(leftKey);
 	}
 	
+	@Override
+	public void applyParameters(Map<String, String> parameters) {
+		
+	}
 }

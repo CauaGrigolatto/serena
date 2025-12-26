@@ -2,6 +2,7 @@
 package br.com.cauag.serena.commands;
 
 import java.awt.Robot;
+import java.util.Map;
 
 public class Display implements CommandExecutor {
 	
@@ -10,13 +11,22 @@ public class Display implements CommandExecutor {
 	
 	@Override
 	public void prepare(String arg) {
-		this.n = arg.length();
-		this.message = arg.substring(1, n-1);
+		int argLen = arg.length();
+		this.message = arg.substring(1, argLen-1);
+		this.n = argLen-2;
+	}
+	
+	@Override
+	public void applyParameters(Map<String, String> parameters) {
+		for (Map.Entry<String, String> entry : parameters.entrySet()) {
+			String key = "\\$" + entry.getKey();
+			String value = entry.getValue();
+			message = message.replaceAll(key, value);
+		}
 	}
 
 	@Override
 	public void execute(Robot bot) {
 		System.out.println(message);
 	}
-
 }

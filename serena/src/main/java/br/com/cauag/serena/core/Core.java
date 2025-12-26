@@ -10,6 +10,7 @@ import org.apache.commons.io.FilenameUtils;
 
 import br.com.cauag.serena.commands.CommandExecutor;
 import br.com.cauag.serena.commands.CommandMapper;
+import br.com.cauag.serena.functions.block.Block;
 import br.com.cauag.serena.functions.block.BlocksControl;
 import br.com.cauag.serena.functions.repeat.RepeatsControl;
 import br.com.cauag.serena.functions.repeat.Syntax;
@@ -43,27 +44,50 @@ public class Core implements Runnable {
 				String line = lines.get(index).trim();
 				if (line.isBlank() || line.startsWith("//")) continue;
 				
-				String[] statement = getStatement(line);
+				String[] statement = getStatement(line, false);
 				
 				String commandStr = statement[0].trim();
-				String argumentStr = statement[1] != null ? statement[1].trim() : null;
+				String commandArgumentStr = statement[1] != null ? statement[1].trim() : null;
 				
 				if (Syntax.BLOCK.sameAs(commandStr)) {
-					blocksControl.startBlock(argumentStr);
+					String[] splittedArgs = commandArgumentStr.split(" ");
+					
+					String name = splittedArgs[0];
+					int totalArgs = splittedArgs.length-1;
+					
+					String[] args = new String[totalArgs];
+					
+					for (int i = 1; i <= totalArgs; i++) {
+						args[i-1] = splittedArgs[i];
+					}
+					
+					blocksControl.startBlock(name, args);
 				}
 				else if (Syntax.END_BLOCK.sameAs(commandStr)) {
 					blocksControl.closeBlock();
 				}
-				else if (Syntax.CALL.sameAs(commandStr)) {					
+				else if (Syntax.CALL.sameAs(commandStr)) {
+					String[] splittedArgs = commandArgumentStr.split(" ");
+					
+					String name = splittedArgs[0];
+					int totalArgs = splittedArgs.length-1;
+					
+					String[] args = new String[totalArgs];
+					
+					for (int i = 1; i <= totalArgs; i++) {
+						args[i-1] = splittedArgs[i];
+					}
+					
 					if (blocksControl.isDeclaringBlock()) {
-						blocksControl.appendCommands(blocksControl.getBlock(argumentStr));
+						Block nestedBlock = blocksControl.getBlock(name);
+						blocksControl.merge(nestedBlock);
 					}
 					else {						
-						blocksControl.execute(argumentStr);
+						blocksControl.execute(name, args);
 					}
 				}
 				else if (Syntax.REPEAT.sameAs(commandStr)) {
-					repeatsControl.startRepeat(index, Integer.parseInt(argumentStr));
+					repeatsControl.startRepeat(index, Integer.parseInt(commandArgumentStr));
 				}
 				else if (Syntax.END_REPEAT.sameAs(commandStr)) {
 					Integer goBackTo = repeatsControl.getIndexAndDecreaseLoop();
@@ -76,10 +100,10 @@ public class Core implements Runnable {
 					CommandExecutor commandExecutor = commandMapper.fromString(commandStr);
 					
 					if (commandExecutor != null) {
-						commandExecutor.prepare(argumentStr);
+						commandExecutor.prepare(commandArgumentStr);
 						
 						if (blocksControl.isDeclaringBlock()) {
-							blocksControl.appendCommand(commandExecutor);
+							blocksControl.addCommand(commandExecutor);
 						}
 						else {							
 							commandExecutor.execute(bot);
@@ -92,9 +116,9 @@ public class Core implements Runnable {
 			e.printStackTrace();
 		}
 	}
-
-	private String[] getStatement(String line) {
-		String[] statement = new String[2];
+	
+	private String[] getStatement(String line, boolean receivesArguments) {
+		String[] statement = new String[3];
 		String[] splittedLine = line.split(" ", 2);
 		
 		for (int i = 0; i < splittedLine.length; i++) {

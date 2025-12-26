@@ -1,6 +1,7 @@
 package br.com.cauag.serena.commands;
 
 import java.awt.Robot;
+import java.util.Map;
 
 import br.com.cauag.serena.commands.CommandMapper.SpecialKey;
 
@@ -18,4 +19,8 @@ public class Press implements CommandExecutor {
 		bot.keyPress(key.getKeyCode());
 	}
 	
+	@Override
+	public void applyParameters(Map<String, String> parameters) {
+		
+	}
 }

@@ -2,6 +2,7 @@ package br.com.cauag.serena.commands;
 
 import java.awt.Robot;
 import java.io.IOException;
+import java.util.Map;
 
 public class Execute implements CommandExecutor {
 	private String program;
@@ -21,4 +22,9 @@ public class Execute implements CommandExecutor {
 		}
 	}
 
+	@Override
+	public void applyParameters(Map<String, String> parameters) {
+		
+	}
+	
 }

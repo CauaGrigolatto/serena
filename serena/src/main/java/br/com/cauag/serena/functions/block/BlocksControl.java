@@ -2,60 +2,50 @@ package br.com.cauag.serena.functions.block;
 
 import java.awt.Robot;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 import br.com.cauag.serena.commands.CommandExecutor;
 
-public class BlocksControl {
-	private final Map<String, List<CommandExecutor>> definedBlocks;
+public class BlocksControl {	
+	private final Map<String, Block> blocks;
+	private Block current;
 	
 	private final Robot bot;
-	
-	private String blockName;
-	private List<CommandExecutor> blockCommands;
-	private boolean declaringBlock;
-	
+
 	public BlocksControl(Robot bot) {
-		this.bot = bot;
-		this.definedBlocks = new HashMap<String, List<CommandExecutor>>();
+		this.bot = bot;		
+		this.blocks = new HashMap<String, Block>();
+		this.current = null;
 	}
 	
-	public void execute(String blockName) {
-		List<CommandExecutor> commands = getBlock(blockName);
-		
-		for (CommandExecutor c : commands) {
-			c.execute(bot);
-		}
+	public void execute(String blockName, String... args) {
+		Block block = getBlock(blockName);
+		block.setArguments(args);
+		block.execute(bot);
 	}
 	
-	public void startBlock(String blockName) {
-		this.blockName = blockName;
-		this.blockCommands = new LinkedList<CommandExecutor>();
-		this.declaringBlock = true;
+	public void startBlock(String blockName, String... args) {
+		this.current = new Block(blockName, args);
 	}
 	
-	public void appendCommand(CommandExecutor command) {
-		this.blockCommands.add(command);
-	}
-	
-	public void appendCommands(List<CommandExecutor> command) {
-		this.blockCommands.addAll(command);
+	public void addCommand(CommandExecutor command) {
+		this.current.addCommand(command);
 	}
 	
 	public void closeBlock() {
-		definedBlocks.put(blockName, new LinkedList<>(blockCommands));
-		this.blockName = null;
-		this.blockCommands = null;
-		this.declaringBlock = false;
+		this.blocks.put(current.getName(), current);
+		this.current = null;
 	}
 	
 	public boolean isDeclaringBlock() {
-		return declaringBlock;
+		return current != null;
 	}
 	
-	public List<CommandExecutor> getBlock(String blockName) {
-		return definedBlocks.get(blockName);
+	public Block getBlock(String blockName) {
+		return blocks.get(blockName);
+	}
+
+	public void merge(Block nestedBlock) {
+		this.current.addCommands(nestedBlock.getCommands());
 	}
 }

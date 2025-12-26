@@ -2,6 +2,7 @@ package br.com.cauag.serena.commands;
 
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
+import java.util.Map;
 
 public class Type implements CommandExecutor {
 
@@ -33,6 +34,11 @@ public class Type implements CommandExecutor {
 	        
 	        if (i < n-1) bot.delay(50);
 		}
+	}
+	
+	@Override
+	public void applyParameters(Map<String, String> parameters) {
+		
 	}
 
 }

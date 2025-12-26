@@ -1,6 +1,7 @@
 package br.com.cauag.serena.commands;
 
 import java.awt.Robot;
+import java.util.Map;
 
 public class WaitSeconds implements CommandExecutor {
 
@@ -15,5 +16,9 @@ public class WaitSeconds implements CommandExecutor {
 	public void execute(Robot bot) {
 		bot.delay(seconds * 1000);
 	}
-
+	
+	@Override
+	public void applyParameters(Map<String, String> parameters) {
+		
+	}
 }

@@ -1,6 +1,7 @@
 package br.com.cauag.serena.commands;
 
 import java.awt.Robot;
+import java.util.Map;
 
 public class MoveMouse implements CommandExecutor {
 
@@ -19,4 +20,8 @@ public class MoveMouse implements CommandExecutor {
 		bot.mouseMove(x, y);
 	}
 
+	@Override
+	public void applyParameters(Map<String, String> parameters) {
+		
+	}
 }
