@@ -3,10 +3,7 @@ package br.com.cauag.serena.core;
 import java.awt.Robot;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Stack;
 
 import org.apache.commons.io.FileUtils;
@@ -14,6 +11,7 @@ import org.apache.commons.io.FilenameUtils;
 
 import br.com.cauag.serena.commands.CommandExecutor;
 import br.com.cauag.serena.commands.CommandMapper;
+import br.com.cauag.serena.functions.block.BlocksControl;
 
 public class Core implements Runnable {
 	private final String FILE_EXTENSION = "ser";
@@ -23,15 +21,14 @@ public class Core implements Runnable {
 	private final Stack<Integer> indexesToComeBack = new Stack<Integer>();
 	private final Stack<Integer> timesToRepeat = new Stack<Integer>();
 	
-	private final Map<String, List<CommandExecutor>> definedBlocks = new HashMap<String,  List<CommandExecutor>>();
-	private String blockName;
-	private List<CommandExecutor> commandsToExecute;
+	private final BlocksControl blocksControl;
 	
 	private Robot bot;
 	private File file;
 	
 	public Core(String path) throws Exception {
 		this.bot = new Robot();
+		this.blocksControl = new BlocksControl(bot);
 		setExecutable(path);
 	}
 	
@@ -51,27 +48,17 @@ public class Core implements Runnable {
 				String argumentStr = statement[1] != null ? statement[1].trim() : null;
 				
 				if ("BLOCK".equals(commandStr)) {
-					commandsToExecute = new LinkedList<CommandExecutor>();
-					blockName = argumentStr;
-					definedBlocks.put(blockName, null);
+					blocksControl.startBlock(argumentStr);
 				}
 				else if ("END_BLOCK".equals(commandStr)) {
-					definedBlocks.put(blockName, new LinkedList<>(commandsToExecute));
-					commandsToExecute = null;
-					blockName = null;
+					blocksControl.closeBlock();
 				}
-				else if ("CALL".equals(commandStr)) {
-					List<CommandExecutor> commands = definedBlocks.get(argumentStr);
-					
-					if (isDeclaringBlock()) {
-						commandsToExecute.addAll(commands);
+				else if ("CALL".equals(commandStr)) {					
+					if (blocksControl.isDeclaringBlock()) {
+						blocksControl.appendCommands(blocksControl.getBlock(argumentStr));
 					}
 					else {						
-						if (commands != null) {
-							for (CommandExecutor c : commands) {
-								c.execute(bot);
-							}
-						}
+						blocksControl.execute(argumentStr);
 					}
 				}
 				else if ("REPEAT".equals(commandStr)) {
@@ -89,7 +76,7 @@ public class Core implements Runnable {
 					}
 					else {
 						indexesToComeBack.pop();
-					}					
+					}
 				}
 				else {
 					CommandExecutor commandExecutor = commandMapper.fromString(commandStr);
@@ -97,8 +84,8 @@ public class Core implements Runnable {
 					if (commandExecutor != null) {
 						commandExecutor.prepare(argumentStr);
 						
-						if (isDeclaringBlock()) {
-							commandsToExecute.add(commandExecutor);
+						if (blocksControl.isDeclaringBlock()) {
+							blocksControl.appendCommand(commandExecutor);
 						}
 						else {							
 							commandExecutor.execute(bot);
@@ -142,9 +129,5 @@ public class Core implements Runnable {
 		}
 		
 		this.file = file;
-	}
-	
-	private boolean isDeclaringBlock() {
-		return blockName != null;
 	}
 }
