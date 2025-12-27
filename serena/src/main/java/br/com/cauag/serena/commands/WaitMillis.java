@@ -1,6 +1,7 @@
 package br.com.cauag.serena.commands;
 
 import java.awt.Robot;
+import java.time.Duration;
 import java.util.Map;
 
 public class WaitMillis implements CommandExecutor {
@@ -14,12 +15,16 @@ public class WaitMillis implements CommandExecutor {
 
 	@Override
 	public void execute(Robot bot) {
-		bot.delay(millis);
+		try {			
+			Thread.sleep(Duration.ofMillis(millis));
+		}
+		catch(InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void applyParameters(Map<String, String> parameters) {
 		
 	}
-	
 }

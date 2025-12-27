@@ -52,7 +52,7 @@ public class Core implements Runnable {
 				if (Syntax.BLOCK.sameAs(commandStr)) {
 					String[] splittedArgs = commandArgumentStr.split(" ");
 					
-					String name = splittedArgs[0];
+					String blockName = splittedArgs[0];
 					int totalArgs = splittedArgs.length-1;
 					
 					String[] args = new String[totalArgs];
@@ -61,7 +61,7 @@ public class Core implements Runnable {
 						args[i-1] = splittedArgs[i];
 					}
 					
-					blocksControl.startBlock(name, args);
+					blocksControl.startBlock(blockName, args);
 				}
 				else if (Syntax.END_BLOCK.sameAs(commandStr)) {
 					blocksControl.closeBlock();
@@ -80,7 +80,7 @@ public class Core implements Runnable {
 					
 					if (blocksControl.isDeclaringBlock()) {
 						Block nestedBlock = blocksControl.getBlock(name);
-						blocksControl.merge(nestedBlock);
+						blocksControl.merge(nestedBlock, args);
 					}
 					else {						
 						blocksControl.execute(name, args);

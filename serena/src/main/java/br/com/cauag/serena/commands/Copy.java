@@ -1,14 +1,16 @@
-
 package br.com.cauag.serena.commands;
 
 import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.util.Map;
 
-public class Display implements CommandExecutor {
-	
+public class Copy implements CommandExecutor {
+
 	private String message;
 	private int n;
-		
+	
 	@Override
 	public void prepare(String arg) {
 		int argLen = arg.length();
@@ -18,22 +20,13 @@ public class Display implements CommandExecutor {
 	
 	@Override
 	public void applyParameters(Map<String, String> parameters) {
-		for (Map.Entry<String, String> entry : parameters.entrySet()) {
-			String key = "\\$" + entry.getKey();
-			String value = entry.getValue();
-			
-			// For nested params
-			if (value != null && value.startsWith("$")) {
-				value = "\\" + value;
-			}
-			
-			message = message.replaceAll(key, value);
-		}
+		
 	}
 
 	@Override
 	public void execute(Robot bot) {
-		System.out.println(message);
+		Clipboard cb = Toolkit.getDefaultToolkit().getSystemClipboard();
+	    StringSelection data = new StringSelection(message);
+	    cb.setContents(data, null);
 	}
-
 }

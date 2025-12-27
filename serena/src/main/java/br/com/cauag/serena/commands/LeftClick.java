@@ -5,7 +5,6 @@ import java.awt.event.InputEvent;
 import java.util.Map;
 
 public class LeftClick implements CommandExecutor {
-
 	private int leftKey;
 	
 	@Override

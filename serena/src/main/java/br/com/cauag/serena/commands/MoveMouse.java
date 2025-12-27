@@ -4,7 +4,6 @@ import java.awt.Robot;
 import java.util.Map;
 
 public class MoveMouse implements CommandExecutor {
-
 	private int x;
 	private int y;
 	

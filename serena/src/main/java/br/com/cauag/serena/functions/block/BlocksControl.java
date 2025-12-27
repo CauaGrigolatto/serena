@@ -45,7 +45,8 @@ public class BlocksControl {
 		return blocks.get(blockName);
 	}
 
-	public void merge(Block nestedBlock) {
+	public void merge(Block nestedBlock, String... args) {
+		nestedBlock.setArguments(args);
 		this.current.addCommands(nestedBlock.getCommands());
 	}
 }

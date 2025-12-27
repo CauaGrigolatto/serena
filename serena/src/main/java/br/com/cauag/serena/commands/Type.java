@@ -17,7 +17,6 @@ public class Type implements CommandExecutor {
 
 	@Override
 	public void execute(Robot bot) {
-		
 		int i = 0;
 		
 		for (char ch : phrase.toCharArray()) {
@@ -40,5 +39,4 @@ public class Type implements CommandExecutor {
 	public void applyParameters(Map<String, String> parameters) {
 		
 	}
-
 }

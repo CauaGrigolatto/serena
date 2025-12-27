@@ -1,10 +1,10 @@
 package br.com.cauag.serena.commands;
 
 import java.awt.Robot;
+import java.time.Duration;
 import java.util.Map;
 
 public class WaitSeconds implements CommandExecutor {
-
 	private int seconds;
 	
 	@Override
@@ -14,7 +14,12 @@ public class WaitSeconds implements CommandExecutor {
 
 	@Override
 	public void execute(Robot bot) {
-		bot.delay(seconds * 1000);
+		try {			
+			Thread.sleep(Duration.ofSeconds(seconds));
+		}
+		catch(InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@Override

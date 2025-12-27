@@ -26,5 +26,4 @@ public class Execute implements CommandExecutor {
 	public void applyParameters(Map<String, String> parameters) {
 		
 	}
-	
 }

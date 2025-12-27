@@ -27,7 +27,9 @@ public class Block {
 	}
 
 	public void addCommands(List<CommandExecutor> commands) {
-		this.commands.addAll(commands);
+		for (CommandExecutor c : commands) {
+			this.commands.add(c);
+		}
 	}
 	
 	public List<CommandExecutor> getCommands() {
@@ -60,6 +62,10 @@ public class Block {
 				String argValue = args[i];
 				argumentsMap.put(argName, argValue);
 			}
+			
+			for (CommandExecutor c : commands) {	
+				c.applyParameters(argumentsMap);
+			}
 		}
 	}
 	
@@ -78,8 +84,11 @@ public class Block {
 
 	public void execute(Robot bot) {
 		for (CommandExecutor c : commands) {
-			c.applyParameters(argumentsMap);
 			c.execute(bot);
 		}
-	}	
+	}
+	
+	public Map<String, String> getParameters() {
+		return argumentsMap;
+	}
 }
