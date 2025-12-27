@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import br.com.cauag.serena.commands.CommandExecutor;
+import br.com.cauag.serena.commands.ParameterizedCommand;
 
 public class Block {
 	private String name;
@@ -63,8 +64,10 @@ public class Block {
 				argumentsMap.put(argName, argValue);
 			}
 			
-			for (CommandExecutor c : commands) {	
-				c.applyParameters(argumentsMap);
+			for (CommandExecutor c : commands) {
+				if (c instanceof ParameterizedCommand pc) {					
+					pc.applyParameters(argumentsMap);
+				}
 			}
 		}
 	}

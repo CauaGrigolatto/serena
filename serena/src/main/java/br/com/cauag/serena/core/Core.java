@@ -66,7 +66,7 @@ public class Core implements Runnable {
 					String[][] extractedArgs = extractArgs(commandArgumentStr);
 					
 					String blockName = extractedArgs[0][0];
-					String[] args = extractedArgs[0];
+					String[] args = extractedArgs[1];
 					
 					blocksControl.startBlock(blockName, args);
 				}
@@ -77,7 +77,7 @@ public class Core implements Runnable {
 					String[][] extractedArgs = extractArgs(commandArgumentStr);
 					
 					String blockName = extractedArgs[0][0];
-					String[] args = extractedArgs[0];
+					String[] args = extractedArgs[1];
 					
 					if (blocksControl.isDeclaringBlock()) {
 						Block nestedBlock = blocksControl.getBlock(blockName);

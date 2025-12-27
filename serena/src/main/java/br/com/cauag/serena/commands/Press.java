@@ -1,26 +1,18 @@
 package br.com.cauag.serena.commands;
 
 import java.awt.Robot;
-import java.util.Map;
 
 import br.com.cauag.serena.commands.CommandMapper.SpecialKey;
 
-public class Press implements CommandExecutor {
-
-	private SpecialKey key;
-	
+public class Press extends ParameterizedCommand {	
 	@Override
 	public void prepare(String arg) {
-		this.key = SpecialKey.valueOf(arg);
+		setArg(arg);
 	}
 
 	@Override
 	public void execute(Robot bot) {
-		bot.keyPress(key.getKeyCode());
-	}
-	
-	@Override
-	public void applyParameters(Map<String, String> parameters) {
-		
+		SpecialKey key = SpecialKey.valueOf(getArg());
+		bot.keyPress( key.getKeyCode() );
 	}
 }

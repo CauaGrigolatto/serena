@@ -2,24 +2,25 @@ package br.com.cauag.serena.commands;
 
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
-import java.util.Map;
 
-public class Type implements CommandExecutor {
-
-	private String phrase;
-	private int n;
+public class Type extends ParameterizedCommand {
+	
+	private int argLen;
 	
 	@Override
 	public void prepare(String arg) {
-		this.n = arg.length();
-		this.phrase = arg.substring(1, n-1);
+		int fullArgLen = arg.length();
+		setArg(arg.substring(1, fullArgLen-1));
+		this.argLen = fullArgLen - 2;
 	}
 
 	@Override
 	public void execute(Robot bot) {
 		int i = 0;
 		
-		for (char ch : phrase.toCharArray()) {
+		String message = getArg();
+		
+		for (char ch : message.toCharArray()) {
 			if (ch == '\0') continue;
 			
 	        int keyCode = KeyEvent.getExtendedKeyCodeForChar(ch);
@@ -31,12 +32,7 @@ public class Type implements CommandExecutor {
 	        bot.keyPress(keyCode);
 	        bot.keyRelease(keyCode);
 	        
-	        if (i < n-1) bot.delay(50);
+	        if (i < argLen-1) bot.delay(50);
 		}
-	}
-	
-	@Override
-	public void applyParameters(Map<String, String> parameters) {
-		
 	}
 }

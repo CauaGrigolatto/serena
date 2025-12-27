@@ -2,16 +2,11 @@ package br.com.cauag.serena.commands;
 
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
-import java.util.Map;
 
-public class Paste implements CommandExecutor {
-	
-	private String content;
-	
-	@Override
-	public void prepare(String arg) {
+public class Paste extends ParameterizedCommand {
 		
-	}
+	@Override
+	public void prepare(String arg) {}
 
 	@Override
 	public void execute(Robot bot) {
@@ -20,11 +15,5 @@ public class Paste implements CommandExecutor {
 		bot.delay(100);
 		bot.keyRelease(KeyEvent.VK_CONTROL);
 		bot.keyRelease(KeyEvent.VK_V);
-	}
-
-	@Override
-	public void applyParameters(Map<String, String> parameters) {
-		// TODO Auto-generated method stub
-		
 	}
 }

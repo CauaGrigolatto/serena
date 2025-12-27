@@ -1,26 +1,18 @@
 package br.com.cauag.serena.commands;
 
 import java.awt.Robot;
-import java.util.Map;
 
-public class MoveMouse implements CommandExecutor {
-	private int x;
-	private int y;
-	
+public class MoveMouse extends ParameterizedCommand {	
 	@Override
 	public void prepare(String arg) {
-		String[] coordinates = arg.split(",");
-		this.x = Integer.parseInt(coordinates[0]);
-		this.y = Integer.parseInt(coordinates[1]);
+		setArg(arg);
 	}
 
 	@Override
 	public void execute(Robot bot) {
+		String[] coordinates = getArg().split(",");
+		int x = Integer.parseInt(coordinates[0]);
+		int y = Integer.parseInt(coordinates[1]);
 		bot.mouseMove(x, y);
-	}
-
-	@Override
-	public void applyParameters(Map<String, String> parameters) {
-		
 	}
 }

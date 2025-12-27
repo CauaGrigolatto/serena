@@ -2,28 +2,24 @@ package br.com.cauag.serena.commands;
 
 import java.awt.Robot;
 import java.time.Duration;
-import java.util.Map;
 
-public class WaitSeconds implements CommandExecutor {
-	private int seconds;
-	
+public class WaitSeconds extends ParameterizedCommand {
 	@Override
 	public void prepare(String arg) {
-		this.seconds = Integer.parseInt(arg);
+		setArg(arg);
 	}
 
 	@Override
 	public void execute(Robot bot) {
 		try {			
-			Thread.sleep(Duration.ofSeconds(seconds));
+			Thread.sleep(
+				Duration.ofSeconds(
+					Integer.parseInt( getArg() )
+				)
+			);
 		}
 		catch(InterruptedException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	@Override
-	public void applyParameters(Map<String, String> parameters) {
-		
 	}
 }
