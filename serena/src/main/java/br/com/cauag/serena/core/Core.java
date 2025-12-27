@@ -49,6 +49,19 @@ public class Core implements Runnable {
 				String commandStr = statement[0].trim();
 				String commandArgumentStr = statement[1] != null ? statement[1].trim() : null;
 				
+				if (Syntax.INCLUDE.sameAs(commandStr)) {
+					File other = validateAndGetFile(commandArgumentStr);
+					List<String> content = FileUtils.readLines(other, "UTF-8");
+					lines.remove(index);
+					lines.addAll(index, content);
+					n = lines.size();
+					
+					line = lines.get(index);
+					statement = getStatement(line, false);
+					commandStr = statement[0].trim();
+					commandArgumentStr = statement[1] != null ? statement[1].trim() : null;
+				}
+				
 				if (Syntax.BLOCK.sameAs(commandStr)) {
 					String[][] extractedArgs = extractArgs(commandArgumentStr);
 					
@@ -136,6 +149,10 @@ public class Core implements Runnable {
 	}
 
 	private void setExecutable(String path) throws IOException {
+		this.file = validateAndGetFile(path);
+	}
+	
+	private File validateAndGetFile(String path) throws IOException {
 		String extension = FilenameUtils.getExtension(path);
 		
 		if (!FILE_EXTENSION.equals(extension)) {
@@ -152,6 +169,6 @@ public class Core implements Runnable {
 			throw new IOException("Argument must be the path to a script.");
 		}
 		
-		this.file = file;
+		return file;
 	}
 }

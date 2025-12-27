@@ -2,7 +2,8 @@ package br.com.cauag.serena.functions.repeat;
 
 public enum Syntax {
 	REPEAT("REPEAT"), END_REPEAT("END_REPEAT"),
-	BLOCK("BLOCK"), END_BLOCK("END_BLOCK"), CALL("CALL");
+	BLOCK("BLOCK"), END_BLOCK("END_BLOCK"), CALL("CALL"),
+	INCLUDE("INCLUDE");
 	
 	private String syntax;
 	
