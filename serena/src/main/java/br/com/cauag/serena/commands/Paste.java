@@ -3,7 +3,7 @@ package br.com.cauag.serena.commands;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 
-public class Paste extends ParameterizedCommand {
+public class Paste implements CommandExecutor {
 		
 	@Override
 	public void prepare(String arg) {}
