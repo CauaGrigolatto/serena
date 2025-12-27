@@ -42,7 +42,13 @@ public class BlocksControl {
 	}
 	
 	public Block getBlock(String blockName) {
-		return blocks.get(blockName);
+		Block block = blocks.get(blockName);
+		
+		if (block == null) {
+			throw new IllegalArgumentException("Block " + blockName + " is not declared.");
+		}
+		
+		return block;
 	}
 
 	public void merge(Block nestedBlock, String... args) {

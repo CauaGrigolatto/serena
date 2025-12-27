@@ -50,16 +50,10 @@ public class Core implements Runnable {
 				String commandArgumentStr = statement[1] != null ? statement[1].trim() : null;
 				
 				if (Syntax.BLOCK.sameAs(commandStr)) {
-					String[] splittedArgs = commandArgumentStr.split(" ");
+					String[][] extractedArgs = extractArgs(commandArgumentStr);
 					
-					String blockName = splittedArgs[0];
-					int totalArgs = splittedArgs.length-1;
-					
-					String[] args = new String[totalArgs];
-					
-					for (int i = 1; i <= totalArgs; i++) {
-						args[i-1] = splittedArgs[i];
-					}
+					String blockName = extractedArgs[0][0];
+					String[] args = extractedArgs[0];
 					
 					blocksControl.startBlock(blockName, args);
 				}
@@ -67,23 +61,17 @@ public class Core implements Runnable {
 					blocksControl.closeBlock();
 				}
 				else if (Syntax.CALL.sameAs(commandStr)) {
-					String[] splittedArgs = commandArgumentStr.split(" ");
+					String[][] extractedArgs = extractArgs(commandArgumentStr);
 					
-					String name = splittedArgs[0];
-					int totalArgs = splittedArgs.length-1;
-					
-					String[] args = new String[totalArgs];
-					
-					for (int i = 1; i <= totalArgs; i++) {
-						args[i-1] = splittedArgs[i];
-					}
+					String blockName = extractedArgs[0][0];
+					String[] args = extractedArgs[0];
 					
 					if (blocksControl.isDeclaringBlock()) {
-						Block nestedBlock = blocksControl.getBlock(name);
+						Block nestedBlock = blocksControl.getBlock(blockName);
 						blocksControl.merge(nestedBlock, args);
 					}
 					else {						
-						blocksControl.execute(name, args);
+						blocksControl.execute(blockName, args);
 					}
 				}
 				else if (Syntax.REPEAT.sameAs(commandStr)) {
@@ -115,6 +103,25 @@ public class Core implements Runnable {
 		catch(IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private String[][] extractArgs(String commandArgument) {
+		String[][] extracted = new String[2][2];
+		
+		String[] splittedArgs = commandArgument.split(" ");
+		
+		String name = splittedArgs[0];
+		int totalArgs = splittedArgs.length-1;
+		
+		String[] args = new String[totalArgs];
+		
+		for (int i = 1; i <= totalArgs; i++) {
+			args[i-1] = splittedArgs[i];
+		}
+		
+		extracted[0] = new String[] {name};
+		extracted[1] = args;
+		return extracted;
 	}
 	
 	private String[] getStatement(String line, boolean receivesArguments) {
