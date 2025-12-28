@@ -65,7 +65,7 @@ public class Block {
 			}
 			
 			for (CommandExecutor c : commands) {
-				if (c instanceof ParameterizedCommand pc) {					
+				if (c instanceof ParameterizedCommand pc) {
 					pc.applyParameters(argumentsMap);
 				}
 			}
