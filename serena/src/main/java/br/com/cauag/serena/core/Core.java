@@ -10,10 +10,10 @@ import org.apache.commons.io.FilenameUtils;
 
 import br.com.cauag.serena.commands.CommandExecutor;
 import br.com.cauag.serena.commands.CommandMapper;
+import br.com.cauag.serena.functions.Syntax;
 import br.com.cauag.serena.functions.block.Block;
 import br.com.cauag.serena.functions.block.BlocksControl;
 import br.com.cauag.serena.functions.repeat.RepeatsControl;
-import br.com.cauag.serena.functions.repeat.Syntax;
 
 public class Core implements Runnable {
 	private Robot bot;
