@@ -34,8 +34,18 @@ public class Type implements CommandExecutor {
 				throw new RuntimeException("Key code not found for character '" + ch + "'");
 			}
 			
+			boolean isUpper = Character.isUpperCase(ch);
+			
+			if (isUpper) {
+				bot.keyPress(KeyEvent.VK_SHIFT);
+			}
+			
 			bot.keyPress(keyCode);
 			bot.keyRelease(keyCode);
+			
+			if (isUpper) {
+				bot.keyRelease(KeyEvent.VK_SHIFT);
+			}
 			
 			if (i < messageLen-1) bot.delay(50);
 		}
