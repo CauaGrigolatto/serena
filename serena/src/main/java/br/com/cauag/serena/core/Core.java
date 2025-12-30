@@ -4,6 +4,8 @@ import java.awt.Robot;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
+import java.util.Stack;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -11,8 +13,9 @@ import org.apache.commons.io.FilenameUtils;
 import br.com.cauag.serena.commands.CommandExecutor;
 import br.com.cauag.serena.commands.CommandMapper;
 import br.com.cauag.serena.functions.Syntax;
-import br.com.cauag.serena.functions.block.Block;
 import br.com.cauag.serena.functions.block.BlocksControl;
+import br.com.cauag.serena.functions.block.IndexController;
+import br.com.cauag.serena.functions.repeat.ParameterizedRepeat;
 import br.com.cauag.serena.functions.repeat.RepeatsControl;
 
 public class Core implements Runnable {
@@ -26,6 +29,17 @@ public class Core implements Runnable {
 	private final BlocksControl blocksControl;
 	private final RepeatsControl repeatsControl;
 	
+	/*
+	 * 
+	 */
+	
+	private IndexController indexController = new IndexController();
+	private final Stack<ParameterizedRepeat> repeats = new Stack<ParameterizedRepeat>();
+	
+	/*
+	 * 
+	 */
+	
 	public Core(String path) throws Exception {
 		this.bot = new Robot();
 		this.commandMapper = new CommandMapper();
@@ -36,7 +50,7 @@ public class Core implements Runnable {
 	
 	@Override
 	public void run() {
-		try {			
+		try {
 			List<String> lines = FileUtils.readLines(file, "UTF-8");
 			int n = lines.size();
 			
@@ -44,10 +58,24 @@ public class Core implements Runnable {
 				String line = lines.get(index).trim();
 				if (line.isBlank() || line.startsWith("//")) continue;
 				
-				String[] statement = getStatement(line, false);
+				String[] statement = getStatement(line);
 				
 				String commandStr = statement[0].trim();
 				String commandArgumentStr = statement[1] != null ? statement[1].trim() : null;
+				
+				Map<String, String> currentArgs = indexController.currentArgs();
+				
+				if (currentArgs != null) {
+					for (Map.Entry<String, String> currArg : currentArgs.entrySet()) {
+						String argKey = currArg.getKey();
+						String argValue = currArg.getValue();
+						commandStr = commandStr.replaceAll("\\$" + argKey, argValue);
+						
+						if (commandArgumentStr != null) {							
+							commandArgumentStr = commandArgumentStr.replaceAll("\\$" + argKey, argValue);
+						}
+					}
+				}
 				
 				if (Syntax.INCLUDE.sameAs(commandStr)) {
 					File other = validateAndGetFile(commandArgumentStr);
@@ -57,7 +85,7 @@ public class Core implements Runnable {
 					n = lines.size();
 					
 					line = lines.get(index);
-					statement = getStatement(line, false);
+					statement = getStatement(line);
 					commandStr = statement[0].trim();
 					commandArgumentStr = statement[1] != null ? statement[1].trim() : null;
 				}
@@ -68,45 +96,43 @@ public class Core implements Runnable {
 					String blockName = extractedArgs[0][0];
 					String[] args = extractedArgs[1];
 					
-					blocksControl.startBlock(blockName, args);
+					indexController.addBlock(index, blockName, args);
 				}
 				else if (Syntax.END_BLOCK.sameAs(commandStr)) {
-					blocksControl.closeBlock();
+					int comeBackTo = indexController.endBlock();
+					
+					if (comeBackTo != -1) {
+						index = comeBackTo;
+					}
 				}
 				else if (Syntax.CALL.sameAs(commandStr)) {
-					String[][] extractedArgs = extractArgs(commandArgumentStr);
-					
-					String blockName = extractedArgs[0][0];
-					String[] args = extractedArgs[1];
-					
-					if (blocksControl.isDeclaringBlock()) {
-						Block nestedBlock = blocksControl.getBlock(blockName);
-						blocksControl.merge(nestedBlock, args);
-					}
-					else {						
-						blocksControl.execute(blockName, args);
+					if (! indexController.isDeclaringBlock()) {						
+						String[][] extractedArgs = extractArgs(commandArgumentStr);
+						
+						String blockName = extractedArgs[0][0];
+						String[] args = extractedArgs[1];
+						
+						index = indexController.callBlock(blockName, args, index);
 					}
 				}
 				else if (Syntax.REPEAT.sameAs(commandStr)) {
-					repeatsControl.startRepeat(index, Integer.parseInt(commandArgumentStr));
+					if (! indexController.isDeclaringBlock()) {
+						indexController.addRepeat(commandArgumentStr, index);
+					}
 				}
 				else if (Syntax.END_REPEAT.sameAs(commandStr)) {
-					Integer goBackTo = repeatsControl.getIndexAndDecreaseLoop();
+					int comeBackTo = indexController.endRepeat();
 					
-					if (goBackTo != null) {
-						index = goBackTo;
+					if (comeBackTo != -1) {
+						index = comeBackTo;
 					}
 				}
 				else {
 					CommandExecutor commandExecutor = commandMapper.fromString(commandStr);
 					
-					if (commandExecutor != null) {
-						commandExecutor.prepare(commandArgumentStr);
-						
-						if (blocksControl.isDeclaringBlock()) {
-							blocksControl.addCommand(commandExecutor);
-						}
-						else {							
+					if (commandExecutor != null) {						
+						if (! indexController.isDeclaringBlock()) {
+							commandExecutor.prepare(commandArgumentStr);
 							commandExecutor.execute(bot);
 						}
 					}
@@ -137,8 +163,8 @@ public class Core implements Runnable {
 		return extracted;
 	}
 	
-	private String[] getStatement(String line, boolean receivesArguments) {
-		String[] statement = new String[3];
+	private String[] getStatement(String line) {
+		String[] statement = new String[2];
 		String[] splittedLine = line.split(" ", 2);
 		
 		for (int i = 0; i < splittedLine.length; i++) {
