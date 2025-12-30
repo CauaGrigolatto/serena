@@ -1,4 +1,4 @@
-package br.com.cauag.serena.functions.block;
+package br.com.cauag.serena.functions;
 
 import java.util.HashMap;
 import java.util.Map;

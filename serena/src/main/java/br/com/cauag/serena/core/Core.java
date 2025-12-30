@@ -5,18 +5,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.Stack;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 
 import br.com.cauag.serena.commands.CommandExecutor;
 import br.com.cauag.serena.commands.CommandMapper;
+import br.com.cauag.serena.functions.IndexController;
 import br.com.cauag.serena.functions.Syntax;
-import br.com.cauag.serena.functions.block.BlocksControl;
-import br.com.cauag.serena.functions.block.IndexController;
-import br.com.cauag.serena.functions.repeat.ParameterizedRepeat;
-import br.com.cauag.serena.functions.repeat.RepeatsControl;
 
 public class Core implements Runnable {
 	private Robot bot;
@@ -25,16 +21,12 @@ public class Core implements Runnable {
 	private final String FILE_EXTENSION = "ser";
 	
 	private final CommandMapper commandMapper;
-		
-	private final BlocksControl blocksControl;
-	private final RepeatsControl repeatsControl;
-	
+
 	/*
 	 * 
 	 */
 	
-	private IndexController indexController = new IndexController();
-	private final Stack<ParameterizedRepeat> repeats = new Stack<ParameterizedRepeat>();
+	private final IndexController indexController;
 	
 	/*
 	 * 
@@ -43,8 +35,7 @@ public class Core implements Runnable {
 	public Core(String path) throws Exception {
 		this.bot = new Robot();
 		this.commandMapper = new CommandMapper();
-		this.blocksControl = new BlocksControl(bot);
-		this.repeatsControl = new RepeatsControl();
+		this.indexController = new IndexController();
 		setExecutable(path);
 	}
 	
