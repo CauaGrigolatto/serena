@@ -5,17 +5,20 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 
-public class Copy extends ParameterizedCommand {
+import br.com.cauag.serena.commands.parameters.QuotedParameter;
+
+public class Copy implements CommandExecutor  {
+	private QuotedParameter param;
+	
 	@Override
 	public void prepare(String arg) {
-		int argLen = arg.length();
-		setArg(arg.substring(1, argLen-1));
+		param = new QuotedParameter(arg);
 	}
 	
 	@Override
 	public void execute(Robot bot) {
 		Clipboard cb = Toolkit.getDefaultToolkit().getSystemClipboard();
-	    StringSelection data = new StringSelection(getArg());
+	    StringSelection data = new StringSelection(param.getValue());
 	    cb.setContents(data, null);
 	}
 }

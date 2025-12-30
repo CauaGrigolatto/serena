@@ -1,4 +1,4 @@
-package br.com.cauag.serena.functions;
+package br.com.cauag.serena.core;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,11 +9,11 @@ public class IndexController {
 	
 	private final Map<String, Integer> blocksIndexes;
 	private final Map<String, String[]> blocksArgs;
-	
-	private final Stack<Integer> comebackIndexes;
 	private final Stack<Map<String, String>> stackArgs;
 	
 	private final Stack<Integer> repeatingTimes;
+
+	private final Stack<Integer> comebackIndexes;
 	
 	public IndexController() {
 		this.blocksIndexes = new HashMap<String, Integer>();

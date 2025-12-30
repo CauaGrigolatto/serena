@@ -1,4 +1,4 @@
-package br.com.cauag.serena.functions;
+package br.com.cauag.serena.core;
 
 public enum Syntax {
 	REPEAT("REPEAT"), END_REPEAT("END_REPEAT"),

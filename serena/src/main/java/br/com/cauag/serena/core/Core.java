@@ -11,8 +11,6 @@ import org.apache.commons.io.FilenameUtils;
 
 import br.com.cauag.serena.commands.CommandExecutor;
 import br.com.cauag.serena.commands.CommandMapper;
-import br.com.cauag.serena.functions.IndexController;
-import br.com.cauag.serena.functions.Syntax;
 
 public class Core implements Runnable {
 	private Robot bot;
@@ -20,17 +18,8 @@ public class Core implements Runnable {
 	
 	private final String FILE_EXTENSION = "ser";
 	
-	private final CommandMapper commandMapper;
-
-	/*
-	 * 
-	 */
-	
 	private final IndexController indexController;
-	
-	/*
-	 * 
-	 */
+	private final CommandMapper commandMapper;
 	
 	public Core(String path) throws Exception {
 		this.bot = new Robot();

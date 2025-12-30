@@ -3,36 +3,41 @@ package br.com.cauag.serena.commands;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 
-public class Type extends ParameterizedCommand {
-	
-	private int argLen;
+import br.com.cauag.serena.commands.parameters.QuotedParameter;
+
+public class Type implements CommandExecutor {
+	private QuotedParameter param;
 	
 	@Override
 	public void prepare(String arg) {
-		int fullArgLen = arg.length();
-		setArg(arg.substring(1, fullArgLen-1));
-		this.argLen = fullArgLen - 2;
+		this.param = new QuotedParameter(arg);
 	}
 
 	@Override
-	public void execute(Robot bot) {
-		int i = 0;
+	public void execute(Robot bot) {		
+		String message = param.getValue();
 		
-		String message = getArg();
+		if (! message.matches("^\"[^\"]+\"$")) {
+			throw new IllegalArgumentException("Mal formed quoted parameter.");
+		}
 		
-		for (char ch : message.toCharArray()) {
+		int messageLen = message.length()-2;
+		
+		for (int i = 1; i <= messageLen; i++) {
+			char ch = message.charAt(i);
+			
 			if (ch == '\0') continue;
 			
-	        int keyCode = KeyEvent.getExtendedKeyCodeForChar(ch);
-	        
-	        if (KeyEvent.VK_END == keyCode) {
-	            throw new RuntimeException("Key code not found for character '" + ch + "'");
-	        }
-	        
-	        bot.keyPress(keyCode);
-	        bot.keyRelease(keyCode);
-	        
-	        if (i < argLen-1) bot.delay(50);
+			int keyCode = KeyEvent.getExtendedKeyCodeForChar(ch);
+			
+			if (KeyEvent.VK_END == keyCode) {
+				throw new RuntimeException("Key code not found for character '" + ch + "'");
+			}
+			
+			bot.keyPress(keyCode);
+			bot.keyRelease(keyCode);
+			
+			if (i < messageLen-1) bot.delay(50);
 		}
 	}
 }

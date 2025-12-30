@@ -3,11 +3,15 @@ package br.com.cauag.serena.commands;
 import java.awt.Robot;
 import java.time.Duration;
 
-public class WaitMillis extends ParameterizedCommand {
+import br.com.cauag.serena.commands.parameters.PositiveParameter;
+
+public class WaitMillis implements CommandExecutor {
+	
+	private PositiveParameter param;
 	
 	@Override
 	public void prepare(String arg) {
-		setArg(arg);
+		this.param = new PositiveParameter(Integer.parseInt(arg));
 	}
 
 	@Override
@@ -15,7 +19,7 @@ public class WaitMillis extends ParameterizedCommand {
 		try {			
 			Thread.sleep(
 				Duration.ofMillis(
-					Integer.parseInt( getArg() )
+					param.getValue()
 				)
 			);
 		}

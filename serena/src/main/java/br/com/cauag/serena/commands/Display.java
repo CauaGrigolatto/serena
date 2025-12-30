@@ -3,17 +3,19 @@ package br.com.cauag.serena.commands;
 
 import java.awt.Robot;
 
-public class Display extends ParameterizedCommand {
-			
+import br.com.cauag.serena.commands.parameters.QuotedParameter;
+
+public class Display implements CommandExecutor {
+	private QuotedParameter param;
+	
 	@Override
 	public void prepare(String arg) {
-		int argLen = arg.length();
-		setArg(arg.substring(1, argLen-1));
+		this.param = new QuotedParameter(arg);
 	}
 	
 	@Override
 	public void execute(Robot bot) {
-		System.out.println( getArg() );
+		System.out.println( param.getValue() );
 	}
 
 }
