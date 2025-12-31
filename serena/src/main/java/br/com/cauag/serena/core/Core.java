@@ -18,8 +18,10 @@ public class Core implements Runnable {
 	private Robot bot;
 	private File file;
 	
-	private final String FILE_EXTENSION = "ser";
-		
+	private final static String FILE_EXTENSION = "ser";
+	
+	public static List<String> fileLines;
+	
 	public static final IndexController indexController;
 	public static final FunctionMapper functionMapper;
 	public static final CommandMapper commandMapper;
@@ -39,11 +41,10 @@ public class Core implements Runnable {
 	@Override
 	public void run() {
 		try {
-			List<String> lines = FileUtils.readLines(file, "UTF-8");
-			int n = lines.size();
+			fileLines = FileUtils.readLines(file, "UTF-8");
 			
-			for (index = 0; index < n; index++) {
-				String line = lines.get(index).trim();
+			for (index = 0; index < fileLines.size(); index++) {
+				String line = fileLines.get(index).trim();
 				if (line.isBlank() || line.startsWith("//")) continue;
 				
 				String[] statement = getStatement(line);
@@ -54,28 +55,16 @@ public class Core implements Runnable {
 				commandStr = applyParameters(commandStr);
 				complementStr = applyParameters(complementStr);
 				
-				if (Syntax.INCLUDE.sameAs(commandStr)) {
-					File other = validateAndGetFile(complementStr);
-					List<String> content = FileUtils.readLines(other, "UTF-8");
-					lines.remove(index);
-					lines.addAll(index, content);
-					n = lines.size();
-					
-					line = lines.get(index);
-					statement = getStatement(line);
-					commandStr = statement[0].trim();
-					complementStr = statement[1] != null ? statement[1].trim() : null;
-					continue;
-				}
-				
 				try {
-					Syntax syntax = Syntax.valueOf(commandStr);
-					FunctionExecutor functionExecutor = functionMapper.get(syntax);
-					index = functionExecutor.executeAndGetIndex(complementStr);
-					continue;
+					FunctionExecutor functionExecutor = functionMapper.fromString(commandStr);
+					
+					if (functionExecutor != null) {						
+						index = functionExecutor.executeAndGetIndex(complementStr);
+						continue;
+					}
 				}
 				catch(Exception e) {
-					
+					e.printStackTrace();
 				}
 				
 				CommandExecutor commandExecutor = commandMapper.fromString(commandStr);
@@ -143,7 +132,7 @@ public class Core implements Runnable {
 		this.file = validateAndGetFile(path);
 	}
 	
-	private File validateAndGetFile(String path) throws IOException {
+	public static File validateAndGetFile(String path) throws IOException {
 		String extension = FilenameUtils.getExtension(path);
 		
 		if (!FILE_EXTENSION.equals(extension)) {

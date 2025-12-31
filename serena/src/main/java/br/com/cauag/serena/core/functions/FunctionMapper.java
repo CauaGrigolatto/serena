@@ -15,6 +15,7 @@ public class FunctionMapper {
 		map.put(Syntax.CALL, new Call());
 		map.put(Syntax.REPEAT, new Repeat());
 		map.put(Syntax.END_REPEAT, new EndRepeat());
+		map.put(Syntax.INCLUDE, new Include());
 	}
 	
 	public FunctionExecutor fromString(String syntax) {
