@@ -11,20 +11,28 @@ import org.apache.commons.io.FilenameUtils;
 
 import br.com.cauag.serena.commands.CommandExecutor;
 import br.com.cauag.serena.commands.CommandMapper;
+import br.com.cauag.serena.core.functions.FunctionExecutor;
+import br.com.cauag.serena.core.functions.FunctionMapper;
 
 public class Core implements Runnable {
 	private Robot bot;
 	private File file;
 	
 	private final String FILE_EXTENSION = "ser";
+		
+	public static final IndexController indexController;
+	public static final FunctionMapper functionMapper;
+	public static final CommandMapper commandMapper;
+	public static int index;
 	
-	private final IndexController indexController;
-	private final CommandMapper commandMapper;
+	static {
+		indexController = new IndexController();		
+		functionMapper = new FunctionMapper();
+		commandMapper = new CommandMapper();
+	}
 	
 	public Core(String path) throws Exception {
 		this.bot = new Robot();
-		this.commandMapper = new CommandMapper();
-		this.indexController = new IndexController();
 		setExecutable(path);
 	}
 	
@@ -34,31 +42,20 @@ public class Core implements Runnable {
 			List<String> lines = FileUtils.readLines(file, "UTF-8");
 			int n = lines.size();
 			
-			for (int index = 0; index < n; index++) {
+			for (index = 0; index < n; index++) {
 				String line = lines.get(index).trim();
 				if (line.isBlank() || line.startsWith("//")) continue;
 				
 				String[] statement = getStatement(line);
 				
 				String commandStr = statement[0].trim();
-				String commandArgumentStr = statement[1] != null ? statement[1].trim() : null;
+				String complementStr = statement[1] != null ? statement[1].trim() : null;
 				
-				Map<String, String> currentArgs = indexController.currentArgs();
-				
-				if (currentArgs != null) {
-					for (Map.Entry<String, String> currArg : currentArgs.entrySet()) {
-						String argKey = currArg.getKey();
-						String argValue = currArg.getValue();
-						commandStr = commandStr.replaceAll("\\$" + argKey, argValue);
-						
-						if (commandArgumentStr != null) {							
-							commandArgumentStr = commandArgumentStr.replaceAll("\\$" + argKey, argValue);
-						}
-					}
-				}
+				commandStr = applyParameters(commandStr);
+				complementStr = applyParameters(complementStr);
 				
 				if (Syntax.INCLUDE.sameAs(commandStr)) {
-					File other = validateAndGetFile(commandArgumentStr);
+					File other = validateAndGetFile(complementStr);
 					List<String> content = FileUtils.readLines(other, "UTF-8");
 					lines.remove(index);
 					lines.addAll(index, content);
@@ -67,54 +64,26 @@ public class Core implements Runnable {
 					line = lines.get(index);
 					statement = getStatement(line);
 					commandStr = statement[0].trim();
-					commandArgumentStr = statement[1] != null ? statement[1].trim() : null;
+					complementStr = statement[1] != null ? statement[1].trim() : null;
+					continue;
 				}
 				
-				if (Syntax.BLOCK.sameAs(commandStr)) {
-					String[][] extractedArgs = extractArgs(commandArgumentStr);
-					
-					String blockName = extractedArgs[0][0];
-					String[] args = extractedArgs[1];
-					
-					indexController.addBlock(index, blockName, args);
+				try {
+					Syntax syntax = Syntax.valueOf(commandStr);
+					FunctionExecutor functionExecutor = functionMapper.get(syntax);
+					index = functionExecutor.executeAndGetIndex(complementStr);
+					continue;
 				}
-				else if (Syntax.END_BLOCK.sameAs(commandStr)) {
-					int comeBackTo = indexController.endBlock();
+				catch(Exception e) {
 					
-					if (comeBackTo != -1) {
-						index = comeBackTo;
-					}
 				}
-				else if (Syntax.CALL.sameAs(commandStr)) {
-					if (! indexController.isDeclaringBlock()) {						
-						String[][] extractedArgs = extractArgs(commandArgumentStr);
-						
-						String blockName = extractedArgs[0][0];
-						String[] args = extractedArgs[1];
-						
-						index = indexController.callBlock(blockName, args, index);
-					}
-				}
-				else if (Syntax.REPEAT.sameAs(commandStr)) {
+				
+				CommandExecutor commandExecutor = commandMapper.fromString(commandStr);
+					
+				if (commandExecutor != null) {						
 					if (! indexController.isDeclaringBlock()) {
-						indexController.addRepeat(commandArgumentStr, index);
-					}
-				}
-				else if (Syntax.END_REPEAT.sameAs(commandStr)) {
-					int comeBackTo = indexController.endRepeat();
-					
-					if (comeBackTo != -1) {
-						index = comeBackTo;
-					}
-				}
-				else {
-					CommandExecutor commandExecutor = commandMapper.fromString(commandStr);
-					
-					if (commandExecutor != null) {						
-						if (! indexController.isDeclaringBlock()) {
-							commandExecutor.prepare(commandArgumentStr);
-							commandExecutor.execute(bot);
-						}
+						commandExecutor.prepare(complementStr);
+						commandExecutor.execute(bot);
 					}
 				}
 			}
@@ -124,7 +93,23 @@ public class Core implements Runnable {
 		}
 	}
 	
-	private String[][] extractArgs(String commandArgument) {
+	private String applyParameters(String target) {
+		if (target != null && ! target.isBlank()) {			
+			Map<String, String> currentArgs = indexController.currentArgs();
+			
+			if (currentArgs != null) {
+				for (Map.Entry<String, String> currArg : currentArgs.entrySet()) {
+					String argKey = currArg.getKey();
+					String argValue = currArg.getValue();
+					target = target.replaceAll("\\$" + argKey, argValue);
+				}
+			}
+		}
+		
+		return target;
+	}
+	
+	public static String[][] extractArgs(String commandArgument) {
 		String[][] extracted = new String[2][2];
 		
 		String[] splittedArgs = commandArgument.split(" ");

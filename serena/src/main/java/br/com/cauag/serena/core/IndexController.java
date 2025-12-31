@@ -65,14 +65,14 @@ public class IndexController {
 		return index;
 	}
 	
-	public int endBlock() {
+	public Integer endBlock() {
 		if (! declaringBlock) {			
 			stackArgs.pop();
 			return comebackIndexes.pop();
 		}
 		
 		declaringBlock = false;
-		return -1;
+		return null;
 	}
 
 	public Map<String, String> currentArgs() {
@@ -95,17 +95,18 @@ public class IndexController {
 		comebackIndexes.push(currentIndex);
 	}
 	
-	public int endRepeat() {
-		if (isDeclaringBlock()) return -1;
-		
-		int times = repeatingTimes.pop() - 1;
-		
-		if (times > 0) {			
-			repeatingTimes.push(times);
-			return comebackIndexes.peek();
+	public Integer endRepeat() {
+		if (! isDeclaringBlock()) {			
+			int times = repeatingTimes.pop() - 1;
+			
+			if (times > 0) {			
+				repeatingTimes.push(times);
+				return comebackIndexes.peek();
+			}
+			
+			comebackIndexes.pop();
 		}
 		
-		comebackIndexes.pop();
-		return -1;
+		return null;
 	}
 }

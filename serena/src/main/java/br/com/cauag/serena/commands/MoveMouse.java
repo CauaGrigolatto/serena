@@ -2,14 +2,14 @@ package br.com.cauag.serena.commands;
 
 import java.awt.Robot;
 
-import br.com.cauag.serena.commands.parameters.QuotedParameter;
+import br.com.cauag.serena.commands.parameters.UnquotedParameter;
 
 public class MoveMouse implements CommandExecutor {
-	private QuotedParameter param;
+	private UnquotedParameter param;
 	
 	@Override
 	public void prepare(String arg) {
-		this.param = new QuotedParameter(arg);
+		this.param = new UnquotedParameter(arg);
 	}
 
 	@Override
