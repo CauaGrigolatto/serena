@@ -6,6 +6,6 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 		String executableFile = args[0];
 		Core core = new Core(executableFile);
-		new Thread(core).run();
+		core.run();
 	}
 }
