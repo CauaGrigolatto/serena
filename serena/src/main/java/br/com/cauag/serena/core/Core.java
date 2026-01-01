@@ -70,7 +70,7 @@ public class Core {
 							}
 						}
 						else {
-							throw new IllegalArgumentException("Reserved key word not found for " + commandStr);
+							throw new IllegalArgumentException(commandStr + " is not a command or function.");
 						}
 					}
 				}
