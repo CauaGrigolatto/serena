@@ -14,7 +14,7 @@ import br.com.cauag.serena.commands.CommandMapper;
 import br.com.cauag.serena.core.functions.FunctionExecutor;
 import br.com.cauag.serena.core.functions.FunctionMapper;
 
-public class Core implements Runnable {
+public class Core {
 	private Robot bot;
 	private File file;
 	
@@ -38,7 +38,6 @@ public class Core implements Runnable {
 		setExecutable(path);
 	}
 	
-	@Override
 	public void run() {
 		try {
 			fileLines = FileUtils.readLines(file, "UTF-8");
@@ -60,20 +59,24 @@ public class Core implements Runnable {
 					
 					if (functionExecutor != null) {						
 						index = functionExecutor.executeAndGetIndex(complementStr);
-						continue;
+					}
+					else {						
+						CommandExecutor commandExecutor = commandMapper.fromString(commandStr);
+						
+						if (commandExecutor != null) {						
+							if (! indexController.isDeclaringBlock()) {
+								commandExecutor.prepare(complementStr);
+								commandExecutor.execute(bot);
+							}
+						}
+						else {
+							throw new IllegalArgumentException("Reserved key word not found for " + commandStr);
+						}
 					}
 				}
 				catch(Exception e) {
-					e.printStackTrace();
-				}
-				
-				CommandExecutor commandExecutor = commandMapper.fromString(commandStr);
-					
-				if (commandExecutor != null) {						
-					if (! indexController.isDeclaringBlock()) {
-						commandExecutor.prepare(complementStr);
-						commandExecutor.execute(bot);
-					}
+					e.printStackTrace();					
+					return;
 				}
 			}
 		}
