@@ -4,7 +4,7 @@ import br.com.cauag.serena.core.Core;
 
 public class Call implements FunctionExecutor {
 	@Override
-	public int executeAndGetIndex(String complement, Core core) {
+	public int executeAndGetIndex(String complement, Core core) throws Exception {
 		if (! core.indexController.isDeclaringBlock()) {						
 			String[][] extractedArgs = Core.extractArgs(complement);
 			

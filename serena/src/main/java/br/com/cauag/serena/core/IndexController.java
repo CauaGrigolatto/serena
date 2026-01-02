@@ -4,6 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
+import br.com.cauag.serena.exceptions.BlockNotDeclaredException;
+import br.com.cauag.serena.exceptions.DuplicatedBlockException;
+import br.com.cauag.serena.exceptions.IncompatibleArgumentsException;
+import br.com.cauag.serena.exceptions.NegativeArgumentException;
+
 public class IndexController {
 	private boolean declaringBlock;
 	private final Map<String, Integer> blockIndexes;
@@ -22,7 +27,7 @@ public class IndexController {
 
 	public void addBlock(int index, String blockName, String[] args) throws IllegalArgumentException {
 		if (blockIndexes.containsKey(blockName)) {
-			throw new IllegalArgumentException("Block named " + blockName + " is already declared.");
+			throw new DuplicatedBlockException(blockName, index+1);
 		}
 		
 		blockIndexes.put(blockName, index);
@@ -36,20 +41,20 @@ public class IndexController {
 		Integer index = blockIndexes.get(blockName);
 		
 		if (index == null) {
-			throw new IllegalArgumentException("Block named " + blockName + " does not exist.");
+			throw new BlockNotDeclaredException(blockName, currentIndex+1);
 		}
 		
 		String[] blockArgsList = blocksArgs.get(blockName);
-		int acceptedArgumentsLen = blockArgsList.length;
-		int argumentsPassed = args.length;
+		int acceptedArgs = blockArgsList.length;
+		int passedArgs = args.length;
 		
-		if (acceptedArgumentsLen != argumentsPassed) {
-			throw new IllegalArgumentException(blockName + " must have " + acceptedArgumentsLen + " arguments, but " + argumentsPassed + " were passed.");
+		if (acceptedArgs != passedArgs) {
+			throw new IncompatibleArgumentsException(blockName, acceptedArgs, passedArgs, currentIndex+1);
 		}
 		
 		Map<String, String> currentArgsMap = new HashMap<String, String>();
 		
-		for (int i = 0; i < acceptedArgumentsLen; i++) {
+		for (int i = 0; i < acceptedArgs; i++) {
 			String keyArg = blockArgsList[i];
 			String valueArg = args[i];
 			currentArgsMap.put(keyArg, valueArg);
@@ -83,7 +88,7 @@ public class IndexController {
 		int times = Integer.parseInt(commandArgumentStr);
 		
 		if (times < 0) {
-			throw new IllegalArgumentException("REPEAT does not accept negative values: " + times + ".");
+			throw new NegativeArgumentException(currentIndex+1);
 		}
 		
 		repeatingTimes.push(times);

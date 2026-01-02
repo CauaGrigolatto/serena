@@ -5,7 +5,7 @@ import br.com.cauag.serena.core.Core;
 public class Block implements FunctionExecutor {
 	
 	@Override
-	public int executeAndGetIndex(String complement, Core core) {
+	public int executeAndGetIndex(String complement, Core core) throws Exception {
 		String[][] extractedArgs = Core.extractArgs(complement);
 		
 		String blockName = extractedArgs[0][0];

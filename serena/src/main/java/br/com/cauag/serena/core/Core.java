@@ -13,6 +13,8 @@ import br.com.cauag.serena.commands.CommandExecutor;
 import br.com.cauag.serena.commands.CommandMapper;
 import br.com.cauag.serena.core.functions.FunctionExecutor;
 import br.com.cauag.serena.core.functions.FunctionMapper;
+import br.com.cauag.serena.exceptions.InvalidCommandException;
+import br.com.cauag.serena.exceptions.InvalidSerenaFile;
 
 public class Core {
 	private Robot bot;
@@ -68,7 +70,7 @@ public class Core {
 							}
 						}
 						else {
-							throw new IllegalArgumentException(commandStr + " is not a command or function.");
+							throw new InvalidCommandException(commandStr, index+1);
 						}
 					}
 				}
@@ -129,25 +131,25 @@ public class Core {
 		return statement;
 	}
 
-	private void setExecutable(String path) throws IOException {
+	private void setExecutable(String path) throws InvalidSerenaFile {
 		this.file = validateAndGetFile(path);
 	}
 	
-	public static File validateAndGetFile(String path) throws IOException {
-		String extension = FilenameUtils.getExtension(path);
-		
-		if (!FILE_EXTENSION.equals(extension)) {
-			throw new IOException("Invalid serena script.");
-		}
-		
+	public static File validateAndGetFile(String path) throws InvalidSerenaFile {
 		File file = new File(path);
-		
+
 		if (! file.exists()) {
-			throw new IOException("Serena script does not exist.");
+			throw new InvalidSerenaFile();
 		}
 		
 		if (! file.isFile()) {
-			throw new IOException("Argument must be the path to a script.");
+			throw new InvalidSerenaFile();
+		}
+
+		String extension = FilenameUtils.getExtension(path);
+		
+		if (!FILE_EXTENSION.equals(extension)) {
+			throw new InvalidSerenaFile();
 		}
 		
 		return file;
