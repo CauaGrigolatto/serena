@@ -6,31 +6,26 @@ import java.util.Stack;
 
 public class IndexController {
 	private boolean declaringBlock;
-	
-	private final Map<String, Integer> blocksIndexes;
+	private final Map<String, Integer> blockIndexes;
 	private final Map<String, String[]> blocksArgs;
 	private final Stack<Map<String, String>> stackArgs;
-	
 	private final Stack<Integer> repeatingTimes;
-
 	private final Stack<Integer> comebackIndexes;
-	
-	public IndexController() {
-		this.blocksIndexes = new HashMap<String, Integer>();
-		this.blocksArgs = new HashMap<String, String[]>();
 		
+	public IndexController() {
+		this.blockIndexes = new HashMap<String, Integer>();
+		this.blocksArgs = new HashMap<String, String[]>();
 		this.comebackIndexes = new Stack<Integer>();
 		this.stackArgs = new Stack<Map<String,String>>();
-		
 		this.repeatingTimes = new Stack<Integer>();
 	}
 
 	public void addBlock(int index, String blockName, String[] args) throws IllegalArgumentException {
-		if (blocksIndexes.containsKey(blockName)) {
+		if (blockIndexes.containsKey(blockName)) {
 			throw new IllegalArgumentException("Block named " + blockName + " is already declared.");
 		}
 		
-		blocksIndexes.put(blockName, index);
+		blockIndexes.put(blockName, index);
 		blocksArgs.put(blockName, args);
 		this.declaringBlock = true;
 	}
@@ -38,14 +33,14 @@ public class IndexController {
 	public int callBlock(String blockName, String[] args, int currentIndex) {
 		comebackIndexes.add(currentIndex);
 		
-		Integer index = blocksIndexes.get(blockName);
+		Integer index = blockIndexes.get(blockName);
 		
 		if (index == null) {
 			throw new IllegalArgumentException("Block named " + blockName + " does not exist.");
 		}
 		
-		String[] blockArgs = blocksArgs.get(blockName);
-		int acceptedArgumentsLen = blockArgs.length;
+		String[] blockArgsList = blocksArgs.get(blockName);
+		int acceptedArgumentsLen = blockArgsList.length;
 		int argumentsPassed = args.length;
 		
 		if (acceptedArgumentsLen != argumentsPassed) {
@@ -55,7 +50,7 @@ public class IndexController {
 		Map<String, String> currentArgsMap = new HashMap<String, String>();
 		
 		for (int i = 0; i < acceptedArgumentsLen; i++) {
-			String keyArg = blockArgs[i];
+			String keyArg = blockArgsList[i];
 			String valueArg = args[i];
 			currentArgsMap.put(keyArg, valueArg);
 		}

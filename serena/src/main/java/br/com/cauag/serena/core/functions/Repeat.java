@@ -4,11 +4,11 @@ import br.com.cauag.serena.core.Core;
 
 public class Repeat implements FunctionExecutor {
 	@Override
-	public int executeAndGetIndex(String complement) {
-		if (! Core.indexController.isDeclaringBlock()) {
-			Core.indexController.addRepeat(complement, Core.index);
+	public int executeAndGetIndex(String complement, Core core) {
+		if (! core.indexController.isDeclaringBlock()) {
+			core.indexController.addRepeat(complement, core.index);
 		}
 		
-		return Core.index;
+		return core.index;
 	}
 }

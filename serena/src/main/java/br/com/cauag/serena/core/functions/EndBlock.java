@@ -6,10 +6,10 @@ import br.com.cauag.serena.core.Core;
 
 public class EndBlock implements FunctionExecutor {
 	@Override
-	public int executeAndGetIndex(String complement) {
+	public int executeAndGetIndex(String complement, Core core) {
 		int comeBackTo = Optional.ofNullable(
-			Core.indexController.endBlock()
-		).orElse(Core.index);
+			core.indexController.endBlock()
+		).orElse(core.index);
 		
 		return comeBackTo;
 	}

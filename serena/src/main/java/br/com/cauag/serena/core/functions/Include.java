@@ -11,13 +11,13 @@ import br.com.cauag.serena.core.Core;
 public class Include implements FunctionExecutor {
 
 	@Override
-	public int executeAndGetIndex(String complement) {
+	public int executeAndGetIndex(String complement, Core core) {
 		try {
 			File file = Core.validateAndGetFile(complement);
 			List<String> content = FileUtils.readLines(file, "UTF-8");
-			Core.fileLines.remove(Core.index);
-			Core.fileLines.addAll(Core.index, content);
-			return Core.index-1;
+			core.fileLines.remove(core.index);
+			core.fileLines.addAll(core.index, content);
+			return core.index-1;
 		}
 		catch(IOException e) {
 			throw new IllegalArgumentException(e.getMessage());

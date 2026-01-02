@@ -5,13 +5,13 @@ import br.com.cauag.serena.core.Core;
 public class Block implements FunctionExecutor {
 	
 	@Override
-	public int executeAndGetIndex(String complement) {
+	public int executeAndGetIndex(String complement, Core core) {
 		String[][] extractedArgs = Core.extractArgs(complement);
 		
 		String blockName = extractedArgs[0][0];
 		String[] args = extractedArgs[1];
 		
-		Core.indexController.addBlock(Core.index, blockName, args);
-		return Core.index;
+		core.indexController.addBlock(core.index, blockName, args);
+		return core.index;
 	}
 }

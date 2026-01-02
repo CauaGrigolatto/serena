@@ -4,16 +4,16 @@ import br.com.cauag.serena.core.Core;
 
 public class Call implements FunctionExecutor {
 	@Override
-	public int executeAndGetIndex(String complement) {
-		if (! Core.indexController.isDeclaringBlock()) {						
+	public int executeAndGetIndex(String complement, Core core) {
+		if (! core.indexController.isDeclaringBlock()) {						
 			String[][] extractedArgs = Core.extractArgs(complement);
 			
 			String blockName = extractedArgs[0][0];
 			String[] args = extractedArgs[1];
 			
-			return Core.indexController.callBlock(blockName, args, Core.index);
+			return core.indexController.callBlock(blockName, args, core.index);
 		}
 		
-		return Core.index;
+		return core.index;
 	}
 }

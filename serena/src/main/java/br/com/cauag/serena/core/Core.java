@@ -20,27 +20,25 @@ public class Core {
 	
 	private final static String FILE_EXTENSION = "ser";
 	
-	public static List<String> fileLines;
-	
-	public static final IndexController indexController;
-	public static final FunctionMapper functionMapper;
-	public static final CommandMapper commandMapper;
-	public static int index;
-	
-	static {
-		indexController = new IndexController();		
-		functionMapper = new FunctionMapper();
-		commandMapper = new CommandMapper();
-	}
+	public List<String> fileLines;
+	public final IndexController indexController;
+	public final FunctionMapper functionMapper;
+	public final CommandMapper commandMapper;
+	public int index;
 	
 	public Core(String path) throws Exception {
-		this.bot = new Robot();
 		setExecutable(path);
+		this.bot = new Robot();
+		this.indexController = new IndexController();		
+		this.functionMapper = new FunctionMapper();
+		this.commandMapper = new CommandMapper();
 	}
 	
 	public void run() {
 		try {
-			fileLines = FileUtils.readLines(file, "UTF-8");
+			if (fileLines == null) {				
+				fileLines = FileUtils.readLines(file, "UTF-8");
+			}
 			
 			for (index = 0; index < fileLines.size(); index++) {
 				String line = fileLines.get(index).trim();
@@ -58,7 +56,7 @@ public class Core {
 					FunctionExecutor functionExecutor = functionMapper.fromString(commandStr);
 					
 					if (functionExecutor != null) {						
-						index = functionExecutor.executeAndGetIndex(complementStr);
+						index = functionExecutor.executeAndGetIndex(complementStr, this);
 					}
 					else {						
 						CommandExecutor commandExecutor = commandMapper.fromString(commandStr);
