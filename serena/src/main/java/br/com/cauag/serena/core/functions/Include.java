@@ -23,5 +23,4 @@ public class Include implements FunctionExecutor {
 			throw new InvalidSerenaFile(core.index+1);
 		}
 	}
-	
 }

@@ -2,7 +2,6 @@ package br.com.cauag.serena.core;
 
 import java.awt.Robot;
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -24,14 +23,17 @@ public class Core {
 	
 	public List<String> fileLines;
 	public final IndexController indexController;
+	public final ScheduleController scheduleController;
 	public final FunctionMapper functionMapper;
 	public final CommandMapper commandMapper;
+	
 	public int index;
 	
 	public Core(String path) throws Exception {
 		setExecutable(path);
 		this.bot = new Robot();
-		this.indexController = new IndexController();		
+		this.indexController = new IndexController();
+		this.scheduleController = new ScheduleController();
 		this.functionMapper = new FunctionMapper();
 		this.commandMapper = new CommandMapper();
 	}
@@ -42,7 +44,7 @@ public class Core {
 				fileLines = FileUtils.readLines(file, "UTF-8");
 			}
 			
-			for (index = 0; index < fileLines.size(); index++) {
+			for (; index < fileLines.size(); index++) {
 				String line = fileLines.get(index).trim();
 				if (line.isBlank() || line.startsWith("//")) continue;
 				
@@ -58,13 +60,20 @@ public class Core {
 					FunctionExecutor functionExecutor = functionMapper.fromString(commandStr);
 					
 					if (functionExecutor != null) {						
-						index = functionExecutor.executeAndGetIndex(complementStr, this);
+						int temp = functionExecutor.executeAndGetIndex(complementStr, this);
+						
+						if (temp > -1) {
+							index = temp;
+						}
+						else {
+							break;
+						}
 					}
 					else {						
 						CommandExecutor commandExecutor = commandMapper.fromString(commandStr);
 						
 						if (commandExecutor != null) {						
-							if (! indexController.isDeclaringBlock()) {
+							if (! indexController.isDeclaringBlock() && ! scheduleController.isScheduling()) {
 								commandExecutor.prepare(complementStr);
 								commandExecutor.execute(bot);
 							}
@@ -79,8 +88,11 @@ public class Core {
 					return;
 				}
 			}
+			
+			scheduleController.run(this);
 		}
-		catch(IOException e) {
+		
+		catch(Exception e) {
 			e.printStackTrace();
 		}
 	}

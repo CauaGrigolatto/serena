@@ -5,7 +5,7 @@ import br.com.cauag.serena.core.Core;
 public class Call implements FunctionExecutor {
 	@Override
 	public int executeAndGetIndex(String complement, Core core) throws Exception {
-		if (! core.indexController.isDeclaringBlock()) {						
+		if (! core.indexController.isDeclaringBlock() && ! core.scheduleController.isScheduling()) {						
 			String[][] extractedArgs = Core.extractArgs(complement);
 			
 			String blockName = extractedArgs[0][0];
