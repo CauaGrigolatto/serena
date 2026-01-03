@@ -3,8 +3,6 @@ package br.com.cauag.serena.core.functions;
 import java.util.HashMap;
 import java.util.Map;
 
-import br.com.cauag.serena.core.Syntax;
-
 public class FunctionMapper {
 	private Map<Syntax, FunctionExecutor> map;
 	
@@ -18,6 +16,7 @@ public class FunctionMapper {
 		map.put(Syntax.INCLUDE, new Include());
 		map.put(Syntax.SCHEDULE, new Schedule());
 		map.put(Syntax.END_SCHEDULE, new EndSchedule());
+		map.put(Syntax.USE, new Use());
 	}
 	
 	public FunctionExecutor fromString(String syntax) {

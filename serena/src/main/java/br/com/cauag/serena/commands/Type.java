@@ -16,14 +16,9 @@ public class Type implements CommandExecutor {
 	@Override
 	public void execute(Robot bot) {		
 		String message = param.getValue();
+		int messageLen = message.length();
 		
-		if (! message.matches("^\"[^\"]+\"$")) {
-			throw new IllegalArgumentException("Mal formed quoted parameter.");
-		}
-		
-		int messageLen = message.length()-2;
-		
-		for (int i = 1; i <= messageLen; i++) {
+		for (int i = 0; i < messageLen; i++) {
 			char ch = message.charAt(i);
 			
 			if (ch == '\0') continue;
@@ -47,7 +42,7 @@ public class Type implements CommandExecutor {
 				bot.keyRelease(KeyEvent.VK_SHIFT);
 			}
 			
-			if (i < messageLen-1) bot.delay(50);
+			if (i < messageLen-1) bot.delay(1);
 		}
 	}
 }

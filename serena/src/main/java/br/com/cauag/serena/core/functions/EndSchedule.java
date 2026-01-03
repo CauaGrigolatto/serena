@@ -7,7 +7,7 @@ public class EndSchedule implements FunctionExecutor {
 	public int executeAndGetIndex(String complement, Core core) throws Exception {
 		if (core.scheduleController.isExecuting()) {
 			core.scheduleController.shutdown();
-			return -1;
+			return -2;
 		}
 		
 		core.scheduleController.endSchedule(core.index);

@@ -15,9 +15,6 @@ public class Display implements CommandExecutor {
 	
 	@Override
 	public void execute(Robot bot) {
-		int n = param.getValue().length();
-		String message = param.getValue().substring(1, n-1);
-		System.out.println( message );
+		System.out.println( param.getValue() );
 	}
-
 }

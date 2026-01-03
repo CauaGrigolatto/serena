@@ -15,7 +15,9 @@ public class Schedule implements FunctionExecutor {
 		
 		String[] times = new String[n];
 		
-		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		SimpleDateFormat formatter = new SimpleDateFormat(
+			core.configController.getConfig("DATE_TIME_FORMAT")
+		);
 		
 		for (int i = 0; i < n; i++) {
 			times[i] = passedArgs[i].trim();

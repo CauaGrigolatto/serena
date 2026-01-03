@@ -24,6 +24,7 @@ public class Core {
 	public List<String> fileLines;
 	public final IndexController indexController;
 	public final ScheduleController scheduleController;
+	public final ConfigController configController;
 	public final FunctionMapper functionMapper;
 	public final CommandMapper commandMapper;
 	
@@ -34,6 +35,7 @@ public class Core {
 		this.bot = new Robot();
 		this.indexController = new IndexController();
 		this.scheduleController = new ScheduleController();
+		this.configController = new ConfigController();
 		this.functionMapper = new FunctionMapper();
 		this.commandMapper = new CommandMapper();
 	}
@@ -62,7 +64,7 @@ public class Core {
 					if (functionExecutor != null) {						
 						int temp = functionExecutor.executeAndGetIndex(complementStr, this);
 						
-						if (temp > -1) {
+						if (temp > -2) {
 							index = temp;
 						}
 						else {

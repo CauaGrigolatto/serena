@@ -1,9 +1,11 @@
 package br.com.cauag.serena.commands.parameters;
 
 public class QuotedParameter extends Parameter<String> {
+	private String value;
 	
 	public QuotedParameter(String value) {
 		super(value);
+		this.value = value.substring(1, value.length()-1);
 	}
 
 	@Override
@@ -12,10 +14,15 @@ public class QuotedParameter extends Parameter<String> {
 			throw new IllegalArgumentException("Parameter value should not be null.");
 		}
 		
-		boolean validValue = value.charAt(0) == '\"' && value.charAt(0) == '\"';
+		boolean validRegex = value.matches("^\"[^\"]+\"$");
 		
-		if (! validValue) {
+		if (! validRegex) {
 			throw new IllegalArgumentException("Parameter value should start and end with doubled-quotes.");
 		}
+	}
+	
+	@Override
+	public String getValue() {
+		return this.value;
 	}
 }

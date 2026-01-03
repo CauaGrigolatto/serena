@@ -1,10 +1,11 @@
-package br.com.cauag.serena.core;
+package br.com.cauag.serena.core.functions;
 
 public enum Syntax {
 	REPEAT("REPEAT"), END_REPEAT("END_REPEAT"),
 	BLOCK("BLOCK"), END_BLOCK("END_BLOCK"), CALL("CALL"),
 	SCHEDULE("SCHEDULE"), END_SCHEDULE("END_SCHEDULE"),
-	INCLUDE("INCLUDE");
+	INCLUDE("INCLUDE"),
+	USE("USE");
 	
 	private String syntax;
 	
