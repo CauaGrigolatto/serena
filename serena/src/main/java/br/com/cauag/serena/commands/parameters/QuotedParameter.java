@@ -25,4 +25,8 @@ public class QuotedParameter extends Parameter<String> {
 	public String getValue() {
 		return this.value;
 	}
+	
+	public static String valueOf(String param) {
+		return new QuotedParameter(param).getValue();
+	}
 }

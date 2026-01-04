@@ -25,6 +25,7 @@ public class Core {
 	public final IndexController indexController;
 	public final ScheduleController scheduleController;
 	public final ConfigController configController;
+	public final VariablesController variablesController;
 	public final FunctionMapper functionMapper;
 	public final CommandMapper commandMapper;
 	
@@ -36,6 +37,7 @@ public class Core {
 		this.indexController = new IndexController();
 		this.scheduleController = new ScheduleController();
 		this.configController = new ConfigController();
+		this.variablesController = new VariablesController();
 		this.functionMapper = new FunctionMapper();
 		this.commandMapper = new CommandMapper();
 	}
@@ -55,8 +57,8 @@ public class Core {
 				String commandStr = statement[0].trim();
 				String complementStr = statement[1] != null ? statement[1].trim() : null;
 				
-				commandStr = applyParameters(commandStr);
-				complementStr = applyParameters(complementStr);
+				commandStr = applyParametersAndVariables(commandStr);
+				complementStr = applyParametersAndVariables(complementStr);
 				
 				try {
 					FunctionExecutor functionExecutor = functionMapper.fromString(commandStr);
@@ -99,7 +101,7 @@ public class Core {
 		}
 	}
 	
-	private String applyParameters(String target) {
+	private String applyParametersAndVariables(String target) {
 		if (target != null && ! target.isBlank()) {			
 			Map<String, String> currentArgs = indexController.currentArgs();
 			
@@ -108,6 +110,16 @@ public class Core {
 					String argKey = currArg.getKey();
 					String argValue = currArg.getValue();
 					target = target.replaceAll("\\$" + argKey, argValue);
+				}
+			}
+			
+			Map<String, String> currentVariables = variablesController.variables();
+			
+			if (currentVariables != null) {
+				for (Map.Entry<String, String> variable : currentVariables.entrySet()) {
+					String varName = variable.getKey();
+					String varValue = variable.getValue();
+					target = target.replaceAll("\\$" + varName, varValue);
 				}
 			}
 		}

@@ -5,7 +5,8 @@ public enum Syntax {
 	BLOCK("BLOCK"), END_BLOCK("END_BLOCK"), CALL("CALL"),
 	SCHEDULE("SCHEDULE"), END_SCHEDULE("END_SCHEDULE"),
 	INCLUDE("INCLUDE"),
-	SET("SET");
+	SET("SET"),
+	ASSIGN("ASSIGN");
 	
 	private String syntax;
 	

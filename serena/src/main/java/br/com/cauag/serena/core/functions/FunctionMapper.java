@@ -17,6 +17,7 @@ public class FunctionMapper {
 		map.put(Syntax.SCHEDULE, new Schedule());
 		map.put(Syntax.END_SCHEDULE, new EndSchedule());
 		map.put(Syntax.SET, new Set());
+		map.put(Syntax.ASSIGN, new Assign());
 	}
 	
 	public FunctionExecutor fromString(String syntax) {
