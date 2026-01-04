@@ -3,7 +3,7 @@ package br.com.cauag.serena.core.functions;
 import br.com.cauag.serena.commands.parameters.QuotedParameter;
 import br.com.cauag.serena.core.Core;
 
-public class Use implements FunctionExecutor {
+public class Set implements FunctionExecutor {
 	@Override
 	public int executeAndGetIndex(String complement, Core core) throws Exception {
 		String[] splittedArg = complement.split(" ", 2);
