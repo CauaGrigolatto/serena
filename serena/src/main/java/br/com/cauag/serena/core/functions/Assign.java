@@ -7,6 +7,7 @@ public class Assign implements FunctionExecutor {
 
 	@Override
 	public int executeAndGetIndex(String complement, Core core) throws Exception {
+		if (core.indexController.isDeclaringBlock() || core.scheduleController.isScheduling()) return core.index;
 		String[] splittedArgs = complement.split(" ", 2);
 		
 		String varName = splittedArgs[0].trim();

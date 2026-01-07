@@ -1,24 +1,15 @@
+
 package br.com.cauag.serena.core.functions;
 
 import br.com.cauag.serena.commands.parameters.QuotedParameter;
 import br.com.cauag.serena.core.Core;
 
-public class Set implements FunctionExecutor {
+public class Display implements FunctionExecutor {	
 	@Override
 	public int executeAndGetIndex(String complement, Core core) throws Exception {
 		if (core.indexController.isDeclaringBlock() || core.scheduleController.isScheduling()) return core.index;
-		String[] splittedArg = complement.split(" ", 2);
-		
-		String config = splittedArg[0];
-		
-		if (config == null) {
-			throw new IllegalArgumentException();
-		}
-		
-		String value = new QuotedParameter(splittedArg[1]).getValue();
-		
-		core.configController.setConfig(config, value);
-		
+		String message = QuotedParameter.valueOf(complement);
+		System.out.println(message);
 		return core.index;
 	}
 }

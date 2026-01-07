@@ -8,15 +8,13 @@ import java.util.Map;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 
-import br.com.cauag.serena.commands.CommandExecutor;
-import br.com.cauag.serena.commands.CommandMapper;
 import br.com.cauag.serena.core.functions.FunctionExecutor;
 import br.com.cauag.serena.core.functions.FunctionMapper;
 import br.com.cauag.serena.exceptions.InvalidCommandException;
 import br.com.cauag.serena.exceptions.InvalidSerenaFile;
 
 public class Core {
-	private Robot bot;
+	public final Robot bot;
 	private File file;
 	
 	private final static String FILE_EXTENSION = "ser";
@@ -27,7 +25,6 @@ public class Core {
 	public final ConfigController configController;
 	public final VariablesController variablesController;
 	public final FunctionMapper functionMapper;
-	public final CommandMapper commandMapper;
 	
 	public int index;
 	
@@ -39,7 +36,6 @@ public class Core {
 		this.configController = new ConfigController();
 		this.variablesController = new VariablesController();
 		this.functionMapper = new FunctionMapper();
-		this.commandMapper = new CommandMapper();
 	}
 	
 	public void run() {
@@ -63,9 +59,9 @@ public class Core {
 				try {
 					FunctionExecutor functionExecutor = functionMapper.fromString(commandStr);
 					
-					if (functionExecutor != null) {						
-						int temp = functionExecutor.executeAndGetIndex(complementStr, this);
-						
+					if (functionExecutor != null) {
+						int temp = functionExecutor.executeAndGetIndex(complementStr, this);							
+
 						if (temp > -2) {
 							index = temp;
 						}
@@ -73,18 +69,8 @@ public class Core {
 							break;
 						}
 					}
-					else {						
-						CommandExecutor commandExecutor = commandMapper.fromString(commandStr);
-						
-						if (commandExecutor != null) {						
-							if (! indexController.isDeclaringBlock() && ! scheduleController.isScheduling()) {
-								commandExecutor.prepare(complementStr);
-								commandExecutor.execute(bot);
-							}
-						}
-						else {
-							throw new InvalidCommandException(commandStr, index+1);
-						}
+					else {
+						throw new InvalidCommandException(commandStr, index+1);
 					}
 				}
 				catch(Exception e) {

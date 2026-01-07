@@ -18,6 +18,17 @@ public class FunctionMapper {
 		map.put(Syntax.END_SCHEDULE, new EndSchedule());
 		map.put(Syntax.SET, new Set());
 		map.put(Syntax.ASSIGN, new Assign());
+		map.put(Syntax.EXECUTE, new Execute());
+		map.put(Syntax.MOVE_MOUSE, new MoveMouse());
+		map.put(Syntax.LEFT_CLICK, new LeftClick());
+		map.put(Syntax.RIGHT_CLICK, new RightClick());
+		map.put(Syntax.WAIT_SECONDS, new WaitSeconds());
+		map.put(Syntax.WAIT_MILLIS, new WaitMillis());
+		map.put(Syntax.TYPE, new Type());
+		map.put(Syntax.PRESS, new Press());
+		map.put(Syntax.DISPLAY, new Display());
+		map.put(Syntax.COPY, new Copy());
+		map.put(Syntax.PASTE, new Paste());
 	}
 	
 	public FunctionExecutor fromString(String syntax) {

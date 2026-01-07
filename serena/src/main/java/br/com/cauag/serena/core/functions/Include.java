@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 
+import br.com.cauag.serena.commands.parameters.QuotedParameter;
 import br.com.cauag.serena.core.Core;
 import br.com.cauag.serena.exceptions.InvalidSerenaFile;
 
@@ -12,8 +13,10 @@ public class Include implements FunctionExecutor {
 
 	@Override
 	public int executeAndGetIndex(String complement, Core core) throws Exception {
+		if (core.indexController.isDeclaringBlock() || core.scheduleController.isScheduling()) return core.index;
 		try {
-			File file = Core.validateAndGetFile(complement);
+			String filePath = QuotedParameter.valueOf(complement);
+			File file = Core.validateAndGetFile(filePath);
 			List<String> content = FileUtils.readLines(file, "UTF-8");
 			core.fileLines.remove(core.index);
 			core.fileLines.addAll(core.index, content);

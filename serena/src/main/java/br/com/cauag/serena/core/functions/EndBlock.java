@@ -10,7 +10,6 @@ public class EndBlock implements FunctionExecutor {
 		int comeBackTo = Optional.ofNullable(
 			core.indexController.endBlock()
 		).orElse(core.index);
-		
 		return comeBackTo;
 	}
 }

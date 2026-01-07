@@ -6,6 +6,7 @@ public class Block implements FunctionExecutor {
 	
 	@Override
 	public int executeAndGetIndex(String complement, Core core) throws Exception {
+		//TODO no block declaration in block declarations
 		String[][] extractedArgs = Core.extractArgs(complement);
 		
 		String blockName = extractedArgs[0][0];

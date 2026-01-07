@@ -1,24 +1,24 @@
-package br.com.cauag.serena.commands;
+package br.com.cauag.serena.core.functions;
 
-import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 
 import br.com.cauag.serena.commands.parameters.QuotedParameter;
+import br.com.cauag.serena.core.Core;
 
-public class Copy implements CommandExecutor  {
+public class Copy implements FunctionExecutor  {
 	private QuotedParameter param;
 	
 	@Override
-	public void prepare(String arg) {
-		param = new QuotedParameter(arg);
-	}
-	
-	@Override
-	public void execute(Robot bot) {
+	public int executeAndGetIndex(String complement, Core core) throws Exception {
+		if (core.indexController.isDeclaringBlock() || core.scheduleController.isScheduling()) return core.index;
+		param = new QuotedParameter(complement);
 		Clipboard cb = Toolkit.getDefaultToolkit().getSystemClipboard();
 	    StringSelection data = new StringSelection(param.getValue());
 	    cb.setContents(data, null);
+		return core.index;
 	}
+	
+	
 }
