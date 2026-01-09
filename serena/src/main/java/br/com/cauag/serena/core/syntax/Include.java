@@ -1,4 +1,4 @@
-package br.com.cauag.serena.core.functions;
+package br.com.cauag.serena.core.syntax;
 
 import java.io.File;
 import java.util.List;
@@ -9,7 +9,16 @@ import br.com.cauag.serena.commands.parameters.QuotedParameter;
 import br.com.cauag.serena.core.Core;
 import br.com.cauag.serena.exceptions.InvalidSerenaFile;
 
-public class Include implements FunctionExecutor {
+public class Include extends ReservedWord {
+	
+	public Include() {
+		super();
+	}
+
+	@Override
+	protected boolean canExecute() {
+		return true;
+	}
 
 	@Override
 	public int executeAndGetIndex(String complement, Core core) throws Exception {

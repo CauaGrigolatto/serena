@@ -1,10 +1,20 @@
-package br.com.cauag.serena.core.functions;
+package br.com.cauag.serena.core.syntax;
 
 import java.awt.event.KeyEvent;
 
 import br.com.cauag.serena.core.Core;
 
-public class Paste implements FunctionExecutor {
+public class Paste extends ReservedWord {
+	
+	public Paste() {
+		super();
+	}
+
+	@Override
+	protected boolean canExecute() {
+		return true;
+	}
+
 	@Override
 	public int executeAndGetIndex(String complement, Core core) throws Exception {
 		if (core.indexController.isDeclaringBlock() || core.scheduleController.isScheduling()) return core.index;

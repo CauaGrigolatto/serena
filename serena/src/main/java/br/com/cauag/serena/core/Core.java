@@ -8,9 +8,7 @@ import java.util.Map;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 
-import br.com.cauag.serena.core.functions.FunctionExecutor;
-import br.com.cauag.serena.core.functions.FunctionMapper;
-import br.com.cauag.serena.exceptions.InvalidCommandException;
+import br.com.cauag.serena.core.syntax.SyntaxTrieInitializer;
 import br.com.cauag.serena.exceptions.InvalidSerenaFile;
 
 public class Core {
@@ -24,7 +22,10 @@ public class Core {
 	public final ScheduleController scheduleController;
 	public final ConfigController configController;
 	public final VariablesController variablesController;
-	public final FunctionMapper functionMapper;
+	
+	//
+	private final SyntaxTrieInitializer syntaxTrie;
+	//
 	
 	public int index;
 	
@@ -34,8 +35,8 @@ public class Core {
 		this.indexController = new IndexController();
 		this.scheduleController = new ScheduleController();
 		this.configController = new ConfigController();
-		this.variablesController = new VariablesController();
-		this.functionMapper = new FunctionMapper();
+		this.variablesController = new VariablesController();		
+		this.syntaxTrie = new SyntaxTrieInitializer();
 	}
 	
 	public void run() {
@@ -48,40 +49,14 @@ public class Core {
 				String line = fileLines.get(index).trim();
 				if (line.isBlank() || line.startsWith("//")) continue;
 				
-				String[] statement = getStatement(line);
+				String[] tokens = line.split(" ");
+				int tokenIndex = 0;
 				
-				String commandStr = statement[0].trim();
-				String complementStr = statement[1] != null ? statement[1].trim() : null;
-				
-				commandStr = applyParametersAndVariables(commandStr);
-				complementStr = applyParametersAndVariables(complementStr);
-				
-				try {
-					FunctionExecutor functionExecutor = functionMapper.fromString(commandStr);
-					
-					if (functionExecutor != null) {
-						int temp = functionExecutor.executeAndGetIndex(complementStr, this);							
-
-						if (temp > -2) {
-							index = temp;
-						}
-						else {
-							break;
-						}
-					}
-					else {
-						throw new InvalidCommandException(commandStr, index+1);
-					}
-				}
-				catch(Exception e) {
-					e.printStackTrace();					
-					return;
-				}
+				index = syntaxTrie.handleNextToken(tokens, tokenIndex, this);
 			}
 			
 			scheduleController.run(this);
 		}
-		
 		catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -132,17 +107,6 @@ public class Core {
 		return extracted;
 	}
 	
-	private String[] getStatement(String line) {
-		String[] statement = new String[2];
-		String[] splittedLine = line.split(" ", 2);
-		
-		for (int i = 0; i < splittedLine.length; i++) {
-			statement[i] = splittedLine[i];
-		}
-		
-		return statement;
-	}
-
 	private void setExecutable(String path) throws InvalidSerenaFile {
 		this.file = validateAndGetFile(path);
 	}

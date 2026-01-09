@@ -1,8 +1,18 @@
-package br.com.cauag.serena.core.functions;
+package br.com.cauag.serena.core.syntax;
 
 import br.com.cauag.serena.core.Core;
 
-public class EndSchedule implements FunctionExecutor {
+public class EndSchedule extends ReservedWord {
+	
+	public EndSchedule() {
+		super();
+	}
+	
+	@Override
+	protected boolean canExecute() {
+		return true;
+	}
+
 	@Override
 	public int executeAndGetIndex(String complement, Core core) throws Exception {
 		if (core.scheduleController.isExecuting()) {

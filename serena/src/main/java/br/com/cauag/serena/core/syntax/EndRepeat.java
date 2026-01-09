@@ -1,15 +1,26 @@
-package br.com.cauag.serena.core.functions;
+package br.com.cauag.serena.core.syntax;
 
 import java.util.Optional;
 
 import br.com.cauag.serena.core.Core;
 
-public class EndBlock implements FunctionExecutor {
+public class EndRepeat extends ReservedWord {
+	
+	public EndRepeat() {
+		super();
+	}
+	
+	@Override
+	protected boolean canExecute() {
+		return true;
+	}
+
 	@Override
 	public int executeAndGetIndex(String complement, Core core) throws Exception {
 		int comeBackTo = Optional.ofNullable(
-			core.indexController.endBlock()
+				core.indexController.endRepeat()
 		).orElse(core.index);
+		
 		return comeBackTo;
 	}
 }

@@ -1,11 +1,21 @@
-package br.com.cauag.serena.core.functions;
+package br.com.cauag.serena.core.syntax;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import br.com.cauag.serena.core.Core;
 
-public class Schedule implements FunctionExecutor {
+public class Schedule extends ReservedWord {
+	
+	public Schedule() {
+		super();
+	}
+
+	@Override
+	protected boolean canExecute() {
+		return true;
+	}
+
 	@Override
 	public int executeAndGetIndex(String complement, Core core) throws Exception {
 		core.scheduleController.startSchedule(core.index + 1);

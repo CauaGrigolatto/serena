@@ -1,9 +1,18 @@
-package br.com.cauag.serena.core.functions;
+package br.com.cauag.serena.core.syntax;
 
 import br.com.cauag.serena.core.Core;
 
-public class Block implements FunctionExecutor {
+public class Block extends ReservedWord {
 	
+	public Block() {
+		super();
+	}
+
+	@Override
+	protected boolean canExecute() {
+		return true;
+	}
+
 	@Override
 	public int executeAndGetIndex(String complement, Core core) throws Exception {
 		//TODO no block declaration in block declarations
