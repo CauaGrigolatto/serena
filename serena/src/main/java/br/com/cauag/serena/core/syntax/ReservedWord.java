@@ -33,8 +33,10 @@ public abstract class ReservedWord implements FunctionExecutor {
 			throw new IllegalArgumentException("syntax error son at line " + (core.index+1));
 		}
 		
-		token = mergeTokens(tokens, index);
-		token = applyParametersAndVariables(token, core);
+		if (token != null) {
+			token = mergeTokens(tokens, index);
+			token = applyParametersAndVariables(token, core);			
+		}
 		return executeAndGetIndex(token, core);		
 	}
 	

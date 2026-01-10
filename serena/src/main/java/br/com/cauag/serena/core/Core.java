@@ -52,6 +52,7 @@ public class Core {
 				int tokenIndex = 0;
 				
 				index = syntaxTrie.handleNextToken(tokens, tokenIndex, this);
+				if (index == -2) return;
 			}
 			
 			scheduleController.run(this);
