@@ -1,6 +1,7 @@
 package br.com.cauag.serena.core.syntax;
 
 import br.com.cauag.serena.core.Core;
+import br.com.cauag.serena.core.syntax.type.Type;
 
 public class SyntaxTrieInitializer extends ReservedWord {
 	
