@@ -5,13 +5,8 @@ import java.util.Date;
 
 import br.com.cauag.serena.core.Core;
 
-public class Schedule extends ParameterReceiver {
+public class ScheduleFor extends ParameterReceiver {
 	
-	public Schedule() {
-		super();
-		addSuccessor("FOR", new ScheduleFor());
-	}
-
 	@Override
 	protected boolean canExecute() {
 		return true;
