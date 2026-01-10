@@ -4,7 +4,7 @@ import br.com.cauag.serena.commands.parameters.UnquotedParameter;
 import br.com.cauag.serena.core.Core;
 import br.com.cauag.serena.core.functions.Syntax.SpecialKey;
 
-public class Press extends ReservedWord {
+public class Press extends ParameterReceiver {
 	
 	public Press() {
 		super();

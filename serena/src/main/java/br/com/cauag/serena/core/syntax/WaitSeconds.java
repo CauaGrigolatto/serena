@@ -5,7 +5,7 @@ import java.time.Duration;
 import br.com.cauag.serena.commands.parameters.PositiveParameter;
 import br.com.cauag.serena.core.Core;
 
-public class WaitSeconds extends ReservedWord {
+public class WaitSeconds extends ParameterReceiver {
 	
 	public WaitSeconds() {
 		super();

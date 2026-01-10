@@ -5,7 +5,7 @@ import java.util.Date;
 
 import br.com.cauag.serena.core.Core;
 
-public class Schedule extends ReservedWord {
+public class Schedule extends ParameterReceiver {
 	
 	public Schedule() {
 		super();

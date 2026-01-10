@@ -7,7 +7,7 @@ import java.awt.datatransfer.StringSelection;
 import br.com.cauag.serena.commands.parameters.QuotedParameter;
 import br.com.cauag.serena.core.Core;
 
-public class Copy extends ReservedWord  {
+public class Copy extends ParameterReceiver  {
 	
 	public Copy() {
 		super();

@@ -3,7 +3,7 @@ package br.com.cauag.serena.core.syntax;
 import br.com.cauag.serena.commands.parameters.QuotedParameter;
 import br.com.cauag.serena.core.Core;
 
-public class Assign extends ReservedWord {
+public class Assign extends ParameterReceiver {
 
 	public Assign() {
 		super();
@@ -13,7 +13,7 @@ public class Assign extends ReservedWord {
 	protected boolean canExecute() {
 		return true;
 	}
-
+	
 	@Override
 	public int executeAndGetIndex(String complement, Core core) throws Exception {
 		if (core.indexController.isDeclaringBlock() || core.scheduleController.isScheduling()) return core.index;

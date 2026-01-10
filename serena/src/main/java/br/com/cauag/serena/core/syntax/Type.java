@@ -5,7 +5,7 @@ import java.awt.event.KeyEvent;
 import br.com.cauag.serena.commands.parameters.QuotedParameter;
 import br.com.cauag.serena.core.Core;
 
-public class Type extends ReservedWord {
+public class Type extends ParameterReceiver {
 	
 	public Type() {
 		super();

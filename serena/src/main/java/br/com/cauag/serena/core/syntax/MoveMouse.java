@@ -3,7 +3,7 @@ package br.com.cauag.serena.core.syntax;
 import br.com.cauag.serena.commands.parameters.UnquotedParameter;
 import br.com.cauag.serena.core.Core;
 
-public class MoveMouse extends ReservedWord {
+public class MoveMouse extends ParameterReceiver {
 	
 	public MoveMouse() {
 		super();

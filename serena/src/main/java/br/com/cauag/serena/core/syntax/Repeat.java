@@ -2,7 +2,7 @@ package br.com.cauag.serena.core.syntax;
 
 import br.com.cauag.serena.core.Core;
 
-public class Repeat extends ReservedWord {
+public class Repeat extends ParameterReceiver {
 	
 	public Repeat() {
 		super();

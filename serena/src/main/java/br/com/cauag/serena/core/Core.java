@@ -3,7 +3,6 @@ package br.com.cauag.serena.core;
 import java.awt.Robot;
 import java.io.File;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -60,32 +59,6 @@ public class Core {
 		catch(Exception e) {
 			e.printStackTrace();
 		}
-	}
-	
-	private String applyParametersAndVariables(String target) {
-		if (target != null && ! target.isBlank()) {			
-			Map<String, String> currentArgs = indexController.currentArgs();
-			
-			if (currentArgs != null) {
-				for (Map.Entry<String, String> currArg : currentArgs.entrySet()) {
-					String argKey = currArg.getKey();
-					String argValue = currArg.getValue();
-					target = target.replaceAll("\\$" + argKey, argValue);
-				}
-			}
-			
-			Map<String, String> currentVariables = variablesController.variables();
-			
-			if (currentVariables != null) {
-				for (Map.Entry<String, String> variable : currentVariables.entrySet()) {
-					String varName = variable.getKey();
-					String varValue = variable.getValue();
-					target = target.replaceAll("\\$" + varName, varValue);
-				}
-			}
-		}
-		
-		return target;
 	}
 	
 	public static String[][] extractArgs(String commandArgument) {

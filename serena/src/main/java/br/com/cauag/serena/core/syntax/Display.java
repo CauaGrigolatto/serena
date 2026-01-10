@@ -4,7 +4,7 @@ package br.com.cauag.serena.core.syntax;
 import br.com.cauag.serena.commands.parameters.QuotedParameter;
 import br.com.cauag.serena.core.Core;
 
-public class Display extends ReservedWord {
+public class Display extends ParameterReceiver {
 	public Display() {
 		super();
 	}

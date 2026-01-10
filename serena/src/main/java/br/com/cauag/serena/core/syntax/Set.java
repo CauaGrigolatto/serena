@@ -3,7 +3,7 @@ package br.com.cauag.serena.core.syntax;
 import br.com.cauag.serena.commands.parameters.QuotedParameter;
 import br.com.cauag.serena.core.Core;
 
-public class Set extends ReservedWord {
+public class Set extends ParameterReceiver {
 	
 	public Set() {
 		super();

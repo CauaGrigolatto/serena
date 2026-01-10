@@ -9,7 +9,7 @@ import br.com.cauag.serena.commands.parameters.QuotedParameter;
 import br.com.cauag.serena.core.Core;
 import br.com.cauag.serena.exceptions.InvalidSerenaFile;
 
-public class Include extends ReservedWord {
+public class Include extends ParameterReceiver {
 	
 	public Include() {
 		super();

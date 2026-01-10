@@ -2,7 +2,7 @@ package br.com.cauag.serena.core.syntax;
 
 import br.com.cauag.serena.core.Core;
 
-public class Call extends ReservedWord {
+public class Call extends ParameterReceiver {
 	
 	public Call() {
 		super();
