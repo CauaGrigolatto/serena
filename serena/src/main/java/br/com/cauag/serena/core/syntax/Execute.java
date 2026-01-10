@@ -1,26 +1,28 @@
-package br.com.cauag.serena.commands;
+package br.com.cauag.serena.core.syntax;
 
-import java.awt.Robot;
 import java.io.IOException;
 
-import br.com.cauag.serena.commands.parameters.UnquotedParameter;
+import br.com.cauag.serena.commands.parameters.QuotedParameter;
+import br.com.cauag.serena.core.Core;
 
-public class Execute implements CommandExecutor {
-	private UnquotedParameter param;
-	
+public class Execute extends ParameterReceiver {
+	@SuppressWarnings({"deprecation"})
 	@Override
-	public void prepare(String arg) {
-		this.param = new UnquotedParameter(arg);
-	}
-
-	@SuppressWarnings("deprecation")
-	@Override
-	public void execute(Robot bot) {
-		try {			
-			Runtime.getRuntime().exec(param.getValue());
+	public int executeAndGetIndex(String complement, Core core) throws Exception {
+		try {
+			String program = QuotedParameter.valueOf(complement);
+			program = applyParametersAndVariables(program, core);
+			Runtime.getRuntime().exec(program);
 		}
 		catch(IOException e) {
 			e.printStackTrace();
 		}
+		
+		return core.index;
+	}
+
+	@Override
+	protected boolean canExecute() {
+		return true;
 	}
 }
