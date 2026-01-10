@@ -54,39 +54,10 @@ public abstract class ReservedWord implements FunctionExecutor {
 	}
 	
 	private String applyParametersAndVariables(String token, Core core) {
-		
-		if (! canApplyParameters()) return token;
-		
-		if (token != null && ! token.isBlank()) {
-			Map<String, String> currentArgs = core.indexController.currentArgs();
-			
-			if (currentArgs != null) {
-				for (Map.Entry<String, String> currArg : currentArgs.entrySet()) {
-					String argKey = currArg.getKey();
-					String argValue = currArg.getValue();
-					token = token.replaceAll("\\$" + argKey, argValue);
-				}
-			}
-			
-			Map<String, String> currentVariables = core.variablesController.variables();
-			
-			if (currentVariables != null) {
-				for (Map.Entry<String, String> variable : currentVariables.entrySet()) {
-					String varName = variable.getKey();
-					String varValue = variable.getValue();
-					token = token.replaceAll("\\$" + varName, varValue);
-				}
-			}
-		}
-		
 		return token;
 	}
 	
 	protected abstract boolean canExecute();
-	
-	protected boolean canApplyParameters()  {
-		return false;
-	}
 	
 	protected void addSuccessor(String name, ReservedWord successor) {
 		this.successors.put(name, successor);

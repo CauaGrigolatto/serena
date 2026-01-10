@@ -17,7 +17,7 @@ public class Display extends ParameterReceiver {
 	@Override
 	public int executeAndGetIndex(String complement, Core core) throws Exception {
 		if (core.indexController.isDeclaringBlock() || core.scheduleController.isScheduling()) return core.index;
-		String message = QuotedParameter.valueOf(complement);
+		String message = applyParametersAndVariables(QuotedParameter.valueOf(complement), core);
 		System.out.println(message);
 		return core.index;
 	}

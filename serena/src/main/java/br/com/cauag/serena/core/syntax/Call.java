@@ -21,6 +21,10 @@ public class Call extends ParameterReceiver {
 			String blockName = extractedArgs[0][0];
 			String[] args = extractedArgs[1];
 			
+			for (int i = 0; i < args.length; i++) {
+				args[i] = applyParametersAndVariables(args[i], core);
+			}
+			
 			return core.indexController.callBlock(blockName, args, core.index);
 		}
 		

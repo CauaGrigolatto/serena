@@ -2,7 +2,7 @@ package br.com.cauag.serena.core.syntax;
 
 import br.com.cauag.serena.core.Core;
 
-public class Click extends ParameterReceiver {
+public class Click extends ReservedWord {
 
 	public Click() {
 		super();

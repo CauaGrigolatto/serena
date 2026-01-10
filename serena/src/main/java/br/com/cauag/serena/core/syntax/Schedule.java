@@ -30,7 +30,7 @@ public class Schedule extends ParameterReceiver {
 		);
 		
 		for (int i = 0; i < n; i++) {
-			times[i] = passedArgs[i].trim();
+			times[i] = applyParametersAndVariables(passedArgs[i].trim(), core);
 			Date date = formatter.parse(times[i]);
 			core.scheduleController.addDate(date);
 		}

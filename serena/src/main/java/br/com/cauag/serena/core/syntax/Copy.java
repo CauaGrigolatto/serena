@@ -21,9 +21,10 @@ public class Copy extends ParameterReceiver  {
 	@Override
 	public int executeAndGetIndex(String complement, Core core) throws Exception {
 		if (core.indexController.isDeclaringBlock() || core.scheduleController.isScheduling()) return core.index;
-		QuotedParameter param = new QuotedParameter(complement);
+		String value = new QuotedParameter(complement).getValue();
+		value = applyParametersAndVariables(value, core);
 		Clipboard cb = Toolkit.getDefaultToolkit().getSystemClipboard();
-	    StringSelection data = new StringSelection(param.getValue());
+	    StringSelection data = new StringSelection(value);
 	    cb.setContents(data, null);
 		return core.index;
 	}

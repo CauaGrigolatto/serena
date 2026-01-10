@@ -21,10 +21,10 @@ public class Assign extends ParameterReceiver {
 		
 		String varName = splittedArgs[0].trim();
 		String varValue = QuotedParameter.valueOf(splittedArgs[1]).trim();
+		varValue = applyParametersAndVariables(varValue, core);
 		
 		core.variablesController.setVariable(varName, varValue);
 		
 		return core.index;
 	}
-	
 }

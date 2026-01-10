@@ -19,6 +19,7 @@ public class Press extends ParameterReceiver {
 	public int executeAndGetIndex(String complement, Core core) throws Exception {
 		if (core.indexController.isDeclaringBlock() || core.scheduleController.isScheduling()) return core.index;
 		String keyStr = new UnquotedParameter(complement).getValue();
+		keyStr = applyParametersAndVariables(keyStr, core);
 		SpecialKey key = SpecialKey.valueOf( keyStr );
 		core.bot.keyPress( key.getKeyCode() );
 		return core.index;

@@ -20,6 +20,7 @@ public class Type extends ParameterReceiver {
 	public int executeAndGetIndex(String complement, Core core) throws Exception {
 		if (core.indexController.isDeclaringBlock() || core.scheduleController.isScheduling()) return core.index;
 		String message = QuotedParameter.valueOf(complement);
+		message = applyParametersAndVariables(message, core);
 		int messageLen = message.length();
 		
 		for (int i = 0; i < messageLen; i++) {

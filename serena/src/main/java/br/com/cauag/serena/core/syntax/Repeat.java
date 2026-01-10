@@ -16,7 +16,8 @@ public class Repeat extends ParameterReceiver {
 	@Override
 	public int executeAndGetIndex(String complement, Core core) throws Exception {
 		if (! core.indexController.isDeclaringBlock() && ! core.scheduleController.isScheduling()) {
-			core.indexController.addRepeat(complement, core.index);
+			String times = applyParametersAndVariables(complement, core);
+			core.indexController.addRepeat(times, core.index);
 		}
 		
 		return core.index;

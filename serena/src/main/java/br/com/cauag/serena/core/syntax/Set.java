@@ -26,6 +26,7 @@ public class Set extends ParameterReceiver {
 		}
 		
 		String value = new QuotedParameter(splittedArg[1]).getValue();
+		value = applyParametersAndVariables(value, core);
 		
 		core.configController.setConfig(config, value);
 		
