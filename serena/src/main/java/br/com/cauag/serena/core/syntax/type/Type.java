@@ -40,6 +40,7 @@ public class Type extends ParameterReceiver {
 		
 		this.specialChars.put('>', new GreaterThan());
 		this.specialChars.put('<', new LessThan());
+		this.specialChars.put('@', new At());
 	}
 
 	@Override
