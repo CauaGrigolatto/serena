@@ -2,7 +2,7 @@ package br.com.cauag.serena.core.syntax;
 
 import br.com.cauag.serena.core.Core;
 
-public class End extends ReservedWord {
+public class End extends AbstractFunctionExecutor {
 	public End() {
 		super();
 		addSuccessor("BLOCK", new EndBlock());

@@ -4,7 +4,7 @@ import java.awt.event.InputEvent;
 
 import br.com.cauag.serena.core.Core;
 
-public class LeftClick extends ReservedWord {
+public class LeftClick extends AbstractFunctionExecutor {
 	
 	public LeftClick() {
 		super();

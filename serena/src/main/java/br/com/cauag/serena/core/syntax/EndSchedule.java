@@ -2,7 +2,7 @@ package br.com.cauag.serena.core.syntax;
 
 import br.com.cauag.serena.core.Core;
 
-public class EndSchedule extends ReservedWord {
+public class EndSchedule extends AbstractFunctionExecutor {
 	
 	public EndSchedule() {
 		super();

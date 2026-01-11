@@ -4,7 +4,7 @@ import java.awt.event.InputEvent;
 
 import br.com.cauag.serena.core.Core;
 
-public class RightClick extends ReservedWord {
+public class RightClick extends AbstractFunctionExecutor {
 	
 	public RightClick() {
 		super();

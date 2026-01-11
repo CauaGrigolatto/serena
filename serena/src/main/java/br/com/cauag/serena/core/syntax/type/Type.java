@@ -27,10 +27,15 @@ public class Type extends ParameterReceiver {
 		this.specialChars.put('(', new OpenParenthesis());
 		this.specialChars.put(')', new CloseParenthesis());
 		this.specialChars.put('_', new Underline());
-		this.specialChars.put('+', new Plus());
 		
+		this.specialChars.put('+', new Plus());
 		this.specialChars.put('{', new OpenBraces());
 		this.specialChars.put('}', new CloseBraces());
+		this.specialChars.put(':', new Colon());
+		this.specialChars.put('|', new Pipe());
+		
+		this.specialChars.put('>', new GreaterThan());
+		this.specialChars.put('<', new LessThan());
 	}
 
 	@Override

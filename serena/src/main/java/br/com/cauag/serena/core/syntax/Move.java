@@ -2,7 +2,7 @@ package br.com.cauag.serena.core.syntax;
 
 import br.com.cauag.serena.core.Core;
 
-public class Move extends ReservedWord {
+public class Move extends AbstractFunctionExecutor {
 
 	public Move() {
 		super();

@@ -1,4 +1,4 @@
-package br.com.cauag.serena.core.functions;
+package br.com.cauag.serena.core.syntax;
 
 import java.awt.event.KeyEvent;
 

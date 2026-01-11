@@ -4,7 +4,7 @@ import java.util.Map;
 
 import br.com.cauag.serena.core.Core;
 
-public abstract class ParameterReceiver extends ReservedWord {
+public abstract class ParameterReceiver extends AbstractFunctionExecutor {
 	protected String applyParametersAndVariables(String token, Core core) {		
 		if (token != null && ! token.isBlank()) {
 			Map<String, String> currentArgs = core.indexController.currentArgs();

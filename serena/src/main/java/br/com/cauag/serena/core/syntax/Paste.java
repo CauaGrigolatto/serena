@@ -4,7 +4,7 @@ import java.awt.event.KeyEvent;
 
 import br.com.cauag.serena.core.Core;
 
-public class Paste extends ReservedWord {
+public class Paste extends AbstractFunctionExecutor {
 	
 	public Paste() {
 		super();

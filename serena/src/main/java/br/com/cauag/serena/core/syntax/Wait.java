@@ -3,7 +3,7 @@ package br.com.cauag.serena.core.syntax;
 
 import br.com.cauag.serena.core.Core;
 
-public class Wait extends ReservedWord {
+public class Wait extends AbstractFunctionExecutor {
 
 	public Wait() {
 		super();

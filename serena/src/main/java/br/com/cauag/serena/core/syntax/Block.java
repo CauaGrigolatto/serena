@@ -2,7 +2,7 @@ package br.com.cauag.serena.core.syntax;
 
 import br.com.cauag.serena.core.Core;
 
-public class Block extends ReservedWord {
+public class Block extends AbstractFunctionExecutor {
 	
 	public Block() {
 		super();

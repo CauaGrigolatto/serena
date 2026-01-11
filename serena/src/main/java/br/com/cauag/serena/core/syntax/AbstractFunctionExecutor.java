@@ -4,13 +4,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import br.com.cauag.serena.core.Core;
-import br.com.cauag.serena.core.functions.FunctionExecutor;
 
-public abstract class ReservedWord implements FunctionExecutor {
-	private Map<String, ReservedWord> successors;
+public abstract class AbstractFunctionExecutor implements FunctionExecutor {
+	private Map<String, AbstractFunctionExecutor> successors;
 	
-	protected ReservedWord() {
-		this.successors = new HashMap<String, ReservedWord>();
+	protected AbstractFunctionExecutor() {
+		this.successors = new HashMap<String, AbstractFunctionExecutor>();
 	}
 	
 	public int handleNextToken(String[] tokens, int index, Core core) throws Exception {
@@ -21,7 +20,7 @@ public abstract class ReservedWord implements FunctionExecutor {
 			
 			if (token != null ) {
 				token = token.trim();
-				ReservedWord next = successors.get(token);
+				AbstractFunctionExecutor next = successors.get(token);
 				if (next != null) {				
 					return next.handleNextToken(tokens, index+1, core);
 				}
@@ -61,7 +60,7 @@ public abstract class ReservedWord implements FunctionExecutor {
 	
 	protected abstract boolean canExecute();
 	
-	protected void addSuccessor(String name, ReservedWord successor) {
+	protected void addSuccessor(String name, AbstractFunctionExecutor successor) {
 		this.successors.put(name, successor);
 	}
 }
