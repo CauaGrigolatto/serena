@@ -1,6 +1,7 @@
 # Serena
 ## by Cauã Grigolatto and its dog, Lyon
 
+[English]:
 Project Serena is a Java-based command interpreter (and a purely personal project) that aims to automate manual tasks performed on the computer, such as typing, clicking, moving the mouse, and others.
 
 Its clear and natural syntax, combined with the possibilities of programming languages such as loops and functions, brings ordinary users closer to technical programmers.
@@ -30,7 +31,7 @@ Examples of use
 
 1. Opening YouTube with a simple command.
 ```
-ASSIGN target_program "C:\Users\myUser\AppData\Local\Programs\Opera GX/opera.exe"
+ASSIGN target_program "C:\Users\myUser\AppData\Local\Programs\Opera GX\opera.exe"
 
 EXECUTE "$target_program"
 
@@ -53,10 +54,12 @@ END REPEAT
 
 3. Sending a message to different people.
 ```
-// "to" is a parameter - and I am a comment :)
+// this is a global variable
 ASSIGN message "Support Free Software Community!"
 
+// "to" is a parameter - could be several of them: to, when, message...
 BLOCK send_message to
+  // this is a local variable
   TYPE "$to"
   WAIT SECONDS 2
   TYPE "$message"
@@ -74,7 +77,7 @@ CALL send_message $special_email
 ```
 SET DATE_TIME_FORMAT "yyyy-MM-dd HH:mm"
 
-SCHEDULE FOR 2026-02-05 12:00
+SCHEDULE FOR 2026-02-25 12:00
   EXECUTE "notepad"
   WAIT SECONDS 1
   TYPE "Happy Birthday :)"
@@ -83,5 +86,8 @@ SCHEDULE FOR 2026-02-05 12:00
 END SCHEDULE
 ```
 Feel free to automate any task. But remember: Serena is still in an early stage of development, which means that the syntax and how commands are executed may change.
+
+[Português]:
+
 
 
