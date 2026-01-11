@@ -16,7 +16,6 @@ public class MoveMouse extends ParameterReceiver {
 
 	@Override
 	public int executeAndGetIndex(String complement, Core core) throws Exception {
-		if (core.indexController.isDeclaringBlock() || core.scheduleController.isScheduling()) return core.index;
 		String value = new UnquotedParameter(complement).getValue();
 		value = applyParametersAndVariables(value, core);
 		String[] coordinates = value.split(",");

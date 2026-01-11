@@ -2,7 +2,7 @@ package br.com.cauag.serena.core.syntax;
 
 import br.com.cauag.serena.core.Core;
 
-public class EndSchedule extends AbstractFunctionExecutor {
+public class EndSchedule extends FunctionChain {
 	
 	public EndSchedule() {
 		super();

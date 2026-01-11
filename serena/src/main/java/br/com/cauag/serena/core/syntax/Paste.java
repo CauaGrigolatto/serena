@@ -3,11 +3,14 @@ package br.com.cauag.serena.core.syntax;
 import java.awt.event.KeyEvent;
 
 import br.com.cauag.serena.core.Core;
+import br.com.cauag.serena.core.conditions.PreConditions;
 
-public class Paste extends AbstractFunctionExecutor {
+public class Paste extends FunctionChain {
 	
 	public Paste() {
 		super();
+		executeIf(PreConditions.NOT_WHEN_DECLARING_BLOCK);
+		executeIf(PreConditions.NOT_WHEN_SCHEDULING);
 	}
 
 	@Override
@@ -17,7 +20,6 @@ public class Paste extends AbstractFunctionExecutor {
 
 	@Override
 	public int executeAndGetIndex(String complement, Core core) throws Exception {
-		if (core.indexController.isDeclaringBlock() || core.scheduleController.isScheduling()) return core.index;
 		core.bot.keyPress(KeyEvent.VK_CONTROL);
 		core.bot.keyPress(KeyEvent.VK_V);
 		core.bot.delay(100);

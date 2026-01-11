@@ -2,11 +2,14 @@
 package br.com.cauag.serena.core.syntax;
 
 import br.com.cauag.serena.core.Core;
+import br.com.cauag.serena.core.conditions.PreConditions;
 
-public class Wait extends AbstractFunctionExecutor {
+public class Wait extends FunctionChain {
 
 	public Wait() {
 		super();
+		executeIf(PreConditions.NOT_WHEN_DECLARING_BLOCK);
+		executeIf(PreConditions.NOT_WHEN_SCHEDULING);
 		addSuccessor("MILLIS", new WaitMillis());
 		addSuccessor("SECONDS", new WaitSeconds());
 	}

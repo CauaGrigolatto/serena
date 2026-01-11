@@ -18,7 +18,6 @@ public class WaitSeconds extends ParameterReceiver {
 
 	@Override
 	public int executeAndGetIndex(String complement, Core core) throws Exception {
-		if (core.indexController.isDeclaringBlock() || core.scheduleController.isScheduling()) return core.index;
 		String valueStr = applyParametersAndVariables(complement, core);
 		int value = new PositiveParameter(Integer.parseInt(valueStr)).getValue();
 		try {			

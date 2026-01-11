@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import br.com.cauag.serena.core.Core;
 
-public class EndBlock extends AbstractFunctionExecutor {
+public class EndBlock extends FunctionChain {
 	
 	public EndBlock() {
 		super();

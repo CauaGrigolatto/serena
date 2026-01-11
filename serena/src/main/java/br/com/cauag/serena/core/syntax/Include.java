@@ -7,12 +7,15 @@ import org.apache.commons.io.FileUtils;
 
 import br.com.cauag.serena.commands.parameters.QuotedParameter;
 import br.com.cauag.serena.core.Core;
+import br.com.cauag.serena.core.conditions.PreConditions;
 import br.com.cauag.serena.exceptions.InvalidSerenaFile;
 
 public class Include extends ParameterReceiver {
 	
 	public Include() {
 		super();
+		executeIf(PreConditions.NOT_WHEN_DECLARING_BLOCK);
+		executeIf(PreConditions.NOT_WHEN_SCHEDULING);
 	}
 
 	@Override
@@ -22,7 +25,6 @@ public class Include extends ParameterReceiver {
 
 	@Override
 	public int executeAndGetIndex(String complement, Core core) throws Exception {
-		if (core.indexController.isDeclaringBlock() || core.scheduleController.isScheduling()) return core.index;
 		try {
 			String filePath = QuotedParameter.valueOf(complement);
 			filePath = applyParametersAndVariables(filePath, core);

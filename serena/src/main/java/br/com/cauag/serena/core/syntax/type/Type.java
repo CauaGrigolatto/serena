@@ -7,6 +7,7 @@ import java.util.Map;
 
 import br.com.cauag.serena.commands.parameters.QuotedParameter;
 import br.com.cauag.serena.core.Core;
+import br.com.cauag.serena.core.conditions.PreConditions;
 import br.com.cauag.serena.core.syntax.ParameterReceiver;
 
 public class Type extends ParameterReceiver {
@@ -15,6 +16,9 @@ public class Type extends ParameterReceiver {
 	
 	public Type() {
 		super();
+		executeIf(PreConditions.NOT_WHEN_DECLARING_BLOCK);
+		executeIf(PreConditions.NOT_WHEN_SCHEDULING);
+		
 		this.specialChars = new HashMap<Character, SpecialChar>();
 		this.specialChars.put('?', new QuestionMark());
 		this.specialChars.put('!', new ExclamationMark());

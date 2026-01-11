@@ -4,11 +4,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import br.com.cauag.serena.core.Core;
+import br.com.cauag.serena.core.conditions.PreConditions;
 
 public class Schedule extends ParameterReceiver {
 	
 	public Schedule() {
 		super();
+		executeIf(PreConditions.NOT_WHEN_DECLARING_BLOCK);
+		executeIf(PreConditions.NOT_WHEN_SCHEDULING);
 		addSuccessor("FOR", new ScheduleFor());
 	}
 

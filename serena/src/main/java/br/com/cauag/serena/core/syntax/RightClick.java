@@ -4,7 +4,7 @@ import java.awt.event.InputEvent;
 
 import br.com.cauag.serena.core.Core;
 
-public class RightClick extends AbstractFunctionExecutor {
+public class RightClick extends FunctionChain {
 	
 	public RightClick() {
 		super();
@@ -17,7 +17,6 @@ public class RightClick extends AbstractFunctionExecutor {
 
 	@Override
 	public int executeAndGetIndex(String complement, Core core) throws Exception {
-		if (core.indexController.isDeclaringBlock() || core.scheduleController.isScheduling()) return core.index;
 		int rightKey = InputEvent.BUTTON3_DOWN_MASK;
 		core.bot.mousePress(rightKey);
 		core.bot.mouseRelease(rightKey);

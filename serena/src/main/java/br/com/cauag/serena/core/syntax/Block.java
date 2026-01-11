@@ -1,11 +1,14 @@
 package br.com.cauag.serena.core.syntax;
 
 import br.com.cauag.serena.core.Core;
+import br.com.cauag.serena.core.conditions.PreConditions;
 
-public class Block extends AbstractFunctionExecutor {
+public class Block extends FunctionChain {
 	
 	public Block() {
 		super();
+		executeIf(PreConditions.NOT_WHEN_DECLARING_BLOCK);
+		executeIf(PreConditions.NOT_WHEN_SCHEDULING);
 	}
 
 	@Override

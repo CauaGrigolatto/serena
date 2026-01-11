@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import br.com.cauag.serena.core.Core;
 
-public class EndRepeat extends AbstractFunctionExecutor {
+public class EndRepeat extends FunctionChain {
 	
 	public EndRepeat() {
 		super();

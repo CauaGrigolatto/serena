@@ -4,8 +4,16 @@ import java.io.IOException;
 
 import br.com.cauag.serena.commands.parameters.QuotedParameter;
 import br.com.cauag.serena.core.Core;
+import br.com.cauag.serena.core.conditions.PreConditions;
 
 public class Execute extends ParameterReceiver {
+	
+	public Execute() {
+		super();
+		executeIf(PreConditions.NOT_WHEN_DECLARING_BLOCK);
+		executeIf(PreConditions.NOT_WHEN_SCHEDULING);
+	}
+	
 	@SuppressWarnings({"deprecation"})
 	@Override
 	public int executeAndGetIndex(String complement, Core core) throws Exception {
