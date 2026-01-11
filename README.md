@@ -62,6 +62,8 @@ ASSIGN message "Support Free Software Community!"
 BLOCK send_message to
   // this is a local variable
   TYPE "$to"
+  WAIT MILLIS 500
+  PRESS ENTER
   WAIT SECONDS 2
   TYPE "$message"
   WAIT MILLIS 500
