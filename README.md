@@ -1,5 +1,5 @@
 # Serena
-# # by Cauã Grigolatto and its dog, Lyon
+## by Cauã Grigolatto and its dog, Lyon
 
 Project Serena is a Java-based command interpreter (and a purely personal project) that aims to automate manual tasks performed on the computer, such as typing, clicking, moving the mouse, and others.
 
