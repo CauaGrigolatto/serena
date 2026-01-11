@@ -1,5 +1,5 @@
 # Serena
-## by Cauã Grigolatto and its dog, Lyon
+## by Cauã Grigolatto and his dog, Lyon
 
 [English]:
 
