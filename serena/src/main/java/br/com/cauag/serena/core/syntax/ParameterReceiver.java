@@ -9,6 +9,8 @@ public abstract class ParameterReceiver extends FunctionChain {
 		if (token != null && ! token.isBlank()) {
 			Map<String, String> currentArgs = core.indexController.currentArgs();
 			
+			token = token.replaceAll("\\\\", "\\\\\\\\");
+			
 			if (currentArgs != null) {
 				for (Map.Entry<String, String> currArg : currentArgs.entrySet()) {
 					String argKey = currArg.getKey();
