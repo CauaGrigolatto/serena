@@ -11,5 +11,11 @@ public class UnquotedParameter extends Parameter<String> {
 		if (value == null || value.isBlank()) {
 			throw new IllegalArgumentException("Parameter value should not be null.");
 		}
+				
+		boolean hasQuotes = value.matches(".*['\"].*");
+
+		if (hasQuotes) {
+			throw new IllegalArgumentException("Parameter value should be unquoted.");
+		}
 	}
 }

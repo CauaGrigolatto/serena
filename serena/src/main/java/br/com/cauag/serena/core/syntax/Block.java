@@ -3,6 +3,7 @@ package br.com.cauag.serena.core.syntax;
 import java.util.LinkedList;
 import java.util.List;
 
+import br.com.cauag.serena.commands.parameters.UnquotedParameter;
 import br.com.cauag.serena.core.Core;
 import br.com.cauag.serena.core.conditions.PreConditions;
 
@@ -24,12 +25,12 @@ public class Block extends FunctionChain {
 		//TODO no block declaration in block declarations
 		String[] splittedArgs = complement.split(" ");
 		
-		String blockName = splittedArgs[0];
+		String blockName = new UnquotedParameter( splittedArgs[0] ).getValue();
 		
 		List<String> args = new LinkedList<String>();
 		
 		for (int i = 1; i < splittedArgs.length; i++) {
-			args.add(splittedArgs[i]);
+			args.add( new UnquotedParameter(splittedArgs[i]).getValue() );
 		}
 		
 		core.indexController.addBlock(core.index, blockName, args);

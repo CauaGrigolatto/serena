@@ -9,7 +9,7 @@ public abstract class Parameter<T> {
 		setValue(value);
 	}
 		
-	public void setValue(T value) {
+	private void setValue(T value) {
 		validate(value);
 		this.value = value;
 	}

@@ -34,7 +34,6 @@ public abstract class FunctionChain implements FunctionExecutor {
 					return next.handleNextToken(tokens, index+1, core);
 				}
 			}
-			
 		}
 		
 		if (! canExecute()) {
