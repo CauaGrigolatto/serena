@@ -2,6 +2,7 @@ package br.com.cauag.serena.core;
 
 import java.awt.Robot;
 import java.io.File;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
@@ -62,23 +63,36 @@ public class Core {
 		}
 	}
 	
-	public static String[][] extractArgs(String commandArgument) {
-		String[][] extracted = new String[2][2];
+	public static List<String> getArgs(String str) {
+		StringBuilder sb = new StringBuilder();
 		
-		String[] splittedArgs = commandArgument.split(" ");
+		int i = 0;
 		
-		String name = splittedArgs[0];
-		int totalArgs = splittedArgs.length-1;
-		
-		String[] args = new String[totalArgs];
-		
-		for (int i = 1; i <= totalArgs; i++) {
-			args[i-1] = splittedArgs[i];
+		while (i < str.length() && str.charAt(i) != ' ') {
+			sb.append(str.charAt(i));
+			i++;
 		}
 		
-		extracted[0] = new String[] {name};
-		extracted[1] = args;
-		return extracted;
+		List<String> args = new LinkedList<String>();
+		args.add(sb.toString());
+		
+		sb.setLength(0);
+		
+		for (boolean canAppend = false; i < str.length(); i++) {
+			if (str.charAt(i) == '"') {
+				canAppend = !canAppend;
+				
+				if (! sb.isEmpty()) {
+					args.add(sb.toString());
+					sb.setLength(0);
+				}
+			}
+			else if (canAppend) {
+				sb.append( str.charAt(i) );
+			}
+		}
+		
+		return args;
 	}
 	
 	private void setExecutable(String path) throws InvalidSerenaFile {

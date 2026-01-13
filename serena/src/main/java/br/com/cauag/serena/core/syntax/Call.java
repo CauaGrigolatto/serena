@@ -1,5 +1,8 @@
 package br.com.cauag.serena.core.syntax;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import br.com.cauag.serena.core.Core;
 import br.com.cauag.serena.core.conditions.PreConditions;
 
@@ -18,15 +21,17 @@ public class Call extends ParameterReceiver {
 
 	@Override
 	public int executeAndGetIndex(String complement, Core core) throws Exception {
-		String[][] extractedArgs = Core.extractArgs(complement);
+		List<String> allArgs = Core.getArgs(complement);
 		
-		String blockName = extractedArgs[0][0];
-		String[] args = extractedArgs[1];
+		String blockName = allArgs.get(0);
 		
-		for (int i = 0; i < args.length; i++) {
-			args[i] = applyParametersAndVariables(args[i], core);
+		List<String> funcArgs = new LinkedList<String>();
+		
+		for (int i = 1; i < allArgs.size(); i++) {
+			String current = allArgs.get(i);
+			funcArgs.add(applyParametersAndVariables(current, core));
 		}
 		
-		return core.indexController.callBlock(blockName, args, core.index);
+		return core.indexController.callBlock(blockName, funcArgs, core.index);
 	}
 }

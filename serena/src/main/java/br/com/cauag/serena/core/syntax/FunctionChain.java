@@ -38,7 +38,7 @@ public abstract class FunctionChain implements FunctionExecutor {
 		}
 		
 		if (! canExecute()) {
-			throw new IllegalArgumentException("syntax error son at line " + (core.index+1));
+			throw new IllegalArgumentException("syntax error at line " + (core.index+1));
 		}
 		
 		if (token != null) {

@@ -1,6 +1,7 @@
 package br.com.cauag.serena.core;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
@@ -12,20 +13,20 @@ import br.com.cauag.serena.exceptions.NegativeArgumentException;
 public class IndexController {
 	private boolean declaringBlock;
 	private final Map<String, Integer> blockIndexes;
-	private final Map<String, String[]> blocksArgs;
+	private final Map<String, List<String>> blocksArgs;
 	private final Stack<Map<String, String>> stackArgs;
 	private final Stack<Integer> repeatingTimes;
 	private final Stack<Integer> comebackIndexes;
 		
 	public IndexController() {
 		this.blockIndexes = new HashMap<String, Integer>();
-		this.blocksArgs = new HashMap<String, String[]>();
+		this.blocksArgs = new HashMap<String, List<String>>();
 		this.comebackIndexes = new Stack<Integer>();
 		this.stackArgs = new Stack<Map<String,String>>();
 		this.repeatingTimes = new Stack<Integer>();
 	}
 
-	public void addBlock(int index, String blockName, String[] args) throws IllegalArgumentException {
+	public void addBlock(int index, String blockName, List<String> args) throws IllegalArgumentException {
 		if (blockIndexes.containsKey(blockName)) {
 			throw new DuplicatedBlockException(blockName, index+1);
 		}
@@ -35,7 +36,7 @@ public class IndexController {
 		this.declaringBlock = true;
 	}
 	
-	public int callBlock(String blockName, String[] args, int currentIndex) {
+	public int callBlock(String blockName, List<String> args, int currentIndex) {
 		comebackIndexes.add(currentIndex);
 		
 		Integer index = blockIndexes.get(blockName);
@@ -44,9 +45,9 @@ public class IndexController {
 			throw new BlockNotDeclaredException(blockName, currentIndex+1);
 		}
 		
-		String[] blockArgsList = blocksArgs.get(blockName);
-		int acceptedArgs = blockArgsList.length;
-		int passedArgs = args.length;
+		List<String> blockArgsList = blocksArgs.get(blockName);
+		int acceptedArgs = blockArgsList.size();
+		int passedArgs = args.size();
 		
 		if (acceptedArgs != passedArgs) {
 			throw new IncompatibleArgumentsException(blockName, acceptedArgs, passedArgs, currentIndex+1);
@@ -55,8 +56,8 @@ public class IndexController {
 		Map<String, String> currentArgsMap = new HashMap<String, String>();
 		
 		for (int i = 0; i < acceptedArgs; i++) {
-			String keyArg = blockArgsList[i];
-			String valueArg = args[i];
+			String keyArg = blockArgsList.get(i);
+			String valueArg = args.get(i);
 			currentArgsMap.put(keyArg, valueArg);
 		}
 		
