@@ -9,6 +9,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 
 import br.com.cauag.serena.core.syntax.SyntaxTrieInitializer;
+import br.com.cauag.serena.exceptions.IndexableException;
 import br.com.cauag.serena.exceptions.InvalidSerenaFile;
 
 public class Core {
@@ -59,7 +60,7 @@ public class Core {
 			scheduleController.run(this);
 		}
 		catch(Exception e) {
-			e.printStackTrace();
+			throw new IndexableException(index+1, e.getMessage());
 		}
 	}
 	

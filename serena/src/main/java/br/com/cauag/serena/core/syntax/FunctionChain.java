@@ -37,7 +37,7 @@ public abstract class FunctionChain implements FunctionExecutor {
 		}
 		
 		if (! canExecute()) {
-			throw new IllegalArgumentException("syntax error at line " + (core.index+1));
+			throw new IllegalArgumentException("syntax error");
 		}
 		
 		if (token != null) {
@@ -76,7 +76,7 @@ public abstract class FunctionChain implements FunctionExecutor {
 		executeConditions.add(condition);
 	}
 	
-	private boolean canExecuteUnderConditions(Core core) {
+	private boolean canExecuteUnderConditions(Core core) throws Exception {
 		boolean canExecute = true;
 		int i = 0;
 		

@@ -11,7 +11,9 @@ public class Block extends FunctionChain {
 	
 	public Block() {
 		super();
-		executeIf(PreConditions.NOT_WHEN_DECLARING_BLOCK);
+		executeIf(PreConditions.NOT_WHEN_DECLARING_BLOCK_AND_THROWS(
+			new IllegalArgumentException("cannot declare blocks inside a BLOCK declaration.")
+		));
 		executeIf(PreConditions.NOT_WHEN_SCHEDULING);
 	}
 

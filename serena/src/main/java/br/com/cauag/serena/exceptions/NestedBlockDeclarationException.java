@@ -1,10 +1,10 @@
 package br.com.cauag.serena.exceptions;
 
-public class BlockNotDeclaredException extends Exception {
+public class NestedBlockDeclarationException extends Exception {
 	
 	private static final long serialVersionUID = 1L;
 
-	public BlockNotDeclaredException(String blockName) {
+	public NestedBlockDeclarationException(String blockName) {
 		super(blockName + " is not declared.");
 	}
 }

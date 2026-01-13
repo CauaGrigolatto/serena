@@ -10,8 +10,15 @@ public class Schedule extends ParameterReceiver {
 	
 	public Schedule() {
 		super();
-		executeIf(PreConditions.NOT_WHEN_DECLARING_BLOCK);
-		executeIf(PreConditions.NOT_WHEN_SCHEDULING);
+		
+		executeIf(PreConditions.NOT_WHEN_DECLARING_BLOCK_AND_THROWS(
+			new IllegalArgumentException("cannot schedule inside a BLOCK declaration.")
+		));
+
+		executeIf(PreConditions.NOT_WHEN_SCHEDULING_AND_THROWS(
+			new IllegalArgumentException("cannot schedule inside a SCHEDULE statement.")
+		));
+		
 		addSuccessor("FOR", new ScheduleFor());
 	}
 

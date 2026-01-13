@@ -25,17 +25,12 @@ public class Include extends ParameterReceiver {
 
 	@Override
 	public int executeAndGetIndex(String complement, Core core) throws Exception {
-		try {
-			String filePath = QuotedParameter.valueOf(complement);
-			filePath = applyParametersAndVariables(filePath, core);
-			File file = Core.validateAndGetFile(filePath);
-			List<String> content = FileUtils.readLines(file, "UTF-8");
-			core.fileLines.remove(core.index);
-			core.fileLines.addAll(core.index, content);
-			return core.index-1;
-		}
-		catch(InvalidSerenaFile isf) {
-			throw new InvalidSerenaFile(core.index+1);
-		}
+		String filePath = QuotedParameter.valueOf(complement);
+		filePath = applyParametersAndVariables(filePath, core);
+		File file = Core.validateAndGetFile(filePath);
+		List<String> content = FileUtils.readLines(file, "UTF-8");
+		core.fileLines.remove(core.index);
+		core.fileLines.addAll(core.index, content);
+		return core.index-1;
 	}
 }

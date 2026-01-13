@@ -26,9 +26,9 @@ public class IndexController {
 		this.repeatingTimes = new Stack<Integer>();
 	}
 
-	public void addBlock(int index, String blockName, List<String> args) throws IllegalArgumentException {
+	public void addBlock(int index, String blockName, List<String> args) throws DuplicatedBlockException {
 		if (blockIndexes.containsKey(blockName)) {
-			throw new DuplicatedBlockException(blockName, index+1);
+			throw new DuplicatedBlockException(blockName);
 		}
 		
 		blockIndexes.put(blockName, index);
@@ -36,13 +36,13 @@ public class IndexController {
 		this.declaringBlock = true;
 	}
 	
-	public int callBlock(String blockName, List<String> args, int currentIndex) {
+	public int callBlock(String blockName, List<String> args, int currentIndex) throws BlockNotDeclaredException {
 		comebackIndexes.add(currentIndex);
 		
 		Integer index = blockIndexes.get(blockName);
 		
 		if (index == null) {
-			throw new BlockNotDeclaredException(blockName, currentIndex+1);
+			throw new BlockNotDeclaredException(blockName);
 		}
 		
 		List<String> blockArgsList = blocksArgs.get(blockName);
@@ -50,7 +50,7 @@ public class IndexController {
 		int passedArgs = args.size();
 		
 		if (acceptedArgs != passedArgs) {
-			throw new IncompatibleArgumentsException(blockName, acceptedArgs, passedArgs, currentIndex+1);
+			throw new IncompatibleArgumentsException(blockName, acceptedArgs, passedArgs);
 		}
 		
 		Map<String, String> currentArgsMap = new HashMap<String, String>();
@@ -85,11 +85,11 @@ public class IndexController {
 		return declaringBlock;
 	}
 
-	public void addRepeat(String commandArgumentStr, int currentIndex) {
+	public void addRepeat(String commandArgumentStr, int currentIndex) throws NegativeArgumentException {
 		int times = Integer.parseInt(commandArgumentStr);
 		
 		if (times < 0) {
-			throw new NegativeArgumentException(currentIndex+1);
+			throw new NegativeArgumentException();
 		}
 		
 		repeatingTimes.push(times);

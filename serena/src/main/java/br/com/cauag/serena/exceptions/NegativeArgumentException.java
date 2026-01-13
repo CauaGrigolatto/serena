@@ -1,9 +1,9 @@
 package br.com.cauag.serena.exceptions;
 
-public class NegativeArgumentException extends IndexableException {
+public class NegativeArgumentException extends Exception {
 	private static final long serialVersionUID = 1L;
 
-	public NegativeArgumentException(int line) {
-		super(line, "argument should not be negative.");
+	public NegativeArgumentException() {
+		super("argument should not be negative.");
 	}
 }
