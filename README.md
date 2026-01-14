@@ -58,7 +58,7 @@ END REPEAT
 // this is a global variable
 ASSIGN message "Support Free Software Community!"
 
-// "to" is a parameter - could be several of them: to, when, message...
+// "to" is a parameter - and could be several of them: to, when, message...
 BLOCK send_message to
   // this is a local variable
   TYPE "$to"
@@ -69,18 +69,19 @@ BLOCK send_message to
   WAIT MILLIS 500
   PRESS ENTER
   DISPLAY "Message sent successfully!"
+  WAIT SECONDS 2
 END BLOCK
 
 ASSIGN special_email "cauagrigolatto23@gmail.com"
-CALL send_message test1@gmail.com
-CALL send_message $special_email
+CALL send_message "test1@gmail.com"
+CALL send_message "$special_email"
 ```
 
 4. Scheduling the execution of a specific program
 ```
-SET DATE_TIME_FORMAT "yyyy-MM-dd HH:mm"
+SET DATE TIME FORMAT "yyyy-MM-dd HH:mm"
 
-SCHEDULE FOR 2026-02-25 12:00
+SCHEDULE FOR "2026-02-25 12:00"
   EXECUTE "notepad"
   WAIT SECONDS 1
   TYPE "Happy Birthday :)"
