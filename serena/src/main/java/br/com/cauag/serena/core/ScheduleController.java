@@ -10,20 +10,19 @@ import java.util.TimerTask;
 
 public class ScheduleController {
 	
-	private Map<List<Date>, Integer[]> scheduled;
+	private Map<List<Date>, Integer> scheduled;
 	private List<Date> dates;
-	private Integer[] startEndSchedule;
+	private Integer startEndSchedule;
 	private boolean scheduling;
 	private boolean executing;
 
 	public ScheduleController() {
-		this.scheduled = new LinkedHashMap<List<Date>, Integer[]>();
+		this.scheduled = new LinkedHashMap<List<Date>, Integer>();
 	}
 	
 	public void startSchedule(int startIndex) {
 		this.dates = new ArrayList<Date>();
-		this.startEndSchedule = new Integer[2];
-		this.startEndSchedule[0] = startIndex;
+		this.startEndSchedule = startIndex;
 		this.scheduling = true;
 	}
 	
@@ -35,8 +34,8 @@ public class ScheduleController {
 		dates.add(date);
 	}
 	
-	public void endSchedule(int endIndex) {
-		if (dates.isEmpty()) {
+	public void endSchedule() {
+		if ((!isExecuting() && dates == null) || dates.isEmpty()) {
 			throw new IllegalArgumentException("SCHEDULE statement is needed.");
 		}
 		
@@ -46,12 +45,10 @@ public class ScheduleController {
 		this.scheduling = false;
 	}
 	
-	public void run(Core core) {
-		this.executing = true;
-		
-		for (Map.Entry<List<Date>, Integer[]> entry : scheduled.entrySet()) {
+	public void run(Core core) {		
+		for (Map.Entry<List<Date>, Integer> entry : scheduled.entrySet()) {
 			List<Date> dates = entry.getKey();
-			Integer[] indexes = entry.getValue();
+			Integer index = entry.getValue();
 			
 			for (Date date : dates) {
 				Timer timer = new Timer();
@@ -60,7 +57,8 @@ public class ScheduleController {
 					
 					@Override
 					public void run() {
-						core.index = indexes[0];
+						core.scheduleController.on();
+						core.index = index;
 						core.run();
 						timer.cancel();
 					}
@@ -71,6 +69,10 @@ public class ScheduleController {
 			
 			scheduled.clear();;
 		}
+	}
+	
+	public void on() {
+		this.executing = true;
 	}
 	
 	public void shutdown() {

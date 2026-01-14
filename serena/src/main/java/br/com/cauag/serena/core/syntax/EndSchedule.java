@@ -20,7 +20,7 @@ public class EndSchedule extends FunctionChain {
 			return -2;
 		}
 		
-		core.scheduleController.endSchedule(core.index);
+		core.scheduleController.endSchedule();
 		return core.index;
 	}
 }

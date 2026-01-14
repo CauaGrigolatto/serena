@@ -8,7 +8,6 @@ import org.apache.commons.io.FileUtils;
 import br.com.cauag.serena.commands.parameters.QuotedParameter;
 import br.com.cauag.serena.core.Core;
 import br.com.cauag.serena.core.conditions.PreConditions;
-import br.com.cauag.serena.exceptions.InvalidSerenaFile;
 
 public class Include extends ParameterReceiver {
 	

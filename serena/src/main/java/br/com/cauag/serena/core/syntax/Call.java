@@ -21,7 +21,7 @@ public class Call extends ParameterReceiver {
 
 	@Override
 	public int executeAndGetIndex(String complement, Core core) throws Exception {
-		List<String> allArgs = Core.getArgs(complement);
+		List<String> allArgs = getArgs(complement);
 		
 		String blockName = allArgs.get(0);
 		
@@ -33,5 +33,37 @@ public class Call extends ParameterReceiver {
 		}
 		
 		return core.indexController.callBlock(blockName, funcArgs, core.index);
+	}
+	
+	private List<String> getArgs(String str) {
+		StringBuilder sb = new StringBuilder();
+		
+		int i = 0;
+		
+		while (i < str.length() && str.charAt(i) != ' ') {
+			sb.append(str.charAt(i));
+			i++;
+		}
+		
+		List<String> args = new LinkedList<String>();
+		args.add(sb.toString());
+		
+		sb.setLength(0);
+		
+		for (boolean canAppend = false; i < str.length(); i++) {
+			if (str.charAt(i) == '"') {
+				canAppend = !canAppend;
+				
+				if (! sb.isEmpty()) {
+					args.add(sb.toString());
+					sb.setLength(0);
+				}
+			}
+			else if (canAppend) {
+				sb.append( str.charAt(i) );
+			}
+		}
+		
+		return args;
 	}
 }

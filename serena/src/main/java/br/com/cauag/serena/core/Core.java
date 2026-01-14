@@ -2,7 +2,6 @@ package br.com.cauag.serena.core;
 
 import java.awt.Robot;
 import java.io.File;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
@@ -63,39 +62,7 @@ public class Core {
 			throw new IndexableException(index+1, e.getMessage());
 		}
 	}
-	
-	public static List<String> getArgs(String str) {
-		StringBuilder sb = new StringBuilder();
 		
-		int i = 0;
-		
-		while (i < str.length() && str.charAt(i) != ' ') {
-			sb.append(str.charAt(i));
-			i++;
-		}
-		
-		List<String> args = new LinkedList<String>();
-		args.add(sb.toString());
-		
-		sb.setLength(0);
-		
-		for (boolean canAppend = false; i < str.length(); i++) {
-			if (str.charAt(i) == '"') {
-				canAppend = !canAppend;
-				
-				if (! sb.isEmpty()) {
-					args.add(sb.toString());
-					sb.setLength(0);
-				}
-			}
-			else if (canAppend) {
-				sb.append( str.charAt(i) );
-			}
-		}
-		
-		return args;
-	}
-	
 	private void setExecutable(String path) throws InvalidSerenaFile {
 		this.file = validateAndGetFile(path);
 	}
