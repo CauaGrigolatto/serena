@@ -4,15 +4,9 @@ import java.util.Optional;
 
 import br.com.cauag.serena.core.Core;
 
-public class EndRepeat extends FunctionChain {
-	
+public class EndRepeat extends ExecutableAndNotParameterReceiver {	
 	public EndRepeat() {
 		super();
-	}
-	
-	@Override
-	protected boolean canExecute() {
-		return true;
 	}
 
 	@Override

@@ -8,9 +8,9 @@ import java.util.Map;
 import br.com.cauag.serena.commands.parameters.QuotedParameter;
 import br.com.cauag.serena.conditions.PreConditions;
 import br.com.cauag.serena.core.Core;
-import br.com.cauag.serena.syntax.ParameterReceiver;
+import br.com.cauag.serena.syntax.ExecutableAndParametersReceiver;
 
-public class Type extends ParameterReceiver {
+public class Type extends ExecutableAndParametersReceiver {
 	
 	private Map<Character, SpecialChar> specialChars;
 	
@@ -41,11 +41,6 @@ public class Type extends ParameterReceiver {
 		this.specialChars.put('>', new GreaterThan());
 		this.specialChars.put('<', new LessThan());
 		this.specialChars.put('@', new At());
-	}
-
-	@Override
-	protected boolean canExecute() {
-		return true;
 	}
 
 	@Override

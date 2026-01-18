@@ -5,17 +5,11 @@ import br.com.cauag.serena.conditions.PreConditions;
 import br.com.cauag.serena.core.Core;
 import br.com.cauag.serena.syntax.Syntax.SpecialKey;
 
-public class Press extends ParameterReceiver {
-	
+public class Press extends ExecutableAndParametersReceiver {
 	public Press() {
 		super();
 		executeIf(PreConditions.NOT_WHEN_DECLARING_BLOCK);
 		executeIf(PreConditions.NOT_WHEN_SCHEDULING);
-	}
-	
-	@Override
-	protected boolean canExecute() {
-		return true;
 	}
 
 	@Override

@@ -4,15 +4,10 @@ import java.awt.event.InputEvent;
 
 import br.com.cauag.serena.core.Core;
 
-public class LeftClick extends FunctionChain {
+public class LeftClick extends ExecutableAndNotParameterReceiver {
 	
 	public LeftClick() {
 		super();
-	}
-
-	@Override
-	protected boolean canExecute() {
-		return true;
 	}
 
 	@Override

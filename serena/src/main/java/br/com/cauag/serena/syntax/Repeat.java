@@ -3,17 +3,11 @@ package br.com.cauag.serena.syntax;
 import br.com.cauag.serena.conditions.PreConditions;
 import br.com.cauag.serena.core.Core;
 
-public class Repeat extends ParameterReceiver {
-	
+public class Repeat extends ExecutableAndParametersReceiver {
 	public Repeat() {
 		super();
 		executeIf(PreConditions.NOT_WHEN_DECLARING_BLOCK);
 		executeIf(PreConditions.NOT_WHEN_SCHEDULING);
-	}
-	
-	@Override
-	protected boolean canExecute() {
-		return true;
 	}
 
 	@Override

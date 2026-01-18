@@ -2,15 +2,9 @@ package br.com.cauag.serena.syntax;
 
 import br.com.cauag.serena.core.Core;
 
-public class EndSchedule extends FunctionChain {
-	
+public class EndSchedule extends ExecutableAndNotParameterReceiver {
 	public EndSchedule() {
 		super();
-	}
-	
-	@Override
-	protected boolean canExecute() {
-		return true;
 	}
 
 	@Override

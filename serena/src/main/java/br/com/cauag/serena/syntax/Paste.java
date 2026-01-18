@@ -5,17 +5,12 @@ import java.awt.event.KeyEvent;
 import br.com.cauag.serena.conditions.PreConditions;
 import br.com.cauag.serena.core.Core;
 
-public class Paste extends FunctionChain {
+public class Paste extends ExecutableAndNotParameterReceiver {
 	
 	public Paste() {
 		super();
 		executeIf(PreConditions.NOT_WHEN_DECLARING_BLOCK);
 		executeIf(PreConditions.NOT_WHEN_SCHEDULING);
-	}
-
-	@Override
-	protected boolean canExecute() {
-		return true;
 	}
 
 	@Override

@@ -4,15 +4,10 @@ import java.awt.event.InputEvent;
 
 import br.com.cauag.serena.core.Core;
 
-public class RightClick extends FunctionChain {
+public class RightClick extends ExecutableAndNotParameterReceiver {
 	
 	public RightClick() {
 		super();
-	}
-
-	@Override
-	protected boolean canExecute() {
-		return true;
 	}
 
 	@Override

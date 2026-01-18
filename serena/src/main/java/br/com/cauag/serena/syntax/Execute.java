@@ -6,7 +6,7 @@ import br.com.cauag.serena.commands.parameters.QuotedParameter;
 import br.com.cauag.serena.conditions.PreConditions;
 import br.com.cauag.serena.core.Core;
 
-public class Execute extends ParameterReceiver {
+public class Execute extends ExecutableAndParametersReceiver {
 	
 	public Execute() {
 		super();
@@ -27,10 +27,5 @@ public class Execute extends ParameterReceiver {
 		}
 		
 		return core.index;
-	}
-
-	@Override
-	protected boolean canExecute() {
-		return true;
 	}
 }

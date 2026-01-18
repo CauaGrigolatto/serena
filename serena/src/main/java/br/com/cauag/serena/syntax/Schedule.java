@@ -8,8 +8,7 @@ import java.util.List;
 import br.com.cauag.serena.conditions.PreConditions;
 import br.com.cauag.serena.core.Core;
 
-public class Schedule extends ParameterReceiver {
-	
+public class Schedule extends ExecutableAndParametersReceiver {
 	public Schedule() {
 		super();
 		
@@ -22,11 +21,6 @@ public class Schedule extends ParameterReceiver {
 		));
 		
 		addSuccessor("FOR", new ScheduleFor());
-	}
-
-	@Override
-	protected boolean canExecute() {
-		return true;
 	}
 
 	@Override

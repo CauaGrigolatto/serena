@@ -1,11 +1,9 @@
 package br.com.cauag.serena.syntax;
 
-import br.com.cauag.serena.core.Core;
 import br.com.cauag.serena.syntax.set.Set;
 import br.com.cauag.serena.syntax.type.Type;
 
-public class SyntaxTrieInitializer extends FunctionChain {
-	
+public class SyntaxTrieInitializer extends NotExecutable {
 	public SyntaxTrieInitializer() {
 		super();
 		addSuccessor("ASSIGN", new Assign());
@@ -26,15 +24,4 @@ public class SyntaxTrieInitializer extends FunctionChain {
 		addSuccessor("TYPE", new Type());
 		addSuccessor("WAIT", new Wait());
 	}
-	
-	@Override
-	public int executeAndGetIndex(String complement, Core core) throws Exception {
-		return -2;
-	}
-
-	@Override
-	protected boolean canExecute() {
-		return false;
-	}
-	
 }

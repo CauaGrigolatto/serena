@@ -8,17 +8,11 @@ import br.com.cauag.serena.commands.parameters.QuotedParameter;
 import br.com.cauag.serena.conditions.PreConditions;
 import br.com.cauag.serena.core.Core;
 
-public class Copy extends ParameterReceiver  {
-	
+public class Copy extends ExecutableAndParametersReceiver  {
 	public Copy() {
 		super();
 		executeIf(PreConditions.NOT_WHEN_DECLARING_BLOCK);
 		executeIf(PreConditions.NOT_WHEN_SCHEDULING);
-	}
-
-	@Override
-	protected boolean canExecute() {
-		return true;
 	}
 
 	@Override

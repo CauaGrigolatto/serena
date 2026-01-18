@@ -6,17 +6,12 @@ import java.util.List;
 import br.com.cauag.serena.conditions.PreConditions;
 import br.com.cauag.serena.core.Core;
 
-public class Call extends ParameterReceiver {
+public class Call extends ExecutableAndParametersReceiver {
 	
 	public Call() {
 		super();
 		executeIf(PreConditions.NOT_WHEN_DECLARING_BLOCK);
 		executeIf(PreConditions.NOT_WHEN_SCHEDULING);
-	}
-
-	@Override
-	protected boolean canExecute() {
-		return true;
 	}
 
 	@Override

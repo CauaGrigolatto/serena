@@ -7,24 +7,20 @@ import br.com.cauag.serena.commands.parameters.UnquotedParameter;
 import br.com.cauag.serena.conditions.PreConditions;
 import br.com.cauag.serena.core.Core;
 
-public class Block extends FunctionChain {
+public class Block extends ExecutableAndNotParameterReceiver {
 	
 	public Block() {
 		super();
 		executeIf(PreConditions.NOT_WHEN_DECLARING_BLOCK_AND_THROWS(
 			new IllegalArgumentException("cannot declare blocks inside a BLOCK declaration.")
 		));
-		executeIf(PreConditions.NOT_WHEN_SCHEDULING);
-	}
-
-	@Override
-	protected boolean canExecute() {
-		return true;
+		executeIf(PreConditions.NOT_WHEN_SCHEDULING_AND_THROWS(
+			new IllegalArgumentException("cannot declare blocks inside a SCHEDULE declaration.")
+		));
 	}
 
 	@Override
 	public int executeAndGetIndex(String complement, Core core) throws Exception {
-		//TODO no block declaration in block declarations
 		String[] splittedArgs = complement.split(" ");
 		
 		String blockName = new UnquotedParameter( splittedArgs[0] ).getValue();

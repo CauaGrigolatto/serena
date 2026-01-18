@@ -5,15 +5,10 @@ import java.time.Duration;
 import br.com.cauag.serena.commands.parameters.PositiveParameter;
 import br.com.cauag.serena.core.Core;
 
-public class WaitSeconds extends ParameterReceiver {
+public class WaitSeconds extends ExecutableAndParametersReceiver {
 	
 	public WaitSeconds() {
 		super();
-	}
-
-	@Override
-	protected boolean canExecute() {
-		return true;
 	}
 
 	@Override
@@ -32,5 +27,4 @@ public class WaitSeconds extends ParameterReceiver {
 		}
 		return core.index;
 	}
-	
 }

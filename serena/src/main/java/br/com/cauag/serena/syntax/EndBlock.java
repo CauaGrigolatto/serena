@@ -4,15 +4,9 @@ import java.util.Optional;
 
 import br.com.cauag.serena.core.Core;
 
-public class EndBlock extends FunctionChain {
-	
+public class EndBlock extends ExecutableAndNotParameterReceiver {
 	public EndBlock() {
 		super();
-	}
-	
-	@Override
-	protected boolean canExecute() {
-		return true;
 	}
 
 	@Override

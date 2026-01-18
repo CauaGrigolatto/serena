@@ -44,6 +44,7 @@ public abstract class FunctionChain implements FunctionExecutor {
 			token = mergeTokens(tokens, index);
 			token = applyParametersAndVariables(token, core);			
 		}
+		
 		return executeAndGetIndex(token, core);		
 	}
 	
@@ -62,10 +63,7 @@ public abstract class FunctionChain implements FunctionExecutor {
 		return sb.toString();
 	}
 	
-	private String applyParametersAndVariables(String token, Core core) {
-		return token;
-	}
-	
+	protected abstract String applyParametersAndVariables(String token, Core core);
 	protected abstract boolean canExecute();
 	
 	protected void addSuccessor(String name, FunctionChain successor) {

@@ -9,17 +9,12 @@ import br.com.cauag.serena.commands.parameters.QuotedParameter;
 import br.com.cauag.serena.conditions.PreConditions;
 import br.com.cauag.serena.core.Core;
 
-public class Include extends ParameterReceiver {
+public class Include extends ExecutableAndParametersReceiver {
 	
 	public Include() {
 		super();
 		executeIf(PreConditions.NOT_WHEN_DECLARING_BLOCK);
 		executeIf(PreConditions.NOT_WHEN_SCHEDULING);
-	}
-
-	@Override
-	protected boolean canExecute() {
-		return true;
 	}
 
 	@Override

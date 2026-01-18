@@ -5,14 +5,9 @@ import java.time.Duration;
 import br.com.cauag.serena.commands.parameters.PositiveParameter;
 import br.com.cauag.serena.core.Core;
 
-public class WaitMillis extends ParameterReceiver {
+public class WaitMillis extends ExecutableAndParametersReceiver {
 	public WaitMillis() {
 		super();
-	}
-
-	@Override
-	protected boolean canExecute() {
-		return true;
 	}
 
 	@Override

@@ -3,15 +3,9 @@ package br.com.cauag.serena.syntax;
 import br.com.cauag.serena.commands.parameters.UnquotedParameter;
 import br.com.cauag.serena.core.Core;
 
-public class MoveMouse extends ParameterReceiver {
-	
+public class MoveMouse extends ExecutableAndParametersReceiver {	
 	public MoveMouse() {
 		super();
-	}
-
-	@Override
-	protected boolean canExecute() {
-		return true;
 	}
 
 	@Override
@@ -24,5 +18,4 @@ public class MoveMouse extends ParameterReceiver {
 		core.bot.mouseMove(x, y);
 		return core.index;
 	}
-	
 }

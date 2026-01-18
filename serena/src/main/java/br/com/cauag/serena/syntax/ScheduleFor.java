@@ -7,15 +7,9 @@ import java.util.List;
 
 import br.com.cauag.serena.core.Core;
 
-public class ScheduleFor extends ParameterReceiver {
-	
+public class ScheduleFor extends ExecutableAndParametersReceiver {
 	public ScheduleFor() {
 		super();
-	}
-	
-	@Override
-	protected boolean canExecute() {
-		return true;
 	}
 
 	@Override
