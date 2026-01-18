@@ -12,6 +12,8 @@ import br.com.cauag.serena.exceptions.InvalidSerenaFile;
 import br.com.cauag.serena.syntax.SyntaxTrieInitializer;
 
 public class Core {
+	public static final int EXIT_CODE = -2;
+	
 	public final Robot bot;
 	private File file;
 	
@@ -52,7 +54,7 @@ public class Core {
 				int tokenIndex = 0;
 				
 				index = syntaxTrie.handleNextToken(tokens, tokenIndex, this);
-				if (index == -2) return;
+				if (index == EXIT_CODE) return;
 			}
 			
 			scheduleController.run(this);

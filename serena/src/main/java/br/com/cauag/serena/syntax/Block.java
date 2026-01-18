@@ -3,11 +3,11 @@ package br.com.cauag.serena.syntax;
 import java.util.LinkedList;
 import java.util.List;
 
-import br.com.cauag.serena.commands.parameters.UnquotedParameter;
 import br.com.cauag.serena.conditions.PreConditions;
 import br.com.cauag.serena.core.Core;
+import br.com.cauag.serena.parameters.UnquotedParameter;
 
-public class Block extends ExecutableAndNotParametersReceiver {
+public class Block extends Executable {
 	
 	public Block() {
 		super();

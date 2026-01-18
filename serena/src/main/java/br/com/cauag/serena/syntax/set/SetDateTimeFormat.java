@@ -1,7 +1,7 @@
 package br.com.cauag.serena.syntax.set;
 
-import br.com.cauag.serena.commands.parameters.QuotedParameter;
 import br.com.cauag.serena.core.Core;
+import br.com.cauag.serena.parameters.QuotedParameter;
 import br.com.cauag.serena.syntax.ExecutableAndParametersReceiver;
 
 public class SetDateTimeFormat extends ExecutableAndParametersReceiver {	

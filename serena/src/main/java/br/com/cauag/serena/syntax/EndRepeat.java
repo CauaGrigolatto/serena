@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import br.com.cauag.serena.core.Core;
 
-public class EndRepeat extends ExecutableAndNotParametersReceiver {	
+public class EndRepeat extends Executable {	
 	public EndRepeat() {
 		super();
 	}

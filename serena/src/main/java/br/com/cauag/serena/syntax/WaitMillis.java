@@ -2,8 +2,8 @@ package br.com.cauag.serena.syntax;
 
 import java.time.Duration;
 
-import br.com.cauag.serena.commands.parameters.PositiveParameter;
 import br.com.cauag.serena.core.Core;
+import br.com.cauag.serena.parameters.PositiveParameter;
 
 public class WaitMillis extends ExecutableAndParametersReceiver {
 	public WaitMillis() {

@@ -1,8 +1,8 @@
 package br.com.cauag.serena.syntax;
 
-import br.com.cauag.serena.commands.parameters.UnquotedParameter;
 import br.com.cauag.serena.conditions.PreConditions;
 import br.com.cauag.serena.core.Core;
+import br.com.cauag.serena.parameters.UnquotedParameter;
 import br.com.cauag.serena.syntax.Syntax.SpecialKey;
 
 public class Press extends ExecutableAndParametersReceiver {

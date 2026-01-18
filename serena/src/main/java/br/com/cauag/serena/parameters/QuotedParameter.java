@@ -1,4 +1,4 @@
-package br.com.cauag.serena.commands.parameters;
+package br.com.cauag.serena.parameters;
 
 public class QuotedParameter extends Parameter<String> {
 	private String value;

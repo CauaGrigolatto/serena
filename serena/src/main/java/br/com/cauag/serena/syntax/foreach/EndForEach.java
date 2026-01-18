@@ -3,9 +3,9 @@ package br.com.cauag.serena.syntax.foreach;
 import java.util.Optional;
 
 import br.com.cauag.serena.core.Core;
-import br.com.cauag.serena.syntax.ExecutableAndNotParametersReceiver;
+import br.com.cauag.serena.syntax.Executable;
 
-public class EndForEach extends ExecutableAndNotParametersReceiver {
+public class EndForEach extends Executable {
 	public EndForEach() {
 		super();
 	}

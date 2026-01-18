@@ -5,9 +5,9 @@ import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 
-import br.com.cauag.serena.commands.parameters.QuotedParameter;
 import br.com.cauag.serena.conditions.PreConditions;
 import br.com.cauag.serena.core.Core;
+import br.com.cauag.serena.parameters.QuotedParameter;
 
 public class Include extends ExecutableAndParametersReceiver {
 	

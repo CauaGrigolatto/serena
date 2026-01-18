@@ -1,4 +1,4 @@
-package br.com.cauag.serena.commands.parameters;
+package br.com.cauag.serena.parameters;
 
 public class PositiveParameter extends IntegerParameter {
 	

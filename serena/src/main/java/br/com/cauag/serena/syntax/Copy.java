@@ -4,9 +4,9 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 
-import br.com.cauag.serena.commands.parameters.QuotedParameter;
 import br.com.cauag.serena.conditions.PreConditions;
 import br.com.cauag.serena.core.Core;
+import br.com.cauag.serena.parameters.QuotedParameter;
 
 public class Copy extends ExecutableAndParametersReceiver  {
 	public Copy() {

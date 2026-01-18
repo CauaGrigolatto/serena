@@ -5,7 +5,7 @@ import java.awt.event.KeyEvent;
 import br.com.cauag.serena.conditions.PreConditions;
 import br.com.cauag.serena.core.Core;
 
-public class Paste extends ExecutableAndNotParametersReceiver {
+public class Paste extends Executable {
 	
 	public Paste() {
 		super();

@@ -1,7 +1,7 @@
 package br.com.cauag.serena.syntax;
 
-import br.com.cauag.serena.commands.parameters.UnquotedParameter;
 import br.com.cauag.serena.core.Core;
+import br.com.cauag.serena.parameters.UnquotedParameter;
 
 public class MoveMouse extends ExecutableAndParametersReceiver {	
 	public MoveMouse() {

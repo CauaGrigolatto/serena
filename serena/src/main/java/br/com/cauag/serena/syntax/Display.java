@@ -1,9 +1,9 @@
 
 package br.com.cauag.serena.syntax;
 
-import br.com.cauag.serena.commands.parameters.QuotedParameter;
 import br.com.cauag.serena.conditions.PreConditions;
 import br.com.cauag.serena.core.Core;
+import br.com.cauag.serena.parameters.QuotedParameter;
 
 public class Display extends ExecutableAndParametersReceiver {
 	public Display() {

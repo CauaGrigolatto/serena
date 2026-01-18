@@ -4,7 +4,7 @@ import java.awt.event.InputEvent;
 
 import br.com.cauag.serena.core.Core;
 
-public class RightClick extends ExecutableAndNotParametersReceiver {
+public class RightClick extends Executable {
 	
 	public RightClick() {
 		super();

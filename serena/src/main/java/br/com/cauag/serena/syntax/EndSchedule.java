@@ -2,7 +2,7 @@ package br.com.cauag.serena.syntax;
 
 import br.com.cauag.serena.core.Core;
 
-public class EndSchedule extends ExecutableAndNotParametersReceiver {
+public class EndSchedule extends Executable {
 	public EndSchedule() {
 		super();
 	}
@@ -11,7 +11,7 @@ public class EndSchedule extends ExecutableAndNotParametersReceiver {
 	public int executeAndGetIndex(String complement, Core core) throws Exception {
 		if (core.scheduleController.isExecuting()) {
 			core.scheduleController.shutdown();
-			return -2;
+			return Core.EXIT_CODE;
 		}
 		
 		core.scheduleController.endSchedule();

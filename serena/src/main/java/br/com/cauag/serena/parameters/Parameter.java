@@ -1,4 +1,4 @@
-package br.com.cauag.serena.commands.parameters;
+package br.com.cauag.serena.parameters;
 
 public abstract class Parameter<T> {
 	private T value;
