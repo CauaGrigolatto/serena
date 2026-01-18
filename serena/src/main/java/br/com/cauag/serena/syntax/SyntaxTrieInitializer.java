@@ -1,5 +1,6 @@
 package br.com.cauag.serena.syntax;
 
+import br.com.cauag.serena.syntax.assign.Assign;
 import br.com.cauag.serena.syntax.foreach.For;
 import br.com.cauag.serena.syntax.set.Set;
 import br.com.cauag.serena.syntax.type.Type;

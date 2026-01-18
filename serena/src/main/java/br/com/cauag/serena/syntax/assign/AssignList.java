@@ -1,4 +1,4 @@
-package br.com.cauag.serena.syntax.foreach;
+package br.com.cauag.serena.syntax.assign;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -6,24 +6,21 @@ import java.util.List;
 import br.com.cauag.serena.core.Core;
 import br.com.cauag.serena.syntax.ExecutableAndParametersReceiver;
 
-public class ForEach extends ExecutableAndParametersReceiver {
-	public ForEach() {
-		super();
-	}
-
+public class AssignList extends ExecutableAndParametersReceiver {
 	@Override
 	public int executeAndGetIndex(String complement, Core core) throws Exception {
-		String[] args = complement.split("IN", 2);
-		String varName = args[0].trim();
-		String elements = args[1].trim();
-		elements = applyListParameters(elements, core);
-		List<String> datas = getList(elements);
-		core.forEachController.addForEach(core.index, varName, datas);
+		String[] splittedArgs = complement.split(" ", 2);
+		
+		String varName = splittedArgs[0].trim();
+		List<String> varValues = argsListOf(splittedArgs[1], core);
+		
+		core.variablesController.setList(varName, varValues);
+		
 		return core.index;
 	}
 	
-	private List<String> getList(String str) {
-		List<String> datas = new LinkedList<String>();
+	private List<String> argsListOf(String str, Core core) {
+		List<String> args = new LinkedList<String>();
 		StringBuilder sb = new StringBuilder();
 		int i = 0;
 				
@@ -32,7 +29,7 @@ public class ForEach extends ExecutableAndParametersReceiver {
 				canAppend = !canAppend;
 				
 				if (! sb.isEmpty()) {
-					datas.add(sb.toString());
+					args.add(applyParametersAndVariables(sb.toString(), core));
 					sb.setLength(0);
 				}
 			}
@@ -41,6 +38,6 @@ public class ForEach extends ExecutableAndParametersReceiver {
 			}
 		}
 		
-		return datas;
+		return args;
 	}
 }

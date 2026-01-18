@@ -1,14 +1,16 @@
-package br.com.cauag.serena.syntax;
+package br.com.cauag.serena.syntax.assign;
 
 import br.com.cauag.serena.commands.parameters.QuotedParameter;
 import br.com.cauag.serena.conditions.PreConditions;
 import br.com.cauag.serena.core.Core;
+import br.com.cauag.serena.syntax.ExecutableAndParametersReceiver;
 
 public class Assign extends ExecutableAndParametersReceiver {
 	public Assign() {
 		super();
 		executeIf(PreConditions.NOT_WHEN_DECLARING_BLOCK);
 		executeIf(PreConditions.NOT_WHEN_SCHEDULING);
+		addSuccessor("LIST", new AssignList());
 	}
 
 	@Override
