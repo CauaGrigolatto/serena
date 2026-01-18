@@ -1,10 +1,12 @@
 package br.com.cauag.serena.syntax;
 
+import br.com.cauag.serena.conditions.PreConditions;
 import br.com.cauag.serena.core.Core;
 
 public class EndSchedule extends Executable {
 	public EndSchedule() {
 		super();
+		executeIf(PreConditions.NOT_WHEN_DECLARING_BLOCK);
 	}
 
 	@Override
