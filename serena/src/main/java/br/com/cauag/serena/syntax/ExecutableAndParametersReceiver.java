@@ -28,6 +28,16 @@ public abstract class ExecutableAndParametersReceiver extends Executable {
 					token = token.replaceAll("\\$" + varName, varValue);
 				}
 			}
+			
+			Map<String, String> forEachVariables = core.forEachController.variables();
+			
+			if (forEachVariables != null) {
+				for (Map.Entry<String, String> variable : forEachVariables.entrySet()) {
+					String varName = variable.getKey();
+					String varValue = variable.getValue();
+					token = token.replaceAll("\\$" + varName, varValue);
+				}
+			}
 		}
 		
 		return token;

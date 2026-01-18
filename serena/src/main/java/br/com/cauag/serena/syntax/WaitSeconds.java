@@ -6,7 +6,6 @@ import br.com.cauag.serena.commands.parameters.PositiveParameter;
 import br.com.cauag.serena.core.Core;
 
 public class WaitSeconds extends ExecutableAndParametersReceiver {
-	
 	public WaitSeconds() {
 		super();
 	}

@@ -2,7 +2,7 @@ package br.com.cauag.serena.syntax;
 
 import br.com.cauag.serena.core.Core;
 
-public class EndSchedule extends ExecutableAndNotParameterReceiver {
+public class EndSchedule extends ExecutableAndNotParametersReceiver {
 	public EndSchedule() {
 		super();
 	}

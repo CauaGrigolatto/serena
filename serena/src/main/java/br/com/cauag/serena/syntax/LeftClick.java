@@ -4,7 +4,7 @@ import java.awt.event.InputEvent;
 
 import br.com.cauag.serena.core.Core;
 
-public class LeftClick extends ExecutableAndNotParameterReceiver {
+public class LeftClick extends ExecutableAndNotParametersReceiver {
 	
 	public LeftClick() {
 		super();

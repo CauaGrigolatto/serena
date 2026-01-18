@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import br.com.cauag.serena.core.Core;
 
-public class EndBlock extends ExecutableAndNotParameterReceiver {
+public class EndBlock extends ExecutableAndNotParametersReceiver {
 	public EndBlock() {
 		super();
 	}

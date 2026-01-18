@@ -22,11 +22,9 @@ public class Core {
 	public final ScheduleController scheduleController;
 	public final ConfigController configController;
 	public final VariablesController variablesController;
+	public final ForEachController forEachController;
 	
-	//
 	private final SyntaxTrieInitializer syntaxTrie;
-	//
-	
 	public int index;
 	
 	public Core(String path) throws Exception {
@@ -37,6 +35,7 @@ public class Core {
 		this.configController = new ConfigController();
 		this.variablesController = new VariablesController();		
 		this.syntaxTrie = new SyntaxTrieInitializer();
+		this.forEachController = new ForEachController();
 	}
 	
 	public void run() {

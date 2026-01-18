@@ -13,14 +13,14 @@ import br.com.cauag.serena.exceptions.NegativeArgumentException;
 public class IndexController {
 	private boolean declaringBlock;
 	private final Map<String, Integer> blockIndexes;
-	private final Map<String, List<String>> blocksArgs;
+	private final Map<String, List<String>> blockArgs;
 	private final Stack<Map<String, String>> stackArgs;
 	private final Stack<Integer> repeatingTimes;
 	private final Stack<Integer> comebackIndexes;
 		
 	public IndexController() {
 		this.blockIndexes = new HashMap<String, Integer>();
-		this.blocksArgs = new HashMap<String, List<String>>();
+		this.blockArgs = new HashMap<String, List<String>>();
 		this.comebackIndexes = new Stack<Integer>();
 		this.stackArgs = new Stack<Map<String,String>>();
 		this.repeatingTimes = new Stack<Integer>();
@@ -32,7 +32,7 @@ public class IndexController {
 		}
 		
 		blockIndexes.put(blockName, index);
-		blocksArgs.put(blockName, args);
+		blockArgs.put(blockName, args);
 		this.declaringBlock = true;
 	}
 	
@@ -45,7 +45,7 @@ public class IndexController {
 			throw new BlockNotDeclaredException(blockName);
 		}
 		
-		List<String> blockArgsList = blocksArgs.get(blockName);
+		List<String> blockArgsList = blockArgs.get(blockName);
 		int acceptedArgs = blockArgsList.size();
 		int passedArgs = args.size();
 		
@@ -97,7 +97,7 @@ public class IndexController {
 	}
 	
 	public Integer endRepeat() {
-		if (! isDeclaringBlock()) {			
+		if (! isDeclaringBlock()) {
 			int times = repeatingTimes.pop() - 1;
 			
 			if (times > 0) {			

@@ -7,7 +7,7 @@ import br.com.cauag.serena.commands.parameters.UnquotedParameter;
 import br.com.cauag.serena.conditions.PreConditions;
 import br.com.cauag.serena.core.Core;
 
-public class Block extends ExecutableAndNotParameterReceiver {
+public class Block extends ExecutableAndNotParametersReceiver {
 	
 	public Block() {
 		super();
