@@ -7,9 +7,9 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 
-import br.com.cauag.serena.core.syntax.SyntaxTrieInitializer;
 import br.com.cauag.serena.exceptions.IndexableException;
 import br.com.cauag.serena.exceptions.InvalidSerenaFile;
+import br.com.cauag.serena.syntax.SyntaxTrieInitializer;
 
 public class Core {
 	public final Robot bot;
