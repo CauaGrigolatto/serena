@@ -160,7 +160,7 @@ REPEAT $times
 END REPEAT
 ```
 
-* SCHEDULE/SCHEDULE FOR + END SCHEDULE: allows you to schedule the execution of a block of code at various times;
+* SCHEDULE/SCHEDULE FOR: allows you to schedule the execution of a block of code at various times;
 ```
 SCHEDULE FOR "25/02/2026 00:00" "25/02/2027 00:00"
 	TYPE "Happy Birthday!"
@@ -196,6 +196,6 @@ CALL say_hello
 
 First, you need at least JDK 21 and to set the environment variables to point to this version. 
 
-Next, download the available jar file and run it with the following command: "java -jar serena.jar /path/to/script.ser".
+Next, download the available jar file and run it with the following command: java -jar serena.jar "/path/to/script.ser".
 
 Or, if you prefer, download the project code, modify it as you see fit, and compile it using your IDE or terminal.
