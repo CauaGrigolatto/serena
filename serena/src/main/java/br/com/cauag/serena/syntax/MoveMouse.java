@@ -13,8 +13,8 @@ public class MoveMouse extends ExecutableAndParametersReceiver {
 		String value = new UnquotedParameter(complement).getValue();
 		value = applyParametersAndVariables(value, core);
 		String[] coordinates = value.split(",");
-		int x = Integer.parseInt(coordinates[0]);
-		int y = Integer.parseInt(coordinates[1]);
+		int x = Integer.parseInt(coordinates[0].trim());
+		int y = Integer.parseInt(coordinates[1].trim());
 		core.bot.mouseMove(x, y);
 		return core.index;
 	}
