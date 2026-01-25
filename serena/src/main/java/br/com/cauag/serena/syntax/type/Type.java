@@ -41,6 +41,18 @@ public class Type extends ExecutableAndParametersReceiver {
 		this.specialChars.put('>', new GreaterThan());
 		this.specialChars.put('<', new LessThan());
 		this.specialChars.put('@', new At());
+		
+		this.specialChars.put('á', new AcuteAccentA());
+		this.specialChars.put('é', new AcuteAccentE());
+		this.specialChars.put('í', new AcuteAccentI());
+		this.specialChars.put('ó', new AcuteAccentO());
+		this.specialChars.put('ú', new AcuteAccentU());
+		
+		this.specialChars.put('Á', new UpperAcuteAccentA());
+		this.specialChars.put('É', new UpperAcuteAccentE());
+		this.specialChars.put('Í', new UpperAcuteAccentI());
+		this.specialChars.put('Ó', new UpperAcuteAccentO());
+		this.specialChars.put('Ú', new UpperAcuteAccentU());
 	}
 
 	@Override
