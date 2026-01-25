@@ -53,6 +53,9 @@ public class Type extends ExecutableAndParametersReceiver {
 		this.specialChars.put('Í', new UpperAcuteAccentI());
 		this.specialChars.put('Ó', new UpperAcuteAccentO());
 		this.specialChars.put('Ú', new UpperAcuteAccentU());
+		
+		this.specialChars.put('ã', new TildeLetterA());
+		this.specialChars.put('õ', new TildeLetterO());
 	}
 
 	@Override
