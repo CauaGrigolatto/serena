@@ -2,6 +2,7 @@ package br.com.cauag.serena.syntax;
 
 import br.com.cauag.serena.syntax.assign.Assign;
 import br.com.cauag.serena.syntax.foreach.For;
+import br.com.cauag.serena.syntax.screenshot.Screenshot;
 import br.com.cauag.serena.syntax.set.Set;
 import br.com.cauag.serena.syntax.type.Type;
 
@@ -26,5 +27,6 @@ public class SyntaxTrieInitializer extends NotExecutable {
 		addSuccessor("TYPE", new Type());
 		addSuccessor("WAIT", new Wait());
 		addSuccessor("FOR", new For());
+		addSuccessor("SCREENSHOT", new Screenshot());
 	}
 }
